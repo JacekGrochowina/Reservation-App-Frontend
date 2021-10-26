@@ -31,6 +31,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -127,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "angular-boilerplate"
+  "defaultProject": "angular-boilerplate",
+  "cli": {
+    "analytics": "f313f357-5026-48fb-9a43-1a512a9e1a34"
+  }
 }

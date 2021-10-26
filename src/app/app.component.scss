@@ -1,0 +1,26 @@
+.main-wrapper {
+  height: 100vh;
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh + 52px);
+}
+
+.content__toolbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.content__router {
+  flex-grow: 1;
+}
+
+.sidenav {
+  min-width: 250px;
+}

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>
+    {{ data?.title ? data?.title : 'Potwierdzenie' }}
+</h1>
+
+<div mat-dialog-content>
+    <p>{{ data?.message ? data?.message : 'Czy jesteś pewien, że chcesz wykonać tę akcję?' }}</p>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-stroked-button (click)="onDismiss()">{{ data?.dismissLabel ? data?.dismissLabel : 'Anuluj' }}</button>
+    <button mat-raised-button color="primary" (click)="onConfirm()" class="ml-2">{{ data?.confirmLabel ? data?.confirmLabel : 'Potwierdź' }}</button>
+</div>
