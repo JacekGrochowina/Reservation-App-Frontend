@@ -13,5 +13,10 @@ export class NavigationComponent {
       icon: 'home',
       path: '',
     },
+    {
+      name: 'Kierowcy',
+      icon: 'people',
+      path: 'kierowcy',
+    },
   ];
 }

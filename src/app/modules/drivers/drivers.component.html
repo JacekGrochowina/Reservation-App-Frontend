@@ -1,0 +1,13 @@
+<app-page-wrapper>
+    <h1>Kierowcy</h1>
+    <mat-divider></mat-divider>
+
+    <div class="d-flex justify-content-end py-3">
+        <button mat-raised-button color="primary" (click)="openAddDriverDialog()">
+            Dodaj kierowcę
+            <mat-icon class="ml-1">person_add</mat-icon>
+        </button>
+    </div>
+
+    <app-drivers-table></app-drivers-table>
+</app-page-wrapper>

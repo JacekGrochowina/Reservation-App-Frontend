@@ -1,0 +1,13 @@
+.table-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+}
+
+.table-loading > span {
+  margin-top: 1rem;
+  font-weight: 500;
+  color: var(--primary);
+}

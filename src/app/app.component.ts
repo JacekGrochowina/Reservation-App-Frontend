@@ -9,16 +9,20 @@ import { Themes } from './shared/utils/enums/themes.enums';
 })
 export class AppComponent implements OnInit {
   theme!: Themes;
-  mode!: boolean;
 
   constructor(private themeService: ThemeService) {}
 
   ngOnInit(): void {
-    this.theme = this.themeService.getTheme();
+    this.initToogleTheme();
   }
 
-  setTheme($event: boolean) {
+  getTheme($event: boolean) {
     this.theme = $event ? Themes.dark : Themes.light;
     this.themeService.setTheme($event);
+  }
+
+  private initToogleTheme() {
+    this.theme = this.themeService.getTheme();
+    this.themeService.setThemeOverlay(this.theme);
   }
 }

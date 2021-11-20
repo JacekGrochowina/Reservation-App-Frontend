@@ -7,6 +7,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },
+  {
+    path: 'kierowcy',
+    loadChildren: () =>
+      import('./modules/drivers/drivers.module').then((m) => m.DriversModule),
+  },
 ];
 
 @NgModule({
