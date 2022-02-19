@@ -13,7 +13,7 @@
   --primary: #{$primary};
   --accent: #{$accent};
   --warn: #{$warn};
-  --light: rgb(255, 255, 255, 0.5);
+  --light: rgb(255, 255, 255);
   --active: rgba(0, 0, 0, 0.04);
 }
 
@@ -26,6 +26,6 @@
   --primary: #{$primary};
   --accent: #{$accent};
   --warn: #{$warn};
-  --light: rgb(255, 255, 255, 0.5);
+  --light: rgba(0, 0, 0);
   --active: rgba(255, 255, 255, 0.04);
 }

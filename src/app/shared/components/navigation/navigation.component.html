@@ -1,16 +1,16 @@
 <h2 class="mt-5 mx-3">Menu</h2>
 <mat-nav-list class="nav-list" routerLinkActive="active">
-
-    <mat-list-item
-        *ngFor="let navItem of navList"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{exact: true}"
-        class="nav-item"
-    >
-        <a [routerLink]="navItem.path" class="nav-link">
-            <mat-icon color="primary" class="mr-3">{{navItem.icon}}</mat-icon>
-            <span>{{navItem.name}}</span>
-        </a>
-    </mat-list-item>
-
+  <mat-list-item
+    *ngFor="let navItem of navList"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="
+      navItem.path === '' ? { exact: true } : { exact: false }
+    "
+    class="nav-item"
+  >
+    <a [routerLink]="navItem.path" class="nav-link">
+      <mat-icon color="primary" class="mr-3">{{ navItem.icon }}</mat-icon>
+      <span>{{ navItem.name }}</span>
+    </a>
+  </mat-list-item>
 </mat-nav-list>
