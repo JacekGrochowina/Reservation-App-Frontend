@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AddEditMode } from 'src/app/shared/utils/enums/add-edit-mode.enum';
 import { Masks } from 'src/app/shared/utils/masks';
-import { DriversFacade } from '../../+state/drivers.facade';
+import { DriversFacade } from '../../../../store/drivers/drivers.facade';
 import { AddEditDriverDialogData } from '../../utils/interfaces/add-edit-driver-dialog-data.interface';
 
 @Component({

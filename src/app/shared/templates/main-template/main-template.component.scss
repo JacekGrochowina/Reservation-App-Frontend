@@ -1,0 +1,29 @@
+@import "./src/styles/variables";
+
+.main-template {
+  min-height: 100vh;
+
+  &__sidenav {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    .content {
+      &__toolbar {
+      }
+
+      &__main {
+        flex-grow: 1;
+        //margin-top: $toolbarHeight;
+        min-height: calc(100vh - #{$toolbarHeight});
+      }
+
+      &__foter {
+      }
+    }
+  }
+}

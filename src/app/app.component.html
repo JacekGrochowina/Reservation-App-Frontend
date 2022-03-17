@@ -1,23 +1,5 @@
-<div [class]="theme">
-  <mat-drawer-container autosize class="main-wrapper">
-
-    <mat-drawer #drawer class="sidenav" mode="side">
-      <app-navigation></app-navigation>
-    </mat-drawer>
-  
-    <div class="content">
-      <app-toolbar
-        (mode)="getTheme($event)"
-        [drawer]="drawer"
-        class="content__toolbar"
-      ></app-toolbar>
-  
-      <main class="content__router">
-        <router-outlet></router-outlet>
-      </main>
-
-      <app-footer class="content__footer"></app-footer>
-    </div>
-
-  </mat-drawer-container>
+<div [class]="theme | async">
+  <app-main-template>
+    <router-outlet></router-outlet>
+  </app-main-template>
 </div>

@@ -1,3 +1,5 @@
+@import "./src/styles/variables";
+
 .main-wrapper {
   height: 100vh;
 }
@@ -22,5 +24,5 @@
 }
 
 .sidenav {
-  min-width: 250px;
+  min-width: $sidenavWidth;
 }

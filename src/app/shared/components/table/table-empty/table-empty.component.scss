@@ -1,0 +1,27 @@
+@import "./src/styles/variables";
+
+.table__empty {
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+      display: block;
+      margin: auto;
+      width: $tableEmptyContentIconSize;
+      height: $tableEmptyContentIconSize;
+      line-height: $tableEmptyContentIconSize;
+      font-size: $tableEmptyContentIconSize;
+      color: var(--table-empty-content-icon);
+      fill: var(--table-empty-content-icon);
+    }
+
+    &__text {
+      text-align: center;
+      font-weight: 500;
+      color: var(--table-empty-content-text);
+    }
+  }
+}

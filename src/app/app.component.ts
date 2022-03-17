@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeService } from './shared/services/theme.service';
 import { Themes } from './shared/utils/enums/themes.enums';
+import { SettingsFacade } from './store/settings/settings.facade';
+import { map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,21 +10,36 @@ import { Themes } from './shared/utils/enums/themes.enums';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  theme!: Themes;
+  public theme!: Observable<Themes>;
+  private unsubscribe$ = new Subject<void>();
 
-  constructor(private themeService: ThemeService) {}
+  constructor(private settingsService: SettingsFacade) {}
 
-  ngOnInit(): void {
-    this.initToogleTheme();
+  public ngOnInit(): void {
+    this.getThemeFromLocalStorage();
+    this.theme = this.getTheme();
   }
 
-  getTheme($event: boolean) {
-    this.theme = $event ? Themes.dark : Themes.light;
-    this.themeService.setTheme($event);
+  private getTheme(): Observable<Themes> {
+    return this.settingsService.settingsTheme$.pipe(
+      takeUntil(this.unsubscribe$),
+      map((theme: Themes) => theme)
+    );
   }
 
-  private initToogleTheme() {
-    this.theme = this.themeService.getTheme();
-    this.themeService.setThemeOverlay(this.theme);
+  private getThemeFromLocalStorage(): void {
+    const theme = localStorage.getItem('theme');
+
+    switch (theme) {
+      case Themes.light:
+        this.settingsService.setTheme(theme);
+        break;
+      case Themes.dark:
+        this.settingsService.setTheme(theme);
+        break;
+      default:
+        this.settingsService.setTheme(Themes.light);
+        break;
+    }
   }
 }
