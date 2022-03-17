@@ -1,9 +1,14 @@
 @import "~@angular/material/theming";
 @include mat-core();
 
-@import "./themes/light-theme.scss";
-@import "./themes/dark-theme.scss";
+// Palettes
+@import "./palettes/navy-palette";
 
+// Themes
+@import "./themes/light-theme";
+@import "./themes/dark-theme";
+
+// Core classes
 .light-theme {
   @include angular-material-theme($light-theme);
   $primary: mat-color($light-theme-primary);
@@ -15,6 +20,21 @@
   --warn: #{$warn};
   --light: rgb(255, 255, 255);
   --active: rgba(0, 0, 0, 0.04);
+
+  --sidenav-title: #{$primary};
+  --sidenav-item-icon: #{$primary};
+  --sidenav-item-text: #{$primary};
+
+  --table-error-bar-bg: rgb(210, 62, 62);
+  --table-error-bar-text: rgb(234, 234, 234);
+  --table-error-bar-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  --table-error-content-icon: #{$primary};
+  --table-error-content-text: #{$primary};
+
+  --table-empty-content-icon: #{$primary};
+  --table-empty-content-text: #{$primary};
+
+  --footer-color: rgb(255, 255, 255);
 }
 
 .dark-theme {
@@ -28,4 +48,16 @@
   --warn: #{$warn};
   --light: rgba(0, 0, 0);
   --active: rgba(255, 255, 255, 0.04);
+
+  --sidenav-title: #{$primary};
+  --sidenav-item-icon: #{$primary};
+  --sidenav-item-text: rgb(255, 255, 255);
+
+  --table-error-bar-bg: rgb(210, 62, 62);
+  --table-error-bar-text: rgb(234, 234, 234);
+  --table-error-bar-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  --table-error-content-icon: #{$primary};
+  --table-error-content-text: #{$primary};
+
+  --footer-color: rgb(0, 0, 0);
 }

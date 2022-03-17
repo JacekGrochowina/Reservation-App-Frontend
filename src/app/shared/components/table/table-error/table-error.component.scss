@@ -1,0 +1,49 @@
+@import "./src/styles/variables";
+
+.table__error {
+  .error {
+    &__bar {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      background-color: var(--table-error-bar-bg);
+      border-radius: 4px;
+      box-shadow: var(--table-error-bar-shadow);
+
+      .bar {
+        &__icon {
+          color: var(--table-error-bar-text);
+          fill: var(--table-error-bar-text);
+        }
+
+        &__label {
+          margin: 0;
+          color: var(--table-error-bar-text);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__icon {
+      width: $tableErrorContentIconSize;
+      height: $tableErrorContentIconSize;
+      line-height: $tableErrorContentIconSize;
+      font-size: $tableErrorContentIconSize;
+      color: var(--table-error-content-icon);
+      fill: var(--table-error-content-icon);
+    }
+
+    &__text {
+      text-align: center;
+      font-weight: 500;
+      color: var(--table-error-content-text);
+    }
+  }
+}

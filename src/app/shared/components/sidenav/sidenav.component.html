@@ -1,0 +1,17 @@
+<div class="sidenav">
+  <h2 class="sidenav__title mt-5 mx-3">Menu</h2>
+
+  <mat-nav-list role="sidenav__list" routerLinkActive="active">
+    <mat-list-item
+      *ngFor="let sidenavItem of sidenavList"
+      [routerLinkActiveOptions]="sidenavItem.path === '' ? {exact: true} : {exact: false}"
+      routerLinkActive="active"
+      class="sidenav__item"
+    >
+      <a [routerLink]="sidenavItem.path" class="sidenav__link">
+        <mat-icon class="sidenav__icon mr-3">{{sidenavItem.icon}}</mat-icon>
+        <span>{{sidenavItem.name}}</span>
+      </a>
+    </mat-list-item>
+  </mat-nav-list>
+</div>

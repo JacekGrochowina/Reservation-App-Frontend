@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AddEditMode } from 'src/app/shared/utils/enums/add-edit-mode.enum';
-import { DriversFacade } from '../../+state/drivers.facade';
+import { DriversFacade } from '../../../../store/drivers/drivers.facade';
 import { Driver } from '../../utils/interfaces/driver.interface';
 import { AddEditDriverComponent } from '../add-edit-driver/add-edit-driver.component';
 
@@ -49,7 +48,7 @@ export class DriversTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.driversFacade.getDrivers();
+    this.driversFacade.getDriversList();
   }
 
   editDriver(driver: Driver): void {
