@@ -10,11 +10,12 @@ import { AddEditDriverDialogData } from './utils/interfaces/add-edit-driver-dial
   styleUrls: ['./drivers.component.scss'],
 })
 export class DriversComponent implements OnInit {
+
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 
-  openAddDriverDialog(): void {
+  public openAddDriverDialog(): void {
     this.dialog.open(AddEditDriverComponent, {
       data: {
         mode: AddEditMode.add,
@@ -23,4 +24,5 @@ export class DriversComponent implements OnInit {
       maxWidth: '500px',
     });
   }
+
 }

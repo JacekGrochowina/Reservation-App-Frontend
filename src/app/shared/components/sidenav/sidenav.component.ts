@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SidenavItemInterface } from './interfaces/sidenav-item.interface';
 
 @Component({
@@ -6,7 +6,7 @@ import { SidenavItemInterface } from './interfaces/sidenav-item.interface';
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
 
   sidenavList: SidenavItemInterface[] = [
     {
@@ -20,9 +20,5 @@ export class SidenavComponent implements OnInit {
       path: 'kierowcy',
     },
   ];
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
 }

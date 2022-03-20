@@ -9,6 +9,7 @@ import { Themes } from '../../utils/enums/themes.enums';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+
   @Input() drawer!: MatDrawer;
   public checked!: boolean;
 
@@ -47,4 +48,5 @@ export class ToolbarComponent implements OnInit {
         break;
     }
   }
+
 }

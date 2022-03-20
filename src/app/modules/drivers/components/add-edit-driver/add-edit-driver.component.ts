@@ -14,18 +14,19 @@ import { AddEditDriverDialogData } from '../../utils/interfaces/add-edit-driver-
   styleUrls: ['./add-edit-driver.component.scss'],
 })
 export class AddEditDriverComponent implements OnInit {
+
   // ========== Selectors Add
-  driverAddLoading$ = this.driversFacade.driverAddLoading$;
-  driverAddSuccess$ = this.driversFacade.driverAddSuccess$;
-  driverAddError$ = this.driversFacade.driverAddError$;
+  public driverAddLoading$ = this.driversFacade.driverAddLoading$;
+  public driverAddSuccess$ = this.driversFacade.driverAddSuccess$;
+  public driverAddError$ = this.driversFacade.driverAddError$;
 
   // ========== Selectors Update
-  driverUpdateLoading$ = this.driversFacade.driverUpdateLoading$;
-  driverUpdateSuccess$ = this.driversFacade.driverUpdateSuccess$;
-  driverUpdateError$ = this.driversFacade.driverUpdateError$;
+  public driverUpdateLoading$ = this.driversFacade.driverUpdateLoading$;
+  public driverUpdateSuccess$ = this.driversFacade.driverUpdateSuccess$;
+  public driverUpdateError$ = this.driversFacade.driverUpdateError$;
 
-  form!: FormGroup;
-  peselMask = Masks.pesel;
+  public form!: FormGroup;
+  public peselMask = Masks.pesel;
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -35,22 +36,22 @@ export class AddEditDriverComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: AddEditDriverDialogData
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.initForm();
     if (this.isEditMode()) {
       this.setFormValues();
     }
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     this.isAddMode() ? this.driverAddSubmit() : this.driverUpdateSubmit();
   }
 
-  isAddMode(): boolean {
+  public isAddMode(): boolean {
     return this.data.mode === AddEditMode.add;
   }
 
-  isEditMode(): boolean {
+  public isEditMode(): boolean {
     return this.data.mode === AddEditMode.edit;
   }
 
@@ -123,4 +124,5 @@ export class AddEditDriverComponent implements OnInit {
         this.dialogRef.close(true);
       });
   }
+
 }

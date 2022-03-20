@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { map, takeUntil } from 'rxjs/operators';
 
@@ -16,12 +16,17 @@ export class TableComponent implements OnInit {
   @Input() error$!: Observable<HttpErrorResponse>;
 
   public isEmpty$!: Observable<boolean>;
-  private unsubscribe$ = new Subject<void>();
+  public isTableErrorVisible$!: Observable<boolean>;
+  public isTableEmptyVisible$!: Observable<boolean>;
+  public isTableContentVisible$!: Observable<boolean>;
 
-  constructor() {}
+  private unsubscribe$ = new Subject<void>();
 
   public ngOnInit(): void {
     this.isEmpty$ = this.getIsEmpty();
+    this.isTableErrorVisible$ = this.getIsTableErrorVisible();
+    this.isTableEmptyVisible$ = this.getIsTableEmptyVisible();
+    this.isTableContentVisible$ = this.getIsTableContentVisible();
   }
 
   private getIsEmpty(): Observable<boolean> {
@@ -29,6 +34,30 @@ export class TableComponent implements OnInit {
       takeUntil(this.unsubscribe$),
       map((items) => items.length === 0)
     );
+  }
+
+  private getIsTableErrorVisible(): Observable<boolean> {
+    return combineLatest([this.loading$, this.error$])
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map(([loading, error]) => !loading && !!error)
+      );
+  }
+
+  private getIsTableEmptyVisible(): Observable<boolean> {
+    return combineLatest([this.loading$, this.error$, this.isEmpty$])
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map(([loading, error, isEmpty]) => !loading && !error && isEmpty)
+      );
+  }
+
+  private getIsTableContentVisible(): Observable<boolean> {
+    return combineLatest([this.loading$, this.isEmpty$])
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map(([loading, isEmpty]) => !loading && !isEmpty)
+      );
   }
 
 }

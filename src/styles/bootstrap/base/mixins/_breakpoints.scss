@@ -21,9 +21,9 @@
 ) {
   $n: index($breakpoint-names, $name);
   @return if(
-    $n != null and $n < length($breakpoint-names),
-    nth($breakpoint-names, $n + 1),
-    null
+      $n != null and $n < length($breakpoint-names),
+      nth($breakpoint-names, $n + 1),
+      null
   );
 }
 

@@ -10,10 +10,11 @@ import { Observable, Subject } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
   public theme!: Observable<Themes>;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private settingsService: SettingsFacade) {}
+  constructor(private settingsFacade: SettingsFacade) {}
 
   public ngOnInit(): void {
     this.getThemeFromLocalStorage();
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
   }
 
   private getTheme(): Observable<Themes> {
-    return this.settingsService.settingsTheme$.pipe(
+    return this.settingsFacade.settingsTheme$.pipe(
       takeUntil(this.unsubscribe$),
       map((theme: Themes) => theme)
     );
@@ -32,14 +33,15 @@ export class AppComponent implements OnInit {
 
     switch (theme) {
       case Themes.light:
-        this.settingsService.setTheme(theme);
+        this.settingsFacade.setTheme(theme);
         break;
       case Themes.dark:
-        this.settingsService.setTheme(theme);
+        this.settingsFacade.setTheme(theme);
         break;
       default:
-        this.settingsService.setTheme(Themes.light);
+        this.settingsFacade.setTheme(Themes.light);
         break;
     }
   }
+
 }

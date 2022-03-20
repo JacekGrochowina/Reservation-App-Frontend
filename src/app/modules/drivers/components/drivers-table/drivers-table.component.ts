@@ -12,28 +12,29 @@ import { AddEditDriverComponent } from '../add-edit-driver/add-edit-driver.compo
   styleUrls: ['./drivers-table.component.scss'],
 })
 export class DriversTableComponent implements OnInit {
+
   // ========== Selectors List
-  driversListItems$ = this.driversFacade.driversListItems$;
-  driversListLoading$ = this.driversFacade.driversListLoading$;
-  driversListSuccess$ = this.driversFacade.driversListSuccess$;
-  driversListError$ = this.driversFacade.driversListError$;
+  public driversListItems$ = this.driversFacade.driversListItems$;
+  public driversListLoading$ = this.driversFacade.driversListLoading$;
+  public driversListSuccess$ = this.driversFacade.driversListSuccess$;
+  public driversListError$ = this.driversFacade.driversListError$;
 
   // ========== Selectors Add
-  driverAddLoading$ = this.driversFacade.driverAddLoading$;
-  driverAddSuccess$ = this.driversFacade.driverAddSuccess$;
-  driverAddError$ = this.driversFacade.driverAddError$;
+  public driverAddLoading$ = this.driversFacade.driverAddLoading$;
+  public driverAddSuccess$ = this.driversFacade.driverAddSuccess$;
+  public driverAddError$ = this.driversFacade.driverAddError$;
 
   // ========== Selectors Del
-  driverDelLoading$ = this.driversFacade.driverDelLoading$;
-  driverDelSuccess$ = this.driversFacade.driverDelSuccess$;
-  driverDelError$ = this.driversFacade.driverDelError$;
+  public driverDelLoading$ = this.driversFacade.driverDelLoading$;
+  public driverDelSuccess$ = this.driversFacade.driverDelSuccess$;
+  public driverDelError$ = this.driversFacade.driverDelError$;
 
   // ========== Selectors Update
-  driverUpdateLoading$ = this.driversFacade.driverUpdateLoading$;
-  driverUpdateSuccess$ = this.driversFacade.driverUpdateSuccess$;
-  driverUpdateError$ = this.driversFacade.driverUpdateError$;
+  public driverUpdateLoading$ = this.driversFacade.driverUpdateLoading$;
+  public driverUpdateSuccess$ = this.driversFacade.driverUpdateSuccess$;
+  public driverUpdateError$ = this.driversFacade.driverUpdateError$;
 
-  displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     'name',
     'surname',
     'pesel',
@@ -47,11 +48,11 @@ export class DriversTableComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.driversFacade.getDriversList();
   }
 
-  editDriver(driver: Driver): void {
+  public editDriver(driver: Driver): void {
     const dialogRef = this.dialog.open(AddEditDriverComponent, {
       data: {
         driver,
@@ -61,7 +62,7 @@ export class DriversTableComponent implements OnInit {
     });
   }
 
-  delDriver(driverID: number): void {
+  public delDriver(driverID: number): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Usuwanie kierowcy',
@@ -80,4 +81,5 @@ export class DriversTableComponent implements OnInit {
       maxWidth: '400px',
     });
   }
+
 }

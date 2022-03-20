@@ -1,14 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-fluid-loading',
   templateUrl: './fluid-loading.component.html',
   styleUrls: ['./fluid-loading.component.scss'],
 })
-export class FluidLoadingComponent implements OnInit {
+export class FluidLoadingComponent {
+
   @Input() height!: number;
 
-  constructor() {}
+  public styleFactory(): string {
+    const style: string[] = [];
 
-  ngOnInit(): void {}
+    style.push(this.height ? `height: ${this.height}px` : '');
+
+    return style.toString().replace(/,/, ' ');
+  }
+
 }

@@ -60,23 +60,24 @@ export class DriversFacade {
 
   constructor(private store: Store<AppState>) {}
 
-  getDriversList(): void {
+  public getDriversList(): void {
     this.store.dispatch(new GetListDrivers());
   }
 
-  getDriverDetails(driverID: number): void {
+  public getDriverDetails(driverID: number): void {
     this.store.dispatch(new GetDetailsDriver(driverID));
   }
 
-  addDriver(driver: Driver): void {
+  public addDriver(driver: Driver): void {
     this.store.dispatch(new AddDriver(driver));
   }
 
-  delDriver(driverID: number): void {
+  public delDriver(driverID: number): void {
     this.store.dispatch(new DelDriver(driverID));
   }
 
-  updateDriver(driver: Driver): void {
+  public updateDriver(driver: Driver): void {
     this.store.dispatch(new UpdateDriver(driver));
   }
+
 }

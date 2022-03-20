@@ -26,6 +26,7 @@ import {
 
 @Injectable()
 export class DriversEffects {
+
   constructor(
     private actions$: Actions,
     private driversService: DriversService,
@@ -156,4 +157,5 @@ export class DriversEffects {
     ),
   { dispatch: false }
   );
+
 }

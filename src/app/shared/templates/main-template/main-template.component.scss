@@ -18,7 +18,6 @@
 
       &__main {
         flex-grow: 1;
-        //margin-top: $toolbarHeight;
         min-height: calc(100vh - #{$toolbarHeight});
       }
 

@@ -1,29 +1,29 @@
 <h1 mat-dialog-title>
-    {{ data?.title ? data?.title : 'Potwierdzenie' }}
+  {{ data?.title ? data?.title : 'Potwierdzenie' }}
 </h1>
 
 <div mat-dialog-content>
-    <p>{{ data?.message ? data?.message : 'Czy jesteś pewien, że chcesz wykonać tę akcję?' }}</p>
+  <p>{{ data?.message ? data?.message : 'Czy jesteś pewien, że chcesz wykonać tę akcję?' }}</p>
 </div>
 
 <div mat-dialog-actions align="end">
-    <button
-        mat-stroked-button
-        (click)="onDismiss()"
-        [disabled]="(data?.loading$ | async)"
-    >
-        {{ data?.dismissLabel ? data?.dismissLabel : 'Anuluj' }}
-    </button>
-    <button
-        mat-raised-button
-        color="primary"
-        class="ml-2"
-        (click)="data.confirmed()"
-        [disabled]="(data?.loading$ | async)"
-    >
-        {{ data?.confirmLabel ? data?.confirmLabel : 'Potwierdź' }}
-        <mat-icon *ngIf="(data?.loading$ | async)" class="ml-1">
-            <mat-spinner diameter="20"></mat-spinner>
-        </mat-icon>
-    </button>
+  <button
+    mat-stroked-button
+    (click)="onDismiss()"
+    [disabled]="(data?.loading$ | async)"
+  >
+    {{ data?.dismissLabel ? data?.dismissLabel : 'Anuluj' }}
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="ml-2"
+    (click)="data.confirmed()"
+    [disabled]="(data?.loading$ | async)"
+  >
+    {{ data?.confirmLabel ? data?.confirmLabel : 'Potwierdź' }}
+    <mat-icon *ngIf="(data?.loading$ | async)" class="ml-1">
+      <mat-spinner diameter="20"></mat-spinner>
+    </mat-icon>
+  </button>
 </div>

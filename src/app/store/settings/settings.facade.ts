@@ -16,4 +16,5 @@ export class SettingsFacade {
   public setTheme(theme: Themes): void {
     this.store.dispatch(new SetTheme(theme));
   }
+
 }

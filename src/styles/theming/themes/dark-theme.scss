@@ -3,7 +3,7 @@ $dark-theme-accent: mat-palette($mat-grey, 900);
 $dark-theme-warn: mat-palette($mat-red);
 
 $dark-theme: mat-dark-theme(
-  $dark-theme-primary,
-  $dark-theme-accent,
-  $dark-theme-warn
+    $dark-theme-primary,
+    $dark-theme-accent,
+    $dark-theme-warn
 );

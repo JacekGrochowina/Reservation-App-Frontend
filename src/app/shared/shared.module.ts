@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FluidLoadingComponent } from './components/fluid-loading/fluid-loading.component';
 import { MatListModule } from '@angular/material/list';
@@ -24,13 +22,13 @@ import { TableLoadingComponent } from './components/table/table-loading/table-lo
 import { TableContentComponent } from './components/table/table-content/table-content.component';
 import { TableErrorComponent } from './components/table/table-error/table-error.component';
 import { TableEmptyComponent } from './components/table/table-empty/table-empty.component';
+import { PageContentTemplateComponent } from './templates/page-content-template/page-content-template.component';
+import { PageContainerTemplateComponent } from './templates/page-container-template/page-container-template.component';
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
-    NavigationComponent,
     ToolbarComponent,
-    PageWrapperComponent,
     FooterComponent,
     FluidLoadingComponent,
     MainTemplateComponent,
@@ -40,6 +38,8 @@ import { TableEmptyComponent } from './components/table/table-empty/table-empty.
     TableContentComponent,
     TableErrorComponent,
     TableEmptyComponent,
+    PageContentTemplateComponent,
+    PageContainerTemplateComponent,
   ],
   imports: [
     CommonModule,
@@ -57,14 +57,14 @@ import { TableEmptyComponent } from './components/table/table-empty/table-empty.
   ],
   exports: [
     MatProgressSpinnerModule,
-    NavigationComponent,
     ToolbarComponent,
-    PageWrapperComponent,
     FooterComponent,
     FluidLoadingComponent,
     MainTemplateComponent,
     SidenavComponent,
-    TableComponent
+    TableComponent,
+    PageContentTemplateComponent,
+    PageContainerTemplateComponent,
   ],
 })
 export class SharedModule {

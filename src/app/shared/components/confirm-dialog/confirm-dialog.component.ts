@@ -10,6 +10,7 @@ import { ConfirmDialogData } from './interfaces/confirm-dialog-data.interface';
   styleUrls: ['./confirm-dialog.component.scss'],
 })
 export class ConfirmDialogComponent implements OnInit {
+
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -17,7 +18,7 @@ export class ConfirmDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     if (this.data.isAsync && this.data.close$) {
       this.data.close$
         .pipe(
@@ -30,7 +31,8 @@ export class ConfirmDialogComponent implements OnInit {
     }
   }
 
-  onDismiss(): void {
+  public onDismiss(): void {
     this.dialogRef.close(false);
   }
+
 }

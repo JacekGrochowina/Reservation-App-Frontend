@@ -8,11 +8,11 @@ import { ConfigAPI as api } from '../../shared/utils/api/config';
   providedIn: 'root',
 })
 export class DriversService {
+
   constructor(private http: HttpClient) {}
 
   public getDrivers(): Observable<Driver[]> {
-    const url = `${api.apiURL}/api/driver/read.php`;  // Correct response
-    // const url = `https://api.thedogapi.com/v1/breedss`;  // Mockup error
+    const url = `${api.apiURL}/api/driver/read.php`;
     return this.http.get<Driver[]>(url, api.headers);
   }
 
@@ -37,4 +37,5 @@ export class DriversService {
     const url = `${api.apiURL}/api/driver/update.php`;
     return this.http.post<Driver>(url, driver, api.headers);
   }
+
 }
