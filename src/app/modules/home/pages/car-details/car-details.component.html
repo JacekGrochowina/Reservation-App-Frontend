@@ -1,0 +1,21 @@
+<app-page-content-template [maxWidth]="900">
+
+  <app-fluid-loading *ngIf="(carDetailsLoading$ | async)" [height]="500"></app-fluid-loading>
+
+  <ng-container *ngIf="!(carDetailsLoading$ | async)">
+    <app-car-details-title [carDetailsItems$]="carDetailsItems$"></app-car-details-title>
+    <app-car-details-info [carDetailsItems$]="carDetailsItems$"></app-car-details-info>
+
+    <div class="d-flex justify-content-end pt-4">
+      <button mat-stroked-button color="warn" (click)="delCar()" class="cmn-btn mr-2">
+        <mat-icon class="mr-1">delete</mat-icon>
+        Usuń
+      </button>
+      <button mat-flat-button color="primary" (click)="editCar()" class="cmn-btn">
+        <mat-icon class="mr-1">edit</mat-icon>
+        Edytuj
+      </button>
+    </div>
+  </ng-container>
+
+</app-page-content-template>

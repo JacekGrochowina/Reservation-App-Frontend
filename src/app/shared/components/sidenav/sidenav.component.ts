@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SidenavItemInterface } from './interfaces/sidenav-item.interface';
+import { Routing } from "../../utils/enums/routing.enum";
 
 @Component({
   selector: 'app-sidenav',
@@ -10,14 +11,14 @@ export class SidenavComponent {
 
   sidenavList: SidenavItemInterface[] = [
     {
-      name: 'Podsumowanie',
-      icon: 'analytics',
-      path: '',
+      name: 'Samochody',
+      icon: 'directions_car',
+      path: Routing.main,
     },
     {
-      name: 'Kierowcy',
-      icon: 'people',
-      path: 'kierowcy',
+      name: 'O programie',
+      icon: 'info',
+      path: Routing.info,
     },
   ];
 

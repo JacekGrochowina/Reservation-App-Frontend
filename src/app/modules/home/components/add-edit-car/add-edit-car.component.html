@@ -1,0 +1,98 @@
+<h1 mat-dialog-title>
+  {{isAddMode() ? 'Dodawanie samochodu' : 'Edycja samochodu'}}
+</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row no-gutters">
+
+      <div class="col-6 pr-2">
+        <mat-form-field appearance="fill" class="w-100 mb-2">
+          <mat-label>Marka</mat-label>
+          <input
+            matInput
+            required
+            cdkFocusInitial
+            formControlName="brand"
+            placeholder="Podaj markę">
+          <mat-hint>Marka samochodu</mat-hint>
+          <mat-error *ngIf="form.controls.brand.value.length > 20 && !form.controls.brand.hasError('required')">
+            Pole musi mieć <strong>maksymalnie 20 znaków</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.brand.value.length < 2 && !form.controls.brand.hasError('required')">
+            Pole musi mieć <strong>co najmniej 2 znaki</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.brand.hasError('required')">
+            Pole <strong>jest wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-6 pr-2">
+        <mat-form-field appearance="fill" class="w-100 mb-2">
+          <mat-label>Model</mat-label>
+          <input
+            matInput
+            required
+            cdkFocusInitial
+            formControlName="model"
+            placeholder="Podaj model">
+          <mat-hint>Model samochodu</mat-hint>
+          <mat-error *ngIf="form.controls.model.value.length > 20 && !form.controls.model.hasError('required')">
+            Pole musi mieć <strong>maksymalnie 20 znaków</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.model.value.length < 2 && !form.controls.model.hasError('required')">
+            Pole musi mieć <strong>co najmniej 2 znaki</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.model.hasError('required')">
+            Pole <strong>jest wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 pr-2">
+        <mat-form-field appearance="fill" class="w-100 mb-2">
+          <mat-label>Wartość</mat-label>
+          <input
+            matInput
+            required
+            cdkFocusInitial
+            type="number"
+            formControlName="valueOfCar"
+            placeholder="Podaj wartość samochodu">
+          <mat-hint>Całkowita kwota samochodu</mat-hint>
+          <mat-error *ngIf="form.controls.valueOfCar.hasError('min') && !form.controls.valueOfCar.hasError('required')">
+            Wartość musi być <strong>większa lub równa 0</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.valueOfCar.hasError('required')">
+            Pole <strong>jest wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div mat-dialog-actions class="d-flex justify-content-end m-0 p-0">
+      <button
+        mat-stroked-button
+        mat-dialog-close
+        type="button"
+        color="primary"
+        (click)="closeDialog()">
+        Anuluj
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!form.valid || !form.dirty || (carAddLoading$ | async) || (carUpdateLoading$ | async)"
+        type="submit"
+        class="ml-2"
+      >
+        {{isAddMode() ? 'Dodaj' : 'Edytuj'}}
+        <mat-icon *ngIf="(carAddLoading$ | async) || (carUpdateLoading$ | async)" class="ml-1">
+          <mat-spinner diameter="20"></mat-spinner>
+        </mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

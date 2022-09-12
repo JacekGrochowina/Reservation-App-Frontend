@@ -1,3 +1,13 @@
-<app-page-content-template>
-  <p>home works!</p>
+<app-page-content-template [maxWidth]="1000">
+  <h1>Samochody</h1>
+  <mat-divider></mat-divider>
+
+  <div class="d-flex justify-content-end py-3">
+    <button mat-raised-button color="primary" (click)="openAddCarDialog()" class="cmn-btn">
+      Dodaj samochód
+      <mat-icon class="ml-1">add</mat-icon>
+    </button>
+  </div>
+
+  <app-cars-table></app-cars-table>
 </app-page-content-template>

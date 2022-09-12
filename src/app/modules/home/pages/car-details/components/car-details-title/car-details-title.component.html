@@ -1,0 +1,11 @@
+<h1 class="d-flex align-items-center">
+  <button
+    mat-icon-button
+    color="primary"
+    (click)="backToList()"
+    aria-label="Back to cars list">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span class="ml-3">{{(carDetailsItems$ | async)?.brand}} {{(carDetailsItems$ | async)?.model}}</span>
+</h1>
+<mat-divider></mat-divider>

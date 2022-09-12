@@ -1,0 +1,11 @@
+.cmn {
+  &-btn {
+    .mat-icon {
+      $mat-icon-size: 19px;
+
+      font-size: $mat-icon-size;
+      height: $mat-icon-size;
+      width: $mat-icon-size;
+    }
+  }
+}

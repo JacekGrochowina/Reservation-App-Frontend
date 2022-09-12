@@ -1,7 +1,7 @@
 import { SettingsState } from './settings/settings.state';
-import { DriversState } from './drivers/drivers.state';
+import { CarsState } from './cars/cars.state';
 
 export interface AppState {
   settings: SettingsState;
-  drivers: DriversState;
+  drivers: CarsState;
 }

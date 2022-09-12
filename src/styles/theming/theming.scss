@@ -35,7 +35,7 @@
   --table-empty-content-icon: #{$primary};
   --table-empty-content-text: #{$primary};
 
-  --footer-color: rgb(255, 255, 255);
+  --footer-text: rgb(255, 255, 255);
 }
 
 .dark-theme {
@@ -60,5 +60,5 @@
   --table-error-content-icon: #{$primary};
   --table-error-content-text: #{$primary};
 
-  --footer-color: rgb(0, 0, 0);
+  --footer-text: rgb(0, 0, 0);
 }
