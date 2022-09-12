@@ -1,21 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { Routing } from './shared/utils/enums/routing.enum';
 
 const routes: Routes = [
   {
-    path: '',
+    path: Routing.main,
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'kierowcy',
+    path: Routing.info,
     loadChildren: () =>
-      import('./modules/drivers/drivers.module').then((m) => m.DriversModule),
+      import('./modules/info/info.module').then((m) => m.InfoModule),
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
