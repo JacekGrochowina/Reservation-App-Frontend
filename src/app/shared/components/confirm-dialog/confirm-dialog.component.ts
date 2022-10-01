@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -9,9 +9,9 @@ import { ConfirmDialogData } from './interfaces/confirm-dialog-data.interface';
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.scss'],
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent implements OnInit, OnDestroy {
 
-  private unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<boolean>();
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmDialogComponent>,
@@ -29,6 +29,11 @@ export class ConfirmDialogComponent implements OnInit {
           this.dialogRef.close();
         });
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.unsubscribe();
   }
 
   public onDismiss(): void {
