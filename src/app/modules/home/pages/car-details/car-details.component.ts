@@ -32,7 +32,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   public carUpdateError$ = this.carsFacade.carUpdateError$;
 
   private params: ParamMap = this.route.snapshot.paramMap;
-  private unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<boolean>();
 
   get carId(): number {
     return Number(this.params.get('id'));
@@ -50,7 +50,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.unsubscribe$.next();
+    this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
     this.carsFacade.clearCarDetails();
   }
