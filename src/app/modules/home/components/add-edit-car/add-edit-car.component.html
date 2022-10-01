@@ -16,13 +16,13 @@
             formControlName="brand"
             placeholder="Podaj markę">
           <mat-hint>Marka samochodu</mat-hint>
-          <mat-error *ngIf="form.controls.brand.value.length > 20 && !form.controls.brand.hasError('required')">
+          <mat-error *ngIf="form.get('brand')?.value.length > 20 && !form.get('brand')?.hasError('required')">
             Pole musi mieć <strong>maksymalnie 20 znaków</strong>
           </mat-error>
-          <mat-error *ngIf="form.controls.brand.value.length < 2 && !form.controls.brand.hasError('required')">
+          <mat-error *ngIf="form.get('brand')?.value.length < 2 && !form.get('brand')?.hasError('required')">
             Pole musi mieć <strong>co najmniej 2 znaki</strong>
           </mat-error>
-          <mat-error *ngIf="form.controls.brand.hasError('required')">
+          <mat-error *ngIf="form.get('brand')?.hasError('required')">
             Pole <strong>jest wymagane</strong>
           </mat-error>
         </mat-form-field>
@@ -37,13 +37,13 @@
             formControlName="model"
             placeholder="Podaj model">
           <mat-hint>Model samochodu</mat-hint>
-          <mat-error *ngIf="form.controls.model.value.length > 20 && !form.controls.model.hasError('required')">
+          <mat-error *ngIf="form.get('model')?.value.length > 20 && !form.get('model')?.hasError('required')">
             Pole musi mieć <strong>maksymalnie 20 znaków</strong>
           </mat-error>
-          <mat-error *ngIf="form.controls.model.value.length < 2 && !form.controls.model.hasError('required')">
+          <mat-error *ngIf="form.get('model')?.value.length < 2 && !form.get('model')?.hasError('required')">
             Pole musi mieć <strong>co najmniej 2 znaki</strong>
           </mat-error>
-          <mat-error *ngIf="form.controls.model.hasError('required')">
+          <mat-error *ngIf="form.get('model')?.hasError('required')">
             Pole <strong>jest wymagane</strong>
           </mat-error>
         </mat-form-field>
@@ -59,10 +59,10 @@
             formControlName="valueOfCar"
             placeholder="Podaj wartość samochodu">
           <mat-hint>Całkowita kwota samochodu</mat-hint>
-          <mat-error *ngIf="form.controls.valueOfCar.hasError('min') && !form.controls.valueOfCar.hasError('required')">
+          <mat-error *ngIf="form.get('valueOfCar')?.hasError('min') && !form.get('valueOfCar')?.hasError('required')">
             Wartość musi być <strong>większa lub równa 0</strong>
           </mat-error>
-          <mat-error *ngIf="form.controls.valueOfCar.hasError('required')">
+          <mat-error *ngIf="form.get('valueOfCar')?.hasError('required')">
             Pole <strong>jest wymagane</strong>
           </mat-error>
         </mat-form-field>
