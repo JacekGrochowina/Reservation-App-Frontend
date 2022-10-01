@@ -1,3 +1,4 @@
 <div class="fluid-loading" [style]="styleFactory()">
-    <mat-spinner [diameter]="70"></mat-spinner>
+  <mat-spinner [diameter]="diameter"></mat-spinner>
+  <p *ngIf="isTextVisible()" class="fluid-loading__text mt-4">{{text}}</p>
 </div>

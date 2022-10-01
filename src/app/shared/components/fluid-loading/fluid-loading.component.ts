@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-fluid-loading',
@@ -8,6 +9,8 @@ import { Component, Input } from '@angular/core';
 export class FluidLoadingComponent {
 
   @Input() height!: number;
+  @Input() text!: string;
+  @Input() diameter = 70;
 
   public styleFactory(): string {
     const style: string[] = [];
@@ -15,6 +18,10 @@ export class FluidLoadingComponent {
     style.push(this.height ? `height: ${this.height}px` : '');
 
     return style.toString().replace(/,/, ' ');
+  }
+
+  public isTextVisible(): boolean {
+    return !_.isNull(this.text);
   }
 
 }
