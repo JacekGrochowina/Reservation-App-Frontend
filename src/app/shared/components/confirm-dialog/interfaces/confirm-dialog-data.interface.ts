@@ -9,5 +9,5 @@ export interface ConfirmDialogData {
   close$?: Observable<boolean>;
   loading$?: Observable<boolean>;
   errors$?: any;
-  confirmed: Function;
+  confirmed: () => void;
 }
