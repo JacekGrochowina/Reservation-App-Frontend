@@ -1,0 +1,13 @@
+<button
+  mat-raised-button
+  [color]="color"
+  [disabled]="disabled"
+  [type]="type"
+  [class]="class"
+  (click)="action ? action() : null"
+>
+  {{ text }}
+  <mat-icon *ngIf="isLoading" class="ml-1">
+    <mat-spinner [color]="diameterColor" [diameter]="diameter"></mat-spinner>
+  </mat-icon>
+</button>

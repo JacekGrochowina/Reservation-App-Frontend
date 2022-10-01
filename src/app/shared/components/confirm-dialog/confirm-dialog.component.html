@@ -14,16 +14,12 @@
   >
     {{ data?.dismissLabel ? data?.dismissLabel : 'Anuluj' }}
   </button>
-  <button
-    mat-raised-button
-    color="primary"
-    class="ml-2"
-    (click)="data.confirmed()"
+
+  <app-button-loading
+    color="warn"
+    [text]="data?.confirmLabel ? data?.confirmLabel : 'Potwierdź'"
     [disabled]="(data?.loading$ | async)"
-  >
-    {{ data?.confirmLabel ? data?.confirmLabel : 'Potwierdź' }}
-    <mat-icon *ngIf="(data?.loading$ | async)" class="ml-1">
-      <mat-spinner diameter="20"></mat-spinner>
-    </mat-icon>
-  </button>
+    [isLoading]="(data?.loading$ | async)"
+    [action]="data.confirmed">
+  </app-button-loading>
 </div>

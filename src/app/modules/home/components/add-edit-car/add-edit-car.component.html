@@ -34,7 +34,6 @@
           <input
             matInput
             required
-            cdkFocusInitial
             formControlName="model"
             placeholder="Podaj model">
           <mat-hint>Model samochodu</mat-hint>
@@ -56,7 +55,6 @@
           <input
             matInput
             required
-            cdkFocusInitial
             type="number"
             formControlName="valueOfCar"
             placeholder="Podaj wartość samochodu">
@@ -81,18 +79,13 @@
         (click)="closeDialog()">
         Anuluj
       </button>
-      <button
-        mat-raised-button
+
+      <app-button-loading
         color="primary"
+        [text]="isAddMode() ? 'Dodaj' : 'Edytuj'"
         [disabled]="!form.valid || !form.dirty || (carAddLoading$ | async) || (carUpdateLoading$ | async)"
-        type="submit"
-        class="ml-2"
-      >
-        {{isAddMode() ? 'Dodaj' : 'Edytuj'}}
-        <mat-icon *ngIf="(carAddLoading$ | async) || (carUpdateLoading$ | async)" class="ml-1">
-          <mat-spinner diameter="20"></mat-spinner>
-        </mat-icon>
-      </button>
+        [isLoading]="(carAddLoading$ | async) || (carUpdateLoading$ | async)">
+      </app-button-loading>
     </div>
   </form>
 </div>

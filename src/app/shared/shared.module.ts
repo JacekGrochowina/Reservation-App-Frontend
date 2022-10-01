@@ -24,6 +24,7 @@ import { TableErrorComponent } from './components/table/table-error/table-error.
 import { TableEmptyComponent } from './components/table/table-empty/table-empty.component';
 import { PageContentTemplateComponent } from './templates/page-content-template/page-content-template.component';
 import { PageContainerTemplateComponent } from './templates/page-container-template/page-container-template.component';
+import { ButtonLoadingComponent } from './components/button-loading/button-loading.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PageContainerTemplateComponent } from './templates/page-container-templ
     TableEmptyComponent,
     PageContentTemplateComponent,
     PageContainerTemplateComponent,
+    ButtonLoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +67,7 @@ import { PageContainerTemplateComponent } from './templates/page-container-templ
     TableComponent,
     PageContentTemplateComponent,
     PageContainerTemplateComponent,
+    ButtonLoadingComponent,
   ],
 })
 export class SharedModule {
