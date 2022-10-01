@@ -1,6 +1,10 @@
 <app-page-content-template [maxWidth]="900">
 
-  <app-fluid-loading *ngIf="(carDetailsLoading$ | async)" [height]="500"></app-fluid-loading>
+  <app-fluid-loading
+    *ngIf="(carDetailsLoading$ | async)"
+    [height]="500"
+    text="Trwa ładowanie szczegółów pojazdu...">
+  </app-fluid-loading>
 
   <ng-container *ngIf="!(carDetailsLoading$ | async)">
     <app-car-details-title [carDetailsItems$]="carDetailsItems$"></app-car-details-title>
