@@ -25,6 +25,7 @@ import { TableEmptyComponent } from './components/table/table-empty/table-empty.
 import { PageContentTemplateComponent } from './templates/page-content-template/page-content-template.component';
 import { PageContainerTemplateComponent } from './templates/page-container-template/page-container-template.component';
 import { ButtonLoadingComponent } from './components/button-loading/button-loading.component';
+import { DialogService } from './services/dialog.service';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ButtonLoadingComponent } from './components/button-loading/button-loadi
     PageContainerTemplateComponent,
     ButtonLoadingComponent,
   ],
+  providers: [DialogService],
 })
 export class SharedModule {
 }

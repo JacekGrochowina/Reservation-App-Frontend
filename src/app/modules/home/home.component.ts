@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AddEditMode } from '../../shared/utils/enums/add-edit-mode.enum';
-import { MatDialog } from '@angular/material/dialog';
 import { AddEditCarComponent } from './components/add-edit-car/add-edit-car.component';
+import { DialogService, DialogSize } from '../../shared/services/dialog.service';
 import { AddEditCarDialogData } from './utils/interfaces/add-edit-car-dialog-data.interface';
+import { AddEditMode } from '../../shared/utils/enums/add-edit-mode.enum';
 
 @Component({
   selector: 'app-home',
@@ -11,17 +11,15 @@ import { AddEditCarDialogData } from './utils/interfaces/add-edit-car-dialog-dat
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private dialogService: DialogService) {}
 
   ngOnInit(): void {}
 
   public openAddCarDialog(): void {
-    this.dialog.open(AddEditCarComponent, {
+    this.dialogService.open(AddEditCarComponent, DialogSize.sm, {
       data: {
         mode: AddEditMode.add,
       } as AddEditCarDialogData,
-      width: '90%',
-      maxWidth: '500px',
     });
   }
 

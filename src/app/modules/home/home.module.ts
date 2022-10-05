@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -27,6 +27,7 @@ import { CarDetailsTitleComponent } from './pages/car-details/components/car-det
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
     HomeRoutingModule,
     SharedModule,

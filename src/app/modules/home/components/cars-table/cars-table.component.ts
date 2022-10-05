@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { AddEditMode } from 'src/app/shared/utils/enums/add-edit-mode.enum';
 import { CarsFacade } from '../../../../store/cars/cars.facade';
 import { AddEditCarComponent } from '../add-edit-car/add-edit-car.component';
 import { Car } from '../../../../store/cars/interfaces/car.interface';
 import { Router } from '@angular/router';
+import { DialogService, DialogSize } from '../../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-cars-table',
@@ -46,7 +46,7 @@ export class CarsTableComponent implements OnInit {
 
   constructor(
     private carsFacade: CarsFacade,
-    private dialog: MatDialog,
+    private dialogService: DialogService,
     private router: Router,
   ) {}
 
@@ -55,17 +55,16 @@ export class CarsTableComponent implements OnInit {
   }
 
   public editCar(car: Car): void {
-    this.dialog.open(AddEditCarComponent, {
+    this.dialogService.open(AddEditCarComponent, DialogSize.sm, {
       data: {
         car,
         mode: AddEditMode.edit,
       },
-      maxWidth: '500px',
     });
   }
 
   public delCar(carID: number): void {
-    this.dialog.open(ConfirmDialogComponent, {
+    this.dialogService.open(ConfirmDialogComponent, DialogSize.xs, {
       data: {
         title: 'Usuwanie samochodu',
         message: 'Czy napewno chcesz usunąć ten samochód?',
@@ -79,8 +78,6 @@ export class CarsTableComponent implements OnInit {
           this.carsFacade.delCar(carID);
         },
       },
-      width: '90%',
-      maxWidth: '400px',
     });
   }
 

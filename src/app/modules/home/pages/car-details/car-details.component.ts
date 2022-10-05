@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { CarsFacade } from '../../../../store/cars/cars.facade';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -7,6 +6,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { filter, first, takeUntil } from 'rxjs/operators';
 import { AddEditCarComponent } from '../../components/add-edit-car/add-edit-car.component';
 import { AddEditMode } from '../../../../shared/utils/enums/add-edit-mode.enum';
+import { DialogService, DialogSize } from '../../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-car-details',
@@ -40,7 +40,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private carsFacade: CarsFacade,
-    private dialog: MatDialog,
+    private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -56,7 +56,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   }
 
   public delCar(): void {
-    this.dialog.open(ConfirmDialogComponent, {
+    this.dialogService.open(ConfirmDialogComponent, DialogSize.xs, {
       data: {
         title: 'Usuwanie samochodu',
         message: 'Czy napewno chcesz usunąć ten samochód?',
@@ -70,8 +70,6 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
           this.carsFacade.delCar(this.carId);
         },
       },
-      width: '90%',
-      maxWidth: '400px',
     });
 
     this.carDelSuccess$
@@ -91,12 +89,11 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
         first(),
       )
       .subscribe((car) => {
-        this.dialog.open(AddEditCarComponent, {
+        this.dialogService.open(AddEditCarComponent, DialogSize.sm, {
           data: {
             car,
             mode: AddEditMode.edit,
           },
-          maxWidth: '500px',
         });
       });
 
