@@ -22,10 +22,12 @@
   --light: rgb(255, 255, 255);
   --active: rgba(0, 0, 0, 0.04);
 
+  // sidenav
   --sidenav-title: #{$primary};
   --sidenav-item-icon: #{$primary};
   --sidenav-item-text: #{$primary};
 
+  // table
   --table-error-bar-bg: rgb(210, 62, 62);
   --table-error-bar-text: rgb(234, 234, 234);
   --table-error-bar-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
@@ -35,6 +37,25 @@
   --table-empty-content-icon: #{$primary};
   --table-empty-content-text: #{$primary};
 
+  // snackbar
+  --snackbar-base-bg: rgb(240, 236, 232);
+  --snackbar-base-strong: rgb(65, 65, 65);
+
+  --snackbar-fail-bg: rgb(249, 225, 220);
+  --snackbar-fail-strong: rgb(146, 13, 10);
+
+  --snackbar-info-bg: rgb(223, 231, 239);
+  --snackbar-info-strong: rgb(12, 58, 119);
+
+  --snackbar-success-bg: rgb(223, 241, 217);
+  --snackbar-success-strong: rgb(22, 93, 24);
+
+  --snackbar-warning-bg: rgb(249, 234, 216);
+  --snackbar-warning-strong: rgb(127, 77, 9);
+
+  --snackbar-text: rgb(33, 33, 33);
+
+  // footer
   --footer-text: rgb(255, 255, 255);
 }
 
@@ -50,15 +71,36 @@
   --light: rgba(0, 0, 0);
   --active: rgba(255, 255, 255, 0.04);
 
+  // sidenav
   --sidenav-title: #{$primary};
   --sidenav-item-icon: #{$primary};
   --sidenav-item-text: rgb(255, 255, 255);
 
+  // table
   --table-error-bar-bg: rgb(210, 62, 62);
   --table-error-bar-text: rgb(234, 234, 234);
   --table-error-bar-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   --table-error-content-icon: #{$primary};
   --table-error-content-text: #{$primary};
 
+  // snackbar
+  --snackbar-base-bg: rgb(240, 236, 232);
+  --snackbar-base-strong: rgb(65, 65, 65);
+
+  --snackbar-fail-bg: rgb(249, 225, 220);
+  --snackbar-fail-strong: rgb(146, 13, 10);
+
+  --snackbar-info-bg: rgb(223, 231, 239);
+  --snackbar-info-strong: rgb(12, 58, 119);
+
+  --snackbar-success-bg: rgb(223, 241, 217);
+  --snackbar-success-strong: rgb(22, 93, 24);
+
+  --snackbar-warning-bg: rgb(249, 234, 216);
+  --snackbar-warning-strong: rgb(127, 77, 9);
+
+  --snackbar-text: rgb(33, 33, 33);
+
+  // footer
   --footer-text: rgb(0, 0, 0);
 }

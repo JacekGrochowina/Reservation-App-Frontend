@@ -1,0 +1,15 @@
+<div class="snackbar-wrapper">
+  <div class="snackbar__content">
+    <mat-icon class="snackbar__icon">error</mat-icon>
+    <p class="snackbar__text"><span>Błąd</span> {{ data.message }}</p>
+  </div>
+  <div>
+    <button mat-icon-button class="snackbar__close-icon" (click)="close()" aria-label="Zamknij komunikat">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="snackbar__progress-bar">
+    <div class="bar" [style.animation-duration]="data.duration + 's'"></div>
+  </div>
+</div>

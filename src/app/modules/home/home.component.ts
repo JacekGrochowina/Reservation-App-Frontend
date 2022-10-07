@@ -3,6 +3,7 @@ import { AddEditCarComponent } from './components/add-edit-car/add-edit-car.comp
 import { DialogService, DialogSize } from '../../shared/services/dialog.service';
 import { AddEditCarDialogData } from './utils/interfaces/add-edit-car-dialog-data.interface';
 import { AddEditMode } from '../../shared/utils/enums/add-edit-mode.enum';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,10 @@ import { AddEditMode } from '../../shared/utils/enums/add-edit-mode.enum';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private dialogService: DialogService) {}
+  constructor(
+    private dialogService: DialogService,
+    public snackbarService: SnackbarService,
+  ) {}
 
   ngOnInit(): void {}
 

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -26,6 +25,7 @@ import {
   GetDetailsCarFail,
   GetDetailsCar,
 } from './cars.actions';
+import { SnackbarService } from '../../shared/services/snackbar.service';
 
 @Injectable()
 export class CarsEffects {
@@ -33,8 +33,8 @@ export class CarsEffects {
   constructor(
     private actions$: Actions,
     private driversService: CarsService,
-    private snackBar: MatSnackBar,
-    private store: Store<AppState>
+    private snackbarService: SnackbarService,
+    private store: Store<AppState>,
   ) {}
 
   getCarsList$ = createEffect(() =>
@@ -49,6 +49,17 @@ export class CarsEffects {
     )
   );
 
+  // getDriversSuccess$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(CarsActionTypes.getListSuccess),
+  //       map(() =>
+  //         this.snackbarService.openBase('Wczytano listę kierowców')
+  //       )
+  //     ),
+  //   { dispatch: false }
+  // );
+
   getCarDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CarsActionTypes.getDetails),
@@ -60,19 +71,6 @@ export class CarsEffects {
       )
     )
   );
-
-  // getDriversSuccess$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(DriversActionTypes.getSuccess),
-  //       map(() =>
-  //         this.snackBar.open('Wczytano pomyślnie listę kierowców', 'Ok', {
-  //           duration: 1000,
-  //         })
-  //       )
-  //     ),
-  //   { dispatch: false }
-  // );
 
   addCar$ = createEffect(() =>
     this.actions$.pipe(
@@ -98,13 +96,22 @@ export class CarsEffects {
     this.actions$.pipe(
       ofType(CarsActionTypes.addSuccess),
       map(() => {
-        this.snackBar.open('Dodano pomyślnie nowy samochód', 'Ok', {
-          duration: 3500,
-        });
+        this.snackbarService.openSuccess('Dodano nowy samochód');
         this.store.dispatch(new AddCarClear());
       })
     ),
   { dispatch: false }
+  );
+
+  addCarFail$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(CarsActionTypes.addFail),
+        map(() => {
+          this.snackbarService.openFail('Nie dodano nowego samochodu');
+          this.store.dispatch(new AddCarClear());
+        })
+      ),
+    { dispatch: false }
   );
 
   delCar$ = createEffect(() =>
@@ -131,13 +138,22 @@ export class CarsEffects {
     this.actions$.pipe(
       ofType(CarsActionTypes.delSuccess),
       map(() => {
-        this.snackBar.open('Pomyślnie usunięto samochód', 'Ok', {
-          duration: 3500,
-        });
+        this.snackbarService.openSuccess('Usunięto samochód');
         this.store.dispatch(new DelCarClear());
       })
     ),
   { dispatch: false }
+  );
+
+  delCarFail$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(CarsActionTypes.delFail),
+        map(() => {
+          this.snackbarService.openFail('Nie usunięto samochodu');
+          this.store.dispatch(new DelCarClear());
+        })
+      ),
+    { dispatch: false }
   );
 
   updateCar$ = createEffect(() =>
@@ -164,13 +180,22 @@ export class CarsEffects {
     this.actions$.pipe(
       ofType(CarsActionTypes.updateSuccess),
       map(() => {
-        this.snackBar.open('Pomyślnie edytowano dane samochodu', 'Ok', {
-          duration: 3500,
-        });
+        this.snackbarService.openSuccess('Edytowano samochód');
         this.store.dispatch(new UpdateCarClear());
       })
     ),
   { dispatch: false }
+  );
+
+  updateCarFail$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(CarsActionTypes.updateFail),
+        map(() => {
+          this.snackbarService.openFail('Nie edytowano samochodu');
+          this.store.dispatch(new UpdateCarClear());
+        })
+      ),
+    { dispatch: false }
   );
 
 }

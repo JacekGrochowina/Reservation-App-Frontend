@@ -26,6 +26,12 @@ import { PageContentTemplateComponent } from './templates/page-content-template/
 import { PageContainerTemplateComponent } from './templates/page-container-template/page-container-template.component';
 import { ButtonLoadingComponent } from './components/button-loading/button-loading.component';
 import { DialogService } from './services/dialog.service';
+import { SnackbarsComponent } from './components/snackbars/snackbars.component';
+import { BaseSnackbarComponent } from './components/snackbars/base/base-snackbar.component';
+import { FailSnackbarComponent } from './components/snackbars/fail/fail-snackbar.component';
+import { InfoSnackbarComponent } from './components/snackbars/info/info-snackbar.component';
+import { SuccessSnackbarComponent } from './components/snackbars/success/success-snackbar.component';
+import { WarningSnackbarComponent } from './components/snackbars/warning/warning-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +49,12 @@ import { DialogService } from './services/dialog.service';
     PageContentTemplateComponent,
     PageContainerTemplateComponent,
     ButtonLoadingComponent,
+    SnackbarsComponent,
+    BaseSnackbarComponent,
+    FailSnackbarComponent,
+    InfoSnackbarComponent,
+    SuccessSnackbarComponent,
+    WarningSnackbarComponent,
   ],
   imports: [
     CommonModule,

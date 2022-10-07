@@ -17,7 +17,7 @@ export enum DialogSize {
 })
 export class DialogService {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {}
 
   public open(component: ComponentType<any>, dialogSize: DialogSize = DialogSize.md, config?: MatDialogConfig): void {
     this.dialog.open(component, {

@@ -9,5 +9,27 @@
     </button>
   </div>
 
+  <div class="mt-3">
+    <button mat-stroked-button color="primary" (click)="this.snackbarService.openBase('Pzykładowy komunikat bazowy')" class="cmn-btn mr-2">
+      Base
+    </button>
+
+    <button mat-stroked-button color="primary" (click)="this.snackbarService.openFail('Pzykładowy komunikat błędu')" class="cmn-btn mr-2">
+      Fail
+    </button>
+
+    <button mat-stroked-button color="primary" (click)="this.snackbarService.openInfo('Pzykładowy komunikat informacyjny')" class="cmn-btn mr-2">
+      Info
+    </button>
+
+    <button mat-stroked-button color="primary" (click)="this.snackbarService.openSuccess('Pzykładowy komunikat sukcesu')" class="cmn-btn mr-2">
+      Success
+    </button>
+
+    <button mat-stroked-button color="primary" (click)="this.snackbarService.openWarning('Pzykładowy komunikat ostrzeżenia')" class="cmn-btn mr-2">
+      Warning
+    </button>
+  </div>
+
   <app-cars-table></app-cars-table>
 </app-page-content-template>

@@ -1,0 +1,148 @@
+.mat-snack-bar-container {
+
+  // commmon styles
+  .snackbar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .snackbar {
+      &__content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      &__icon {
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+      }
+
+      &__close-icon {
+      }
+
+      &__text {
+        display: flex;
+        margin: 0 7px;
+        color: var(--snackbar-text);
+
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          margin-right: 20px;
+          font-weight: 800;
+        }
+      }
+
+      &__progress-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+
+        .bar {
+          width: 0;
+          height: 100%;
+
+          animation-name: progress;
+          animation-timing-function: linear;
+
+          @keyframes progress {
+            from { width: 0% }
+            to { width: 100% }
+          }
+        }
+      }
+    }
+  }
+
+  // custom styles
+  &.snackbar {
+    overflow: hidden;
+    padding: 5px 8px 5px 16px;
+
+    &--base {
+      background-color: var(--snackbar-base-bg);
+
+      .snackbar {
+        &__icon,
+        &__close-icon,
+        &__text span {
+          color: var(--snackbar-base-strong);
+        }
+
+        &__progress-bar .bar {
+          background-color: var(--snackbar-base-strong);
+        }
+      }
+    }
+
+    &--fail {
+      background-color: var(--snackbar-fail-bg);
+
+      .snackbar {
+        &__icon,
+        &__close-icon,
+        &__text span {
+          color: var(--snackbar-fail-strong);
+        }
+
+        &__progress-bar .bar {
+          background-color: var(--snackbar-fail-strong);
+        }
+      }
+    }
+
+    &--info {
+      background-color: var(--snackbar-info-bg);
+
+      .snackbar {
+        &__icon,
+        &__close-icon,
+        &__text span {
+          color: var(--snackbar-info-strong);
+        }
+
+        &__progress-bar .bar {
+          background-color: var(--snackbar-info-strong);
+        }
+      }
+    }
+
+    &--success {
+      background-color: var(--snackbar-success-bg);
+
+      .snackbar {
+        &__icon,
+        &__close-icon,
+        &__text span {
+          color: var(--snackbar-success-strong);
+        }
+
+        &__progress-bar .bar {
+          background-color: var(--snackbar-success-strong);
+        }
+      }
+    }
+
+    &--warning {
+      background-color: var(--snackbar-warning-bg);
+
+      .snackbar {
+        &__icon,
+        &__close-icon,
+        &__text span {
+          color: var(--snackbar-warning-strong);
+        }
+
+        &__progress-bar .bar {
+          background-color: var(--snackbar-warning-strong);
+        }
+      }
+    }
+  }
+}
