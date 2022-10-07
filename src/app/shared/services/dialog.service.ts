@@ -7,8 +7,8 @@ export enum DialogSize {
   xs = '400px',
   sm = '500px',
   md = '600px',
-  lg = '800px',
-  xl = '800px',
+  lg = '700px',
+  xl = '850px',
   xxl = '1000px',
 }
 
