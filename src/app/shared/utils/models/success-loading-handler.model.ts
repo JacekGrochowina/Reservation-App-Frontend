@@ -1,7 +1,7 @@
 import { Loading } from '../interfaces/loading.interface';
 
-export const InitialLoadingHandler: Loading = {
+export const SuccessLoadingHandler: Loading = {
   loading: false,
-  success: false,
+  success: true,
   error: null,
 };

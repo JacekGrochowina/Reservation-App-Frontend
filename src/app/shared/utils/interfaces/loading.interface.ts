@@ -1,4 +1,4 @@
-export interface LoadingHandler {
+export interface Loading {
   loading: boolean;
   success: boolean;
   error: any;

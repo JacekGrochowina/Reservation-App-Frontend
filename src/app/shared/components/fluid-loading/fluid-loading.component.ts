@@ -10,7 +10,7 @@ export class FluidLoadingComponent {
 
   @Input() height!: number;
   @Input() text!: string;
-  @Input() diameter = 70;
+  @Input() diameter = 50;
 
   public styleFactory(): string {
     const style: string[] = [];

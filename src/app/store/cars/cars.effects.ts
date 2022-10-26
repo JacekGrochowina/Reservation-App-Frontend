@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { AppState } from '../app.state';
-import { catchError, map, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
 import { CarsService } from './cars.service';
 import {
   AddCar,
@@ -23,7 +23,7 @@ import {
   UpdateCarSuccess,
   GetDetailsCarSuccess,
   GetDetailsCarFail,
-  GetDetailsCar,
+  GetDetailsCar, GetListCars,
 } from './cars.actions';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 
@@ -75,18 +75,13 @@ export class CarsEffects {
   addCar$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CarsActionTypes.add),
-      mergeMap((action: AddCar) =>
+      switchMap((action: AddCar) =>
         this.driversService.addCar(action.payload).pipe(
-          tap((response) => {
-            this.store.dispatch(new AddCarSuccess());
-          }),
+          switchMap((response) => [
+            new AddCarSuccess(),
+            new GetListCars(),
+          ]),
           catchError((error) => of(new AddCarFail(error)))
-        )
-      ),
-      switchMap(() =>
-        this.driversService.getCarsList().pipe(
-          map((response) => new GetListCarsSuccess(response)),
-          catchError((error) => of(new GetListCarsFail(error)))
         )
       )
     )
@@ -117,20 +112,15 @@ export class CarsEffects {
   delCar$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CarsActionTypes.del),
-      mergeMap((action: DelCar) =>
+      switchMap((action: DelCar) =>
         this.driversService.delCar(action.payload).pipe(
-          tap((response) => {
-            this.store.dispatch(new DelCarSuccess());
-          }),
+          switchMap((response) => [
+            new DelCarSuccess(),
+            new GetListCars(),
+          ]),
           catchError((error) => of(new DelCarFail(error)))
         )
       ),
-      switchMap(() =>
-        this.driversService.getCarsList().pipe(
-          map((response) => new GetListCarsSuccess(response)),
-          catchError((error) => of(new GetListCarsFail(error)))
-        )
-      )
     )
   );
 
@@ -161,18 +151,13 @@ export class CarsEffects {
       ofType(CarsActionTypes.update),
       mergeMap((action: UpdateCar) =>
         this.driversService.updateCar(action.payload).pipe(
-          tap((response) => {
-            this.store.dispatch(new UpdateCarSuccess());
-          }),
+          switchMap((response) => [
+            new UpdateCarSuccess(),
+            new GetListCars(),
+          ]),
           catchError((error) => of(new UpdateCarFail(error)))
         )
       ),
-      switchMap(() =>
-        this.driversService.getCarsList().pipe(
-          map((response) => new GetListCarsSuccess(response)),
-          catchError((error) => of(new GetListCarsFail(error)))
-        )
-      )
     )
   );
 

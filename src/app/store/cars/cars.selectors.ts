@@ -1,5 +1,5 @@
 import { createSelector } from '@ngrx/store';
-import { LoadingHandler } from 'src/app/shared/utils/interfaces/loading-handler.interface';
+import { Loading } from 'src/app/shared/utils/interfaces/loading.interface';
 import { AppState } from '../app.state';
 import { CarsState } from './cars.state';
 import { CarsListState } from './interfaces/cars-list.interface';
@@ -78,19 +78,19 @@ const selectCarAdd = createSelector(
 // Loading
 export const selectCarAddLoading = createSelector(
   selectCarAdd,
-  (state: LoadingHandler) => state.loading
+  (state: Loading) => state.loading
 );
 
 // Success
 export const selectCarAddSuccess = createSelector(
   selectCarAdd,
-  (state: LoadingHandler) => state.success
+  (state: Loading) => state.success
 );
 
 // Error
 export const selectCarAddError = createSelector(
   selectCarAdd,
-  (state: LoadingHandler) => state.error
+  (state: Loading) => state.error
 );
 
 
@@ -103,19 +103,19 @@ const selectCarDel = createSelector(
 // Loading
 export const selectCarDelLoading = createSelector(
   selectCarDel,
-  (state: LoadingHandler) => state.loading
+  (state: Loading) => state.loading
 );
 
 // Success
 export const selectCarDelSuccess = createSelector(
   selectCarDel,
-  (state: LoadingHandler) => state.success
+  (state: Loading) => state.success
 );
 
 // Error
 export const selectCarDelError = createSelector(
   selectCarDel,
-  (state: LoadingHandler) => state.error
+  (state: Loading) => state.error
 );
 
 
@@ -128,17 +128,17 @@ const selectCarUpdate = createSelector(
 // Loading
 export const selectCarUpdateLoading = createSelector(
   selectCarUpdate,
-  (state: LoadingHandler) => state.loading
+  (state: Loading) => state.loading
 );
 
 // Success
 export const selectCarUpdateSuccess = createSelector(
   selectCarUpdate,
-  (state: LoadingHandler) => state.success
+  (state: Loading) => state.success
 );
 
 // Error
 export const selectCarUpdateError = createSelector(
   selectCarUpdate,
-  (state: LoadingHandler) => state.error
+  (state: Loading) => state.error
 );

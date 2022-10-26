@@ -1,6 +1,8 @@
 import { InitialLoadingHandler } from 'src/app/shared/utils/models/initial-loading-handler.model';
 import { CarsActions, CarsActionTypes } from './cars.actions';
 import { carsInitialState, CarsState } from './cars.state';
+import { LoadingHandler } from '../../shared/utils/models/loading-handler.model';
+import { SuccessLoadingHandler } from '../../shared/utils/models/success-loading-handler.model';
 
 export function CarsReducers(
   state = carsInitialState,
@@ -13,9 +15,7 @@ export function CarsReducers(
         ...state,
         list: {
           ...state.list,
-          loading: true,
-          success: false,
-          error: null,
+          ...LoadingHandler,
         },
       };
     }
@@ -25,9 +25,7 @@ export function CarsReducers(
         ...state,
         list: {
           items: action.payload,
-          loading: false,
-          success: true,
-          error: null,
+          ...SuccessLoadingHandler,
         },
       };
     }
@@ -69,9 +67,7 @@ export function CarsReducers(
         ...state,
         details: {
           ...state.details,
-          loading: true,
-          success: false,
-          error: null,
+          ...LoadingHandler,
         },
       };
     }
@@ -81,9 +77,7 @@ export function CarsReducers(
         ...state,
         details: {
           item: action.payload,
-          loading: false,
-          success: true,
-          error: null,
+          ...SuccessLoadingHandler,
         },
       };
     }
@@ -123,28 +117,14 @@ export function CarsReducers(
     case CarsActionTypes.add: {
       return {
         ...state,
-        add: {
-          loading: true,
-          success: false,
-          error: null,
-        },
+        add: LoadingHandler,
       };
     }
 
     case CarsActionTypes.addSuccess: {
       return {
         ...state,
-        list: {
-          ...state.list,
-          loading: true,
-          success: false,
-          error: null,
-        },
-        add: {
-          loading: false,
-          success: true,
-          error: null,
-        },
+        add: SuccessLoadingHandler,
       };
     }
 
@@ -180,28 +160,14 @@ export function CarsReducers(
     case CarsActionTypes.del: {
       return {
         ...state,
-        del: {
-          loading: true,
-          success: false,
-          error: null,
-        },
+        del: LoadingHandler,
       };
     }
 
     case CarsActionTypes.delSuccess: {
       return {
         ...state,
-        list: {
-          ...state.list,
-          loading: true,
-          success: false,
-          error: null,
-        },
-        del: {
-          loading: false,
-          success: true,
-          error: null,
-        },
+        del: SuccessLoadingHandler,
       };
     }
 
@@ -237,28 +203,14 @@ export function CarsReducers(
     case CarsActionTypes.update: {
       return {
         ...state,
-        update: {
-          loading: true,
-          success: false,
-          error: null,
-        },
+        update: LoadingHandler,
       };
     }
 
     case CarsActionTypes.updateSuccess: {
       return {
         ...state,
-        list: {
-          ...state.list,
-          loading: true,
-          success: false,
-          error: null,
-        },
-        update: {
-          loading: false,
-          success: true,
-          error: null,
-        },
+        update: SuccessLoadingHandler,
       };
     }
 
