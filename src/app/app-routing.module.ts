@@ -4,14 +4,14 @@ import { Routing } from './shared/utils/enums/routing.enum';
 
 const routes: Routes = [
   {
-    path: Routing.main,
+    path: Routing.login,
     loadChildren: () =>
-      import('./modules/home/home.module').then((m) => m.HomeModule),
+      import('./modules/login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: Routing.info,
+    path: Routing.dashboard,
     loadChildren: () =>
-      import('./modules/info/info.module').then((m) => m.InfoModule),
+      import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
 ];
 

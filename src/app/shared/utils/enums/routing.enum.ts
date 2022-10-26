@@ -1,4 +1,4 @@
 export enum Routing {
-  main = '',
-  info = 'info',
+  dashboard = 'dashboard',
+  login = 'login',
 }
