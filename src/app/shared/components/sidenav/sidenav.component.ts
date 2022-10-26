@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SidenavItemInterface } from './interfaces/sidenav-item.interface';
-import { Routing } from "../../utils/enums/routing.enum";
+import { Routing } from '../../utils/enums/routing.enum';
 
 @Component({
   selector: 'app-sidenav',
