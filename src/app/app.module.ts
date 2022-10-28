@@ -17,9 +17,13 @@ import { CarsEffects } from './store/cars/cars.effects';
 import { SettingsFacade } from './store/settings/settings.facade';
 import { SettingsEffects } from './store/settings/settings.effects';
 import { environment } from '../environments/environment';
+import { StartComponent } from './modules/start/start.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    StartComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,

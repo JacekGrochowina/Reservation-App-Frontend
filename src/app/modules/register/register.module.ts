@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginRoutingModule } from './login-routing.module';
+import { RegisterRoutingModule } from './register-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TextMaskModule } from 'angular2-text-mask';
-import { LoginComponent } from './login.component';
+import { RegisterComponent } from './register.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,11 +16,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [RegisterComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    LoginRoutingModule,
+    RegisterRoutingModule,
     SharedModule,
     TextMaskModule,
     MatDividerModule,
@@ -35,4 +35,4 @@ import { MatCardModule } from '@angular/material/card';
   ],
   providers: [MatDatepickerModule],
 })
-export class LoginModule {}
+export class RegisterModule {}

@@ -31,6 +31,7 @@ import { FailSnackbarComponent } from './components/snackbars/fail/fail-snackbar
 import { InfoSnackbarComponent } from './components/snackbars/info/info-snackbar.component';
 import { SuccessSnackbarComponent } from './components/snackbars/success/success-snackbar.component';
 import { WarningSnackbarComponent } from './components/snackbars/warning/warning-snackbar.component';
+import { AuthWrapperComponent } from './components/auth-wrapper/auth-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { WarningSnackbarComponent } from './components/snackbars/warning/warning
     PageContentTemplateComponent,
     PageContainerTemplateComponent,
     ButtonLoadingComponent,
+    AuthWrapperComponent,
     BaseSnackbarComponent,
     FailSnackbarComponent,
     InfoSnackbarComponent,
@@ -79,6 +81,7 @@ import { WarningSnackbarComponent } from './components/snackbars/warning/warning
     PageContentTemplateComponent,
     PageContainerTemplateComponent,
     ButtonLoadingComponent,
+    AuthWrapperComponent,
   ],
   providers: [DialogService],
 })

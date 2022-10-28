@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Routing } from '../../shared/utils/enums/routing.enum';
+import { matchValidator } from '../../shared/utils/extensions/matchValidator';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   public loginLoading$: Observable<boolean> = of(false);
 
@@ -33,14 +34,21 @@ export class LoginComponent implements OnInit {
     return this.hide ? 'visibility_off' : 'visibility';
   }
 
-  public goToRegister(): string {
-    return `../${Routing.register}`;
+  public goToLogin(): string {
+    return `../${Routing.login}`;
   }
 
   private initForm(): void {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      password: ['', [
+        Validators.required,
+        matchValidator('confirmPassword', true)
+      ]],
+      confirmPassword: ['', [
+        Validators.required,
+        matchValidator('password'),
+      ]],
     });
   }
 

@@ -22,6 +22,11 @@
   --light: rgb(255, 255, 255);
   --active: rgba(0, 0, 0, 0.04);
 
+  --gray: rgb(131, 131, 131);
+
+  // backgrounds
+  --background: rgb(250, 250, 250);
+
   // sidenav
   --sidenav-title: #{$primary};
   --sidenav-item-icon: #{$primary};
@@ -70,6 +75,9 @@
   --warn: #{$warn};
   --light: rgba(0, 0, 0);
   --active: rgba(255, 255, 255, 0.04);
+
+  // backgrounds
+  --background: rgb(48, 48, 48);
 
   // sidenav
   --sidenav-title: #{$primary};

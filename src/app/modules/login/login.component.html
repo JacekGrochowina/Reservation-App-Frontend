@@ -1,9 +1,54 @@
-<!--<app-page-content-template [maxWidth]="1000">-->
-<!--  <h1>O programie</h1>-->
-<!--  <mat-divider></mat-divider>-->
+<app-auth-wrapper>
 
-<!--  <div class="pt-4">-->
-<!--    <p>Aplikacja webowa typu CRUD, stworzona we frameworku Angular (frontend) oraz NodeJS (backend).</p>-->
-<!--  </div>-->
-<!--</app-page-content-template>-->
-test...
+    <h2 class="cmn-tx-primary">Zaloguj się</h2>
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="pt-4">
+
+      <mat-form-field appearance="fill" class="w-100 mb-2">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email">
+        <mat-error *ngIf="form.get('email')?.hasError('email')">
+          Podany email jest <strong>nieprawidłowy</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          Pole <strong>jest wymagane</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-100 mb-2">
+        <mat-label>Hasło</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          [type]="hide ? 'password' : 'text'">
+        <button
+          mat-icon-button
+          matSuffix
+          color="primary"
+          type="button"
+          (click)="togglePasswordVisibility()">
+          <mat-icon>{{setPasswordVisibilityIcon()}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Pole <strong>jest wymagane</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <p class="cmn-tx-small cmn-tx-gray">Nie masz jeszcze konta? <a [routerLink]="goToRegister()" class="cmn-tx-primary">Zarejestruj się</a></p>
+
+      <div class="d-flex justify-content-end m-0 p-0">
+        <app-button-loading
+          color="primary"
+          text="Zaloguj się"
+          [disabled]="!form.valid || !form.dirty || (loginLoading$ | async)"
+          [isLoading]="(loginLoading$ | async)">
+        </app-button-loading>
+      </div>
+
+    </form>
+
+</app-auth-wrapper>

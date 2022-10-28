@@ -3,6 +3,9 @@
  *  E.g. "cmn-NAME_YOUR_CLASS"
  */
 
+@import "./base/text-colors";
+@import "./base/text-sizes";
+@import "./base/background-colors";
 @import "./base/description-list";
 @import "./base/button";
 @import "./base/snackbar";
