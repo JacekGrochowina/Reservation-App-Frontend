@@ -18,6 +18,8 @@ import { SettingsFacade } from './store/settings/settings.facade';
 import { SettingsEffects } from './store/settings/settings.effects';
 import { environment } from '../environments/environment';
 import { StartComponent } from './modules/start/start.component';
+import { AuthEffects } from './store/auth/auth.effects';
+import { AuthFacade } from './store/auth/auth.facade';
 
 @NgModule({
   declarations: [
@@ -32,13 +34,13 @@ import { StartComponent } from './modules/start/start.component';
     MatSidenavModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(appReducers as ActionReducerMap<AppState>),
-    EffectsModule.forRoot([SettingsEffects, CarsEffects]),
+    EffectsModule.forRoot([SettingsEffects, CarsEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
   ],
-  providers: [SettingsFacade, CarsFacade, { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' }],
+  providers: [SettingsFacade, CarsFacade, AuthFacade, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

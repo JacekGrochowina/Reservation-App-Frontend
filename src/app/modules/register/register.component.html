@@ -5,6 +5,45 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="pt-4">
 
+    <div class="row no-gutters">
+
+      <div class="col-5">
+        <mat-form-field appearance="fill" class="w-100 mb-2">
+          <mat-label>Imie</mat-label>
+          <input
+            matInput
+            formControlName="name">
+          <mat-error *ngIf="form.get('name')?.value.length < 3 && !form.get('name')?.hasError('required')">
+            Imie musi mieć <strong>min. 3 znaki</strong>
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.value.length > 25 && !form.get('name')?.hasError('required')">
+            Imie musi mieć <strong>max. 25 znaków</strong>
+          </mat-error>
+          <mat-error *ngIf="form.get('name')?.hasError('required')">
+            Pole <strong>jest wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-7">
+        <mat-form-field appearance="fill" class="w-100 mb-2">
+          <mat-label>Nazwisko</mat-label>
+          <input
+            matInput
+            formControlName="surname">
+          <mat-error *ngIf="form.get('surname')?.value.length < 3 && !form.get('surname')?.hasError('required')">
+            Naziwsko musi mieć <strong>min. 3 znaki</strong>
+          </mat-error>
+          <mat-error *ngIf="form.get('surname')?.value.length > 25 && !form.get('surname')?.hasError('required')">
+            Nazwisko musi mieć <strong>max. 25 znaków</strong>
+          </mat-error>
+          <mat-error *ngIf="form.get('surname')?.hasError('required')">
+            Pole <strong>jest wymagane</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
     <mat-form-field appearance="fill" class="w-100 mb-2">
       <mat-label>Email</mat-label>
       <input

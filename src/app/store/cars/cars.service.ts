@@ -29,12 +29,8 @@ export class CarsService {
   }
 
   public delCar(id: number): Observable<number> {
-    const options = {
-      ...api.headers,
-    };
-
     const url = `${api.apiURL}/cars/delete/${id}`;
-    return this.http.delete<number>(url, options);
+    return this.http.delete<number>(url, api.headers);
   }
 
   public updateCar({ id, body }: CarUpdatePayload): Observable<Car> {

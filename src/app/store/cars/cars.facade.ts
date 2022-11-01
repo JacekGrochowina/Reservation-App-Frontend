@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { Car } from './interfaces/car.interface';
 import {
   AddCar,
   DelCar, GetDetailsCar, GetDetailsCarClear,

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Routing } from '../../shared/utils/enums/routing.enum';
+import { AuthService } from '../../store/auth/auth.service';
+import { LoginPayload } from '../../store/auth/interfaces/payloads/login.payload';
+import { AuthFacade } from '../../store/auth/auth.facade';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +18,11 @@ export class LoginComponent implements OnInit {
   public form!: FormGroup;
   public hide = true;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private authFacade: AuthFacade,
+  ) {}
 
   public ngOnInit(): void {
     this.initForm();
@@ -23,6 +30,16 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(): void {
     console.log(this.form.value);
+    this.authFacade.login({
+      email: this.form.value.email,
+      password: this.form.value.password,
+    });
+
+    // this.authService.login({
+    //   email: this.form.value.email,
+    //   password: this.form.value.password,
+    // } as LoginPayload)
+    //   .subscribe((response) => console.log(response));
   }
 
   public togglePasswordVisibility(): void {
