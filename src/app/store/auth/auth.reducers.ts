@@ -22,6 +22,7 @@ export function AuthReducers(
       return {
         ...state,
         login: SuccessLoadingHandler,
+        isLogged: true,
       };
     }
 
@@ -49,6 +50,18 @@ export function AuthReducers(
         login: {
           ...state.login,
           error: null,
+        },
+      };
+    }
+
+    // ========== Logout
+    case AuthActionTypes.logout: {
+      return {
+        ...state,
+        isLogged: false,
+        jwt: {
+          ...state.jwt,
+          token: null,
         },
       };
     }

@@ -11,6 +11,8 @@ export enum AuthActionTypes {
   loginClear = '[Auth/Login] Login Clear',
   loginClearError = '[Auth/Login] Login Clear Error',
 
+  logout = '[Auth/Logout] Logout',
+
   register = '[Auth/Register] Register',
   registerSuccess = '[Auth/Register] Register Success',
   registerFail = '[Auth/Register] Register Fail',
@@ -47,6 +49,11 @@ export class AuthLoginClear implements Action {
 
 export class AuthLoginClearError implements Action {
   readonly type = AuthActionTypes.loginClearError;
+}
+
+// ========== Logout
+export class AuthLogout implements Action {
+  readonly type = AuthActionTypes.logout;
 }
 
 // ========== Register
@@ -87,6 +94,7 @@ export type AuthActions =
   | AuthLoginFail
   | AuthLoginClear
   | AuthLoginClearError
+  | AuthLogout
   | AuthRegister
   | AuthRegisterSuccess
   | AuthRegisterFail

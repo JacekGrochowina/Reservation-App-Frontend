@@ -32,12 +32,15 @@ import { InfoSnackbarComponent } from './components/snackbars/info/info-snackbar
 import { SuccessSnackbarComponent } from './components/snackbars/success/success-snackbar.component';
 import { WarningSnackbarComponent } from './components/snackbars/warning/warning-snackbar.component';
 import { AuthWrapperComponent } from './components/auth-wrapper/auth-wrapper.component';
+import { ErrorHandlerComponent } from './components/error-handler/error-handler.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
     ToolbarComponent,
     FooterComponent,
+    ErrorHandlerComponent,
     FluidLoadingComponent,
     MainTemplateComponent,
     SidenavComponent,
@@ -69,11 +72,13 @@ import { AuthWrapperComponent } from './components/auth-wrapper/auth-wrapper.com
     MatDialogModule,
     MatSnackBarModule,
     MatSidenavModule,
+    MatMenuModule,
   ],
   exports: [
     MatProgressSpinnerModule,
     ToolbarComponent,
     FooterComponent,
+    ErrorHandlerComponent,
     FluidLoadingComponent,
     MainTemplateComponent,
     SidenavComponent,

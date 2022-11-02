@@ -1,0 +1,25 @@
+@import "./src/styles/variables";
+
+.error-handler {
+  &__bar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--error-handler-bg);
+    border-radius: 4px;
+    box-shadow: var(--error-handler-shadow);
+
+    .bar {
+      &__icon {
+        color: var(--error-handler-text);
+        fill: var(--error-handler-text);
+      }
+
+      &__label {
+        margin: 0;
+        color: var(--error-handler-text);
+        font-weight: 500;
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { ConfigAPI as api } from '../../shared/utils/api/config';
 import { catchError, tap } from 'rxjs/operators';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { JwtResponse } from './interfaces/responses/jwt.response';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,10 @@ export class AuthService {
   // https://jasonwatmore.com/post/2020/04/29/angular-9-basic-http-authentication-tutorial-example
   // https://blog.angular-university.io/angular-jwt-authentication/
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   public login(login: LoginPayload): Observable<any> {
     const url = `${api.apiURL}/login`;
@@ -25,14 +29,7 @@ export class AuthService {
 
   public setJwtToken(jwt: JwtResponse): void {
     console.log(jwt);
-  }
-
-  private setSession(authResult): any {
-    console.log('authResult', authResult);
-    // const expiresAt = moment().add(authResult.expiresIn, 'second');
-    //
-    // localStorage.setItem('id_token', authResult.idToken);
-    // localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()) );
+    // this.router.navigateByUrl('/dashboard');
   }
 
 }

@@ -4,8 +4,19 @@
   </button>
   <span class="ml-3">Cars List</span>
   <span class="toolbar__spacer"></span>
+
   <mat-slide-toggle
     [checked]="checked"
     (change)="changeTheme()"
   ></mat-slide-toggle>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-3">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Wyloguj się</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>

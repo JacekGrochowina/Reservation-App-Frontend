@@ -32,6 +32,11 @@
   --sidenav-item-icon: #{$primary};
   --sidenav-item-text: #{$primary};
 
+  // error handler
+  --error-handler-bg: rgb(210, 62, 62);
+  --error-handler-text: rgb(234, 234, 234);
+  --error-handler-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+
   // table
   --table-error-bar-bg: rgb(210, 62, 62);
   --table-error-bar-text: rgb(234, 234, 234);
@@ -83,6 +88,11 @@
   --sidenav-title: #{$primary};
   --sidenav-item-icon: #{$primary};
   --sidenav-item-text: rgb(255, 255, 255);
+
+  // error handler
+  --error-handler-bg: rgb(210, 62, 62);
+  --error-handler-text: rgb(234, 234, 234);
+  --error-handler-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
   // table
   --table-error-bar-bg: rgb(210, 62, 62);

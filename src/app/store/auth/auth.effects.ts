@@ -4,9 +4,10 @@ import { AuthService } from './auth.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { AuthActionTypes, AuthLogin, AuthLoginClear, AuthLoginFail, AuthLoginSuccess, AuthSetJwtToken } from './auth.actions';
+import { AuthActionTypes, AuthLogin, AuthLoginFail, AuthLoginSuccess, AuthSetJwtToken } from './auth.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -16,6 +17,7 @@ export class AuthEffects {
     private authService: AuthService,
     private snackbarService: SnackbarService,
     private store: Store<AppState>,
+    private router: Router,
   ) {}
 
   login$ = createEffect(() =>
@@ -37,6 +39,7 @@ export class AuthEffects {
       ofType(AuthActionTypes.loginSuccess),
       switchMap((action: AuthLoginSuccess) => [
         this.store.dispatch(new AuthSetJwtToken(action.payload)),
+        this.router.navigateByUrl('/dashboard'),
         this.snackbarService.openSuccess('Zalogowano pomyślnie'),
       ])
     ),
@@ -47,6 +50,16 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActionTypes.loginFail),
         map(() => this.snackbarService.openFail('Nie udało się zalogować'))
+      ),
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(AuthActionTypes.logout),
+        switchMap(() => [
+          this.router.navigateByUrl('/login'),
+        ])
       ),
     { dispatch: false }
   );

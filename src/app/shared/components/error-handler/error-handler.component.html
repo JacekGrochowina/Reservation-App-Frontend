@@ -1,0 +1,6 @@
+<div *ngIf="message" [class]="'error-handler ' + class">
+  <div class="error-handler__bar bar px-3 py-2">
+    <mat-icon class="bar__icon mr-2">error</mat-icon>
+    <p class="bar__label">{{ message }}</p>
+  </div>
+</div>

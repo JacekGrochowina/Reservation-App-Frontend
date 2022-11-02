@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { SettingsFacade } from '../../../store/settings/settings.facade';
 import { Themes } from '../../utils/enums/themes.enums';
+import { AuthFacade } from '../../../store/auth/auth.facade';
 
 @Component({
   selector: 'app-toolbar',
@@ -13,7 +14,10 @@ export class ToolbarComponent implements OnInit {
   @Input() drawer!: MatDrawer;
   public checked!: boolean;
 
-  constructor(private settingsService: SettingsFacade) {}
+  constructor(
+    private settingsService: SettingsFacade,
+    private authFacade: AuthFacade,
+  ) {}
 
   public ngOnInit(): void {
     this.checked = this.getSlideToogleStateFromLocalStorage();
@@ -23,6 +27,10 @@ export class ToolbarComponent implements OnInit {
     this.slideToogle();
     const theme = this.setTheme(this.checked);
     this.settingsService.setTheme(theme);
+  }
+
+  public logout(): void {
+    this.authFacade.logout();
   }
 
   private slideToogle(): void {

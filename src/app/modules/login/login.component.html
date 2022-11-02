@@ -1,54 +1,57 @@
 <app-auth-wrapper>
 
-    <h2 class="cmn-tx-primary">Zaloguj się</h2>
-    <mat-divider></mat-divider>
+  <h2 class="cmn-tx-primary">Zaloguj się</h2>
+  <mat-divider></mat-divider>
 
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="pt-4">
+  <app-error-handler [errorMessage$]="(authLoginError$ | async)?.message" class="pt-2"></app-error-handler>
 
-      <mat-form-field appearance="fill" class="w-100 mb-2">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          type="email"
-          formControlName="email">
-        <mat-error *ngIf="form.get('email')?.hasError('email')">
-          Podany email jest <strong>nieprawidłowy</strong>
-        </mat-error>
-        <mat-error *ngIf="form.get('email')?.hasError('required')">
-          Pole <strong>jest wymagane</strong>
-        </mat-error>
-      </mat-form-field>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" [class]="(authLoginError$ | async) ? 'pt-2' : 'pt-4'">
 
-      <mat-form-field appearance="fill" class="w-100 mb-2">
-        <mat-label>Hasło</mat-label>
-        <input
-          matInput
-          formControlName="password"
-          [type]="hide ? 'password' : 'text'">
-        <button
-          mat-icon-button
-          matSuffix
-          color="primary"
-          type="button"
-          (click)="togglePasswordVisibility()">
-          <mat-icon>{{setPasswordVisibilityIcon()}}</mat-icon>
-        </button>
-        <mat-error *ngIf="form.get('password')?.hasError('required')">
-          Pole <strong>jest wymagane</strong>
-        </mat-error>
-      </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        formControlName="email">
+      <mat-error *ngIf="form.get('email')?.hasError('email')">
+        Podany email jest <strong>nieprawidłowy</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('email')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
 
-      <p class="cmn-tx-small cmn-tx-gray">Nie masz jeszcze konta? <a [routerLink]="goToRegister()" class="cmn-tx-primary">Zarejestruj się</a></p>
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Hasło</mat-label>
+      <input
+        matInput
+        formControlName="password"
+        [type]="hide ? 'password' : 'text'">
+      <button
+        mat-icon-button
+        matSuffix
+        color="primary"
+        type="button"
+        (click)="togglePasswordVisibility()">
+        <mat-icon>{{setPasswordVisibilityIcon()}}</mat-icon>
+      </button>
+      <mat-error *ngIf="form.get('password')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
 
-      <div class="d-flex justify-content-end m-0 p-0">
-        <app-button-loading
-          color="primary"
-          text="Zaloguj się"
-          [disabled]="!form.valid || !form.dirty || (loginLoading$ | async)"
-          [isLoading]="(loginLoading$ | async)">
-        </app-button-loading>
-      </div>
+    <p class="cmn-tx-small cmn-tx-gray">Nie masz jeszcze konta? <a [routerLink]="goToRegister()" class="cmn-tx-primary">Zarejestruj
+      się</a></p>
 
-    </form>
+    <div class="d-flex justify-content-end m-0 p-0">
+      <app-button-loading
+        color="primary"
+        text="Zaloguj się"
+        [disabled]="!form.valid || !form.dirty || (authLoginLoading$ | async)"
+        [isLoading]="(authLoginLoading$ | async)">
+      </app-button-loading>
+    </div>
+
+  </form>
 
 </app-auth-wrapper>

@@ -5,6 +5,7 @@ import { Routing } from '../../shared/utils/enums/routing.enum';
 import { AuthService } from '../../store/auth/auth.service';
 import { LoginPayload } from '../../store/auth/interfaces/payloads/login.payload';
 import { AuthFacade } from '../../store/auth/auth.facade';
+import { selectAuthLoginError, selectAuthLoginLoading, selectAuthLoginSuccess } from '../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,10 @@ import { AuthFacade } from '../../store/auth/auth.facade';
 })
 export class LoginComponent implements OnInit {
 
-  public loginLoading$: Observable<boolean> = of(false);
+  // ========== Selectors Login
+  authLoginLoading$ = this.authFacade.authLoginLoading$;
+  authLoginSuccess$ = this.authFacade.authLoginSuccess$;
+  authLoginError$ = this.authFacade.authLoginError$;
 
   public form!: FormGroup;
   public hide = true;

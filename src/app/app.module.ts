@@ -20,6 +20,7 @@ import { environment } from '../environments/environment';
 import { StartComponent } from './modules/start/start.component';
 import { AuthEffects } from './store/auth/auth.effects';
 import { AuthFacade } from './store/auth/auth.facade';
+import { AuthInterceptorProvider } from './shared/utils/api/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { AuthFacade } from './store/auth/auth.facade';
       logOnly: environment.production,
     }),
   ],
-  providers: [SettingsFacade, CarsFacade, AuthFacade, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
+  providers: [SettingsFacade, CarsFacade, AuthFacade, AuthInterceptorProvider, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
