@@ -3,7 +3,9 @@
   <h2 class="cmn-tx-primary">Zarejestruj się</h2>
   <mat-divider></mat-divider>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="pt-4">
+  <app-error-handler [errorMessage$]="(authRegisterError$ | async)?.message" class="pt-2"></app-error-handler>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" [class]="(authRegisterError$ | async) ? 'pt-2' : 'pt-4'">
 
     <div class="row no-gutters">
 
@@ -105,8 +107,8 @@
       <app-button-loading
         color="primary"
         text="Zarejestruj się"
-        [disabled]="!form.valid || !form.dirty || (loginLoading$ | async)"
-        [isLoading]="(loginLoading$ | async)">
+        [disabled]="!form.valid || !form.dirty || (authRegisterLoading$ | async)"
+        [isLoading]="(authRegisterLoading$ | async)">
       </app-button-loading>
     </div>
 

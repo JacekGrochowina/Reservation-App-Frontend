@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Routing } from '../../shared/utils/enums/routing.enum';
 import { matchValidator } from '../../shared/utils/extensions/matchValidator';
+import { AuthFacade } from '../../store/auth/auth.facade';
 
 @Component({
   selector: 'app-register',
@@ -11,19 +12,29 @@ import { matchValidator } from '../../shared/utils/extensions/matchValidator';
 })
 export class RegisterComponent implements OnInit {
 
-  public loginLoading$: Observable<boolean> = of(false);
+  // ========== Selectors Register
+  authRegisterLoading$ = this.authFacade.authRegisterLoading$;
+  authRegisterSuccess$ = this.authFacade.authRegisterSuccess$;
+  authRegisterError$ = this.authFacade.authRegisterError$;
 
   public form!: FormGroup;
   public hide = true;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private authFacade: AuthFacade,
+  ) {}
 
   public ngOnInit(): void {
     this.initForm();
   }
 
   public onSubmit(): void {
-    console.log(this.form.value);
+    this.authFacade.register({
+      name: `${this.form.value.name} ${this.form.value.surname}`,
+      email: this.form.value.email,
+      password: this.form.value.password,
+    });
   }
 
   public togglePasswordVisibility(): void {

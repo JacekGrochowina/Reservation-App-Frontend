@@ -30,6 +30,30 @@ export const selectAuthLoginError = createSelector(
   (state: Loading) => state.error
 );
 
+// ========== Selectors Register
+const selectAuthRegister = createSelector(
+  selectAuth,
+  (state: AuthState) => state.register
+);
+
+// Loading
+export const selectAuthRegisterLoading = createSelector(
+  selectAuthRegister,
+  (state: Loading) => state.loading
+);
+
+// Success
+export const selectAuthRegisterSuccess = createSelector(
+  selectAuthRegister,
+  (state: Loading) => state.success
+);
+
+// Error
+export const selectAuthRegisterError = createSelector(
+  selectAuthRegister,
+  (state: Loading) => state.error
+);
+
 // ========== Selectors IsLogged
 export const selectAuthIsLogged = createSelector(
   selectAuth,

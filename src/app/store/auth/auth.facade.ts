@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { AuthGetJwtToken, AuthLogin, AuthLogout } from './auth.actions';
+import { AuthGetJwtToken, AuthLogin, AuthLogout, AuthRegister } from './auth.actions';
 import {
   selectAuthIsLogged,
   selectAuthJwtToken,
   selectAuthLoginError,
   selectAuthLoginLoading,
-  selectAuthLoginSuccess
+  selectAuthLoginSuccess,
+  selectAuthRegisterError,
+  selectAuthRegisterLoading,
+  selectAuthRegisterSuccess,
 } from './auth.selectors';
+import { RegisterPayload } from './interfaces/payloads/register.payload';
 
 @Injectable()
 export class AuthFacade {
@@ -18,6 +22,11 @@ export class AuthFacade {
   authLoginLoading$ = this.store.select(selectAuthLoginLoading);
   authLoginSuccess$ = this.store.select(selectAuthLoginSuccess);
   authLoginError$ = this.store.select(selectAuthLoginError);
+
+  // ========== Selectors Login
+  authRegisterLoading$ = this.store.select(selectAuthRegisterLoading);
+  authRegisterSuccess$ = this.store.select(selectAuthRegisterSuccess);
+  authRegisterError$ = this.store.select(selectAuthRegisterError);
 
   // ========== Selectors IsLogged
   authIsLogged$ = this.store.select(selectAuthIsLogged);
@@ -29,6 +38,10 @@ export class AuthFacade {
 
   public login(login: LoginPayload): void {
     this.store.dispatch(new AuthLogin(login));
+  }
+
+  public register(register: RegisterPayload): void {
+    this.store.dispatch(new AuthRegister(register));
   }
 
   public logout(): void {

@@ -7,6 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { JwtResponse } from './interfaces/responses/jwt.response';
 import { Router } from '@angular/router';
+import { RegisterPayload } from './interfaces/payloads/register.payload';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,11 @@ export class AuthService {
   public login(login: LoginPayload): Observable<any> {
     const url = `${api.apiURL}/login`;
     return this.http.post<string>(url, login, api.headers);
+  }
+
+  public register(register: RegisterPayload): Observable<any> {
+    const url = `${api.apiURL}/register`;
+    return this.http.post<string>(url, register, api.headers);
   }
 
   public setJwtToken({ jwt }: JwtResponse): void {
