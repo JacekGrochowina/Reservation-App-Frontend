@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { AuthLogin, AuthLogout } from './auth.actions';
+import { AuthGetJwtToken, AuthLogin, AuthLogout } from './auth.actions';
 import {
   selectAuthIsLogged,
   selectAuthJwtToken,
@@ -33,6 +33,10 @@ export class AuthFacade {
 
   public logout(): void {
     this.store.dispatch(new AuthLogout());
+  }
+
+  public getJwtToken(): void {
+    this.store.dispatch(new AuthGetJwtToken());
   }
 
 }

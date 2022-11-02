@@ -8,6 +8,9 @@ import { AuthActionTypes, AuthLogin, AuthLoginFail, AuthLoginSuccess, AuthSetJwt
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Routing } from '../../shared/utils/enums/routing.enum';
+import { isNull } from 'lodash';
+import { JwtResponse } from './interfaces/responses/jwt.response';
 
 @Injectable()
 export class AuthEffects {
@@ -35,14 +38,14 @@ export class AuthEffects {
   );
 
   loginSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActionTypes.loginSuccess),
-      switchMap((action: AuthLoginSuccess) => [
-        this.store.dispatch(new AuthSetJwtToken(action.payload)),
-        this.router.navigateByUrl('/dashboard'),
-        this.snackbarService.openSuccess('Zalogowano pomyślnie'),
-      ])
-    ),
+      this.actions$.pipe(
+        ofType(AuthActionTypes.loginSuccess),
+        map((action: AuthLoginSuccess) => {
+          this.store.dispatch(new AuthSetJwtToken(action.payload));
+          this.router.navigate([Routing.dashboard]);
+          this.snackbarService.openSuccess('Zalogowano pomyślnie');
+        })
+      ),
     { dispatch: false }
   );
 
@@ -57,9 +60,11 @@ export class AuthEffects {
   logout$ = createEffect(() =>
       this.actions$.pipe(
         ofType(AuthActionTypes.logout),
-        switchMap(() => [
-          this.router.navigateByUrl('/login'),
-        ])
+        map(() => {
+          const TOKEN_NAME = this.authService.TOKEN_NAME;
+          localStorage.removeItem(TOKEN_NAME);
+          this.router.navigate([Routing.login]);
+        })
       ),
     { dispatch: false }
   );
@@ -67,10 +72,22 @@ export class AuthEffects {
   setJwtToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.setJwtToken),
-      switchMap((action: AuthSetJwtToken) => [
-        this.authService.setJwtToken(action.payload),
-      ])
+      map((action: AuthSetJwtToken) => {
+        this.authService.setJwtToken(action.payload);
+      })
     ),
+    { dispatch: false }
+  );
+
+  getJwtToken$ = createEffect(() =>
+      this.actions$.pipe(
+        ofType(AuthActionTypes.getJwtToken),
+        map(() => {
+          const jwt = this.authService.getJwtToken();
+          if (isNull(jwt)) { return; }
+          this.store.dispatch(new AuthSetJwtToken({ jwt }));
+        })
+      ),
     { dispatch: false }
   );
 

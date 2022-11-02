@@ -88,6 +88,11 @@ export class AuthSetJwtToken implements Action {
   constructor(public payload: JwtResponse) {}
 }
 
+// ========== Get Jwt Token
+export class AuthGetJwtToken implements Action {
+  readonly type = AuthActionTypes.getJwtToken;
+}
+
 export type AuthActions =
   | AuthLogin
   | AuthLoginSuccess
@@ -100,4 +105,5 @@ export type AuthActions =
   | AuthRegisterFail
   | AuthRegisterClear
   | AuthRegisterClearError
-  | AuthSetJwtToken;
+  | AuthSetJwtToken
+  | AuthGetJwtToken;

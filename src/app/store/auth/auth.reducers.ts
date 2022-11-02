@@ -22,7 +22,6 @@ export function AuthReducers(
       return {
         ...state,
         login: SuccessLoadingHandler,
-        isLogged: true,
       };
     }
 
@@ -113,6 +112,7 @@ export function AuthReducers(
     case AuthActionTypes.setJwtToken: {
       return {
         ...state,
+        isLogged: true,
         jwt: {
           ...state.jwt,
           token: action.payload.jwt,

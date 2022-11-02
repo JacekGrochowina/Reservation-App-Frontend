@@ -17,6 +17,8 @@ export class AuthService {
   // https://jasonwatmore.com/post/2020/04/29/angular-9-basic-http-authentication-tutorial-example
   // https://blog.angular-university.io/angular-jwt-authentication/
 
+  public TOKEN_NAME = 'jwtToken';
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -27,9 +29,13 @@ export class AuthService {
     return this.http.post<string>(url, login, api.headers);
   }
 
-  public setJwtToken(jwt: JwtResponse): void {
-    console.log(jwt);
-    // this.router.navigateByUrl('/dashboard');
+  public setJwtToken({ jwt }: JwtResponse): void {
+    localStorage.setItem(this.TOKEN_NAME, jwt);
+  }
+
+  public getJwtToken(): string | null {
+    const jwt = localStorage.getItem(this.TOKEN_NAME);
+    return jwt;
   }
 
 }

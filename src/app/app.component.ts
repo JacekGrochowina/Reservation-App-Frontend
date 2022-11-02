@@ -3,6 +3,7 @@ import { Themes } from './shared/utils/enums/themes.enums';
 import { SettingsFacade } from './store/settings/settings.facade';
 import { map, takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { AuthFacade } from './store/auth/auth.facade';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,16 @@ export class AppComponent implements OnInit, OnDestroy {
   public theme!: Observable<Themes>;
   private unsubscribe$ = new Subject<boolean>();
 
-  constructor(private settingsFacade: SettingsFacade) {}
+  constructor(
+    private settingsFacade: SettingsFacade,
+    private authFacade: AuthFacade,
+  ) {}
 
   public ngOnInit(): void {
     this.getThemeFromLocalStorage();
     this.theme = this.getTheme();
+
+    this.authFacade.getJwtToken();
   }
 
   public ngOnDestroy(): void {
