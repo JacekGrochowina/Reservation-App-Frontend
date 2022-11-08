@@ -78,7 +78,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
         filter((success) => !!success),
       )
       .subscribe(() => {
-        this.router.navigate(['../../']);
+        this.router.navigate(['../'], { relativeTo: this.route });
       });
   }
 
