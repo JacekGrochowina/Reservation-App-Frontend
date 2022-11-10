@@ -5,7 +5,9 @@ import { SnackbarService } from '../../shared/services/snackbar.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
 import {
-  AuthActionTypes, AuthGetCurrentUser, AuthGetCurrentUserClear,
+  AuthActionTypes,
+  AuthGetCurrentUser,
+  AuthGetCurrentUserClear,
   AuthGetCurrentUserFail,
   AuthGetCurrentUserSuccess,
   AuthLogin,

@@ -34,6 +34,7 @@ import { WarningSnackbarComponent } from './components/snackbars/warning/warning
 import { AuthWrapperComponent } from './components/auth-wrapper/auth-wrapper.component';
 import { ErrorHandlerComponent } from './components/error-handler/error-handler.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { CurrentUserInfoComponent } from './components/sidenav/current-user-info/current-user-info.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MatMenuModule } from '@angular/material/menu';
     FluidLoadingComponent,
     MainTemplateComponent,
     SidenavComponent,
+    CurrentUserInfoComponent,
     TableComponent,
     TableLoadingComponent,
     TableContentComponent,

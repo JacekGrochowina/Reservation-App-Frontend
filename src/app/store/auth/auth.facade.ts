@@ -2,8 +2,19 @@ import { Injectable } from '@angular/core';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { AuthGetCurrentUser, AuthGetJwtToken, AuthLogin, AuthLogout, AuthRegister } from './auth.actions';
+import { AuthGetCurrentUser,
+  AuthGetJwtToken,
+  AuthLogin,
+  AuthLogout,
+  AuthRegister,
+} from './auth.actions';
 import {
+  selectAuthCurrentUserEmail,
+  selectAuthCurrentUserError,
+  selectAuthCurrentUserLoading,
+  selectAuthCurrentUserName,
+  selectAuthCurrentUserSuccess,
+  selectAuthCurrentUserSurname,
   selectAuthIsLogged,
   selectAuthJwtToken,
   selectAuthLoginError,
@@ -23,7 +34,7 @@ export class AuthFacade {
   authLoginSuccess$ = this.store.select(selectAuthLoginSuccess);
   authLoginError$ = this.store.select(selectAuthLoginError);
 
-  // ========== Selectors Login
+  // ========== Selectors Register
   authRegisterLoading$ = this.store.select(selectAuthRegisterLoading);
   authRegisterSuccess$ = this.store.select(selectAuthRegisterSuccess);
   authRegisterError$ = this.store.select(selectAuthRegisterError);
@@ -33,6 +44,14 @@ export class AuthFacade {
 
   // ========== Selectors Jwt
   authJwtToken$ = this.store.select(selectAuthJwtToken);
+
+  // ========== Selectors Current User
+  authCurrentUserName$ = this.store.select(selectAuthCurrentUserName);
+  authCurrentUserSurname$ = this.store.select(selectAuthCurrentUserSurname);
+  authCurrentUserEmail$ = this.store.select(selectAuthCurrentUserEmail);
+  authCurrentUserLoading$ = this.store.select(selectAuthCurrentUserLoading);
+  authCurrentUserSuccess$ = this.store.select(selectAuthCurrentUserSuccess);
+  authCurrentUserError$ = this.store.select(selectAuthCurrentUserError);
 
   constructor(private store: Store<AppState>) {}
 

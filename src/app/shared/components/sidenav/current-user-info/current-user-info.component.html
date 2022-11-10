@@ -1,0 +1,18 @@
+<div class="content mx-3 mb-3">
+  <div class="content__avatar avatar">
+    <mat-icon class="avatar__icon">account_box</mat-icon>
+  </div>
+
+  <div class="content__info info ml-2">
+    <div *ngIf="(authCurrentUserLoading$ | async)" class="info__spinner">
+      <mat-spinner [diameter]="20"></mat-spinner>
+    </div>
+
+    <dl *ngIf="!(authCurrentUserLoading$ | async)" class="info__dl">
+      <dt class="info__dt">{{ authCurrentUserName$ | async }} {{ authCurrentUserSurname$ | async }}</dt>
+      <dd class="info__dd">{{ authCurrentUserEmail$ | async }}</dd>
+    </dl>
+  </div>
+</div>
+
+<mat-divider></mat-divider>

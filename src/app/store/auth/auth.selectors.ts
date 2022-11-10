@@ -3,6 +3,7 @@ import { createSelector } from '@ngrx/store';
 import { AuthState } from './auth.state';
 import { Loading } from '../../shared/utils/interfaces/loading.interface';
 import { JwtState } from './interfaces/jwt.interface';
+import { UserState } from './interfaces/user.interface';
 
 const selectAuth = (state: AppState) => state.auth;
 
@@ -72,3 +73,44 @@ export const selectAuthJwtToken = createSelector(
   (state: JwtState) => state.token
 );
 
+// ========== Selectors Current User
+const selectAuthCurrentUser = createSelector(
+  selectAuth,
+  (state: AuthState) => state.user
+);
+
+// Name
+export const selectAuthCurrentUserName = createSelector(
+  selectAuthCurrentUser,
+  (state: UserState) => state.name
+);
+
+// Surname
+export const selectAuthCurrentUserSurname = createSelector(
+  selectAuthCurrentUser,
+  (state: UserState) => state.surname
+);
+
+// Email
+export const selectAuthCurrentUserEmail = createSelector(
+  selectAuthCurrentUser,
+  (state: UserState) => state.email
+);
+
+// Loading
+export const selectAuthCurrentUserLoading = createSelector(
+  selectAuthCurrentUser,
+  (state: UserState) => state.loading
+);
+
+// Success
+export const selectAuthCurrentUserSuccess = createSelector(
+  selectAuthCurrentUser,
+  (state: UserState) => state.success
+);
+
+// Error
+export const selectAuthCurrentUserError = createSelector(
+  selectAuthCurrentUser,
+  (state: UserState) => state.error
+);

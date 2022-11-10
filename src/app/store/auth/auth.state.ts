@@ -1,4 +1,4 @@
-import { User } from './interfaces/user.interface';
+import { UserState } from './interfaces/user.interface';
 import { JwtState } from './interfaces/jwt.interface';
 import { InitialLoadingHandler } from '../../shared/utils/models/initial-loading-handler.model';
 import { Loading } from '../../shared/utils/interfaces/loading.interface';
@@ -6,7 +6,7 @@ import { Loading } from '../../shared/utils/interfaces/loading.interface';
 export interface AuthState {
   login: Loading;
   register: Loading;
-  user: User;
+  user: UserState;
   isLogged: boolean;
   jwt: JwtState;
 }

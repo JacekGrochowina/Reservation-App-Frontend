@@ -1,0 +1,47 @@
+@import "./src/styles/variables";
+
+.content {
+  $mat-icon-size: 30px;
+  $content-gap: 0.5rem;
+
+  display: flex;
+
+  &__avatar {
+    .avatar__icon {
+      color: var(--primary);
+      font-size: $mat-icon-size;
+      height: $mat-icon-size;
+      width: $mat-icon-size;
+    }
+  }
+
+  &__info {
+    flex-grow: 1;
+    max-width: calc(100% - (#{$mat-icon-size} + #{$content-gap}));
+
+    .info__spinner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 1rem;
+      height: 100%;
+    }
+
+    .info__dt,
+    .info__dd {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .info__dt {
+      font-weight: 500;
+    }
+
+    .info__dd {
+      color: var(--gray);
+      font-size: 13px;
+    }
+  }
+
+}
