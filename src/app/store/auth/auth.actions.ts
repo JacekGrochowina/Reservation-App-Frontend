@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { RegisterPayload } from './interfaces/payloads/register.payload';
 import { JwtResponse } from './interfaces/responses/jwt.response';
+import { UserResponse } from './interfaces/responses/user.response';
 
 export enum AuthActionTypes {
   login = '[Auth/Login] Login',
@@ -22,6 +23,12 @@ export enum AuthActionTypes {
   setJwtToken = '[Auth/Jwt] Set Jwt Token',
   getJwtToken = '[Auth/Jwt] Get Jwt Token',
   expireJwtToken = '[Auth/Jwt] Expire Jwt Token',
+
+  getCurrentUser = '[Auth/CurrentUser] Get Current User',
+  getCurrentUserSuccess = '[Auth/CurrentUser] Get Current User Success',
+  getCurrentUserFail = '[Auth/CurrentUser] Get Current User Fail',
+  getCurrentUserClear = '[Auth/CurrentUser] Get Current User Clear',
+  getCurrentUserClearError = '[Auth/CurrentUser] Get Current User Clear Error',
 }
 
 // ========== Login
@@ -95,6 +102,31 @@ export class AuthGetJwtToken implements Action {
   readonly type = AuthActionTypes.getJwtToken;
 }
 
+// ========== Get Current User
+export class AuthGetCurrentUser implements Action {
+  readonly type = AuthActionTypes.getCurrentUser;
+}
+
+export class AuthGetCurrentUserSuccess implements Action {
+  readonly type = AuthActionTypes.getCurrentUserSuccess;
+
+  constructor(public payload: UserResponse) {}
+}
+
+export class AuthGetCurrentUserFail implements Action {
+  readonly type = AuthActionTypes.getCurrentUserFail;
+
+  constructor(public payload: HttpErrorResponse) {}
+}
+
+export class AuthGetCurrentUserClear implements Action {
+  readonly type = AuthActionTypes.getCurrentUserClear;
+}
+
+export class AuthGetCurrentUserClearError implements Action {
+  readonly type = AuthActionTypes.getCurrentUserClearError;
+}
+
 export type AuthActions =
   | AuthLogin
   | AuthLoginSuccess
@@ -108,4 +140,9 @@ export type AuthActions =
   | AuthRegisterClear
   | AuthRegisterClearError
   | AuthSetJwtToken
-  | AuthGetJwtToken;
+  | AuthGetJwtToken
+  | AuthGetCurrentUser
+  | AuthGetCurrentUserSuccess
+  | AuthGetCurrentUserFail
+  | AuthGetCurrentUserClear
+  | AuthGetCurrentUserClearError;

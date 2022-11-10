@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
-import { AuthGetJwtToken, AuthLogin, AuthLogout, AuthRegister } from './auth.actions';
+import { AuthGetCurrentUser, AuthGetJwtToken, AuthLogin, AuthLogout, AuthRegister } from './auth.actions';
 import {
   selectAuthIsLogged,
   selectAuthJwtToken,
@@ -50,6 +50,10 @@ export class AuthFacade {
 
   public getJwtToken(): void {
     this.store.dispatch(new AuthGetJwtToken());
+  }
+
+  public getCurrentUser(): void {
+    this.store.dispatch(new AuthGetCurrentUser());
   }
 
 }

@@ -5,13 +5,16 @@ import { SnackbarService } from '../../shared/services/snackbar.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
 import {
-  AuthActionTypes,
+  AuthActionTypes, AuthGetCurrentUser, AuthGetCurrentUserClear,
+  AuthGetCurrentUserFail,
+  AuthGetCurrentUserSuccess,
   AuthLogin,
   AuthLoginFail,
   AuthLoginSuccess,
-  AuthRegister, AuthRegisterFail,
+  AuthRegister,
+  AuthRegisterFail,
   AuthRegisterSuccess,
-  AuthSetJwtToken
+  AuthSetJwtToken,
 } from './auth.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -104,6 +107,7 @@ export class AuthEffects {
       map(() => {
         const TOKEN_NAME = this.authService.TOKEN_NAME;
         localStorage.removeItem(TOKEN_NAME);
+        this.store.dispatch(new AuthGetCurrentUserClear());
         this.router.navigate([Routing.login]);
       })
     ),
@@ -115,6 +119,7 @@ export class AuthEffects {
       ofType(AuthActionTypes.setJwtToken),
       map((action: AuthSetJwtToken) => {
         this.authService.setJwtToken(action.payload);
+        this.store.dispatch(new AuthGetCurrentUser());
       })
     ),
     { dispatch: false }
@@ -127,9 +132,22 @@ export class AuthEffects {
         const jwt = this.authService.getJwtToken();
         if (isNull(jwt)) { return; }
         this.store.dispatch(new AuthSetJwtToken({ jwt }));
+        this.store.dispatch(new AuthGetCurrentUser());
       })
     ),
   { dispatch: false }
+  );
+
+  getCarsList$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActionTypes.getCurrentUser),
+      switchMap(() =>
+        this.authService.getCurrentUser().pipe(
+          map((response) => new AuthGetCurrentUserSuccess(response)),
+          catchError((error) => of(new AuthGetCurrentUserFail(error)))
+        )
+      )
+    )
   );
 
 }

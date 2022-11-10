@@ -1,38 +1,35 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import * as moment from 'moment';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { ConfigAPI as api } from '../../shared/utils/api/config';
-import { catchError, tap } from 'rxjs/operators';
 import { LoginPayload } from './interfaces/payloads/login.payload';
 import { JwtResponse } from './interfaces/responses/jwt.response';
-import { Router } from '@angular/router';
 import { RegisterPayload } from './interfaces/payloads/register.payload';
+import { MessageResponse } from '../../shared/utils/interfaces/responses/message.response';
+import { UserResponse } from './interfaces/responses/user.response';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  // Tutorial
-  // https://jasonwatmore.com/post/2020/04/29/angular-9-basic-http-authentication-tutorial-example
-  // https://blog.angular-university.io/angular-jwt-authentication/
-
   public TOKEN_NAME = 'jwtToken';
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) {}
+  constructor(private http: HttpClient) {}
 
-  public login(login: LoginPayload): Observable<any> {
+  public login(login: LoginPayload): Observable<JwtResponse> {
     const url = `${api.apiURL}/login`;
-    return this.http.post<string>(url, login, api.headers);
+    return this.http.post<JwtResponse>(url, login, api.headers);
   }
 
-  public register(register: RegisterPayload): Observable<any> {
+  public register(register: RegisterPayload): Observable<MessageResponse> {
     const url = `${api.apiURL}/register`;
-    return this.http.post<string>(url, register, api.headers);
+    return this.http.post<MessageResponse>(url, register, api.headers);
+  }
+
+  public getCurrentUser(): Observable<UserResponse> {
+    const url = `${api.apiURL}/user`;
+    return this.http.get<UserResponse>(url, api.headers);
   }
 
   public setJwtToken({ jwt }: JwtResponse): void {
@@ -40,8 +37,7 @@ export class AuthService {
   }
 
   public getJwtToken(): string | null {
-    const jwt = localStorage.getItem(this.TOKEN_NAME);
-    return jwt;
+    return localStorage.getItem(this.TOKEN_NAME);
   }
 
 }

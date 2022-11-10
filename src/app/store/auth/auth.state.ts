@@ -18,6 +18,7 @@ export const authInitialState: AuthState = {
     name: null,
     surname: null,
     email: null,
+    ...InitialLoadingHandler,
   },
   isLogged: false,
   jwt: {

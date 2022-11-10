@@ -31,7 +31,8 @@ export class RegisterComponent implements OnInit {
 
   public onSubmit(): void {
     this.authFacade.register({
-      name: `${this.form.value.name} ${this.form.value.surname}`,
+      name: this.form.value.name,
+      surname: this.form.value.surname,
       email: this.form.value.email,
       password: this.form.value.password,
     });

@@ -23,7 +23,8 @@ import {
   UpdateCarSuccess,
   GetDetailsCarSuccess,
   GetDetailsCarFail,
-  GetDetailsCar, GetListCars,
+  GetDetailsCar,
+  GetListCars,
 } from './cars.actions';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 

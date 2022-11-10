@@ -120,6 +120,62 @@ export function AuthReducers(
       };
     }
 
+    // ========== Get Current User
+    case AuthActionTypes.getCurrentUser: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...LoadingHandler,
+        },
+      };
+    }
+
+    case AuthActionTypes.getCurrentUserSuccess: {
+      return {
+        ...state,
+        user: {
+          name: action.payload.name,
+          surname: action.payload.surname,
+          email: action.payload.email,
+          ...SuccessLoadingHandler,
+        },
+      };
+    }
+
+    case AuthActionTypes.getCurrentUserFail: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          loading: false,
+          error: action.payload.error,
+        },
+      };
+    }
+
+    case AuthActionTypes.getCurrentUserClear: {
+      return {
+        ...state,
+        user: {
+          name: null,
+          surname: null,
+          email: null,
+          ...InitialLoadingHandler,
+        },
+      };
+    }
+
+    case AuthActionTypes.getCurrentUserClearError: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          error: null,
+        },
+      };
+    }
+
     default:
       return {
         ...state,

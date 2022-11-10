@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { AuthFacade } from '../../../store/auth/auth.facade';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-import { Routing } from '../enums/routing.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginGuard implements CanActivate {
 
-  constructor(
-    private authFacade: AuthFacade,
-    private router: Router,
-  ) {}
+  constructor(private authFacade: AuthFacade) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
