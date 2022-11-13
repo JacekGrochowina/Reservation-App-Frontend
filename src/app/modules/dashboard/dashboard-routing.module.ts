@@ -14,9 +14,19 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: DashboardRouting.cars,
+        path: DashboardRouting.reservations,
         loadChildren: () =>
-          import('./pages/cars/cars.module').then((m) => m.CarsModule),
+          import('./pages/reservations/reservations.module').then((m) => m.ReservationsModule),
+      },
+      {
+        path: DashboardRouting.items,
+        loadChildren: () =>
+          import('./pages/items/items.module').then((m) => m.ItemsModule),
+      },
+      {
+        path: DashboardRouting.groups,
+        loadChildren: () =>
+          import('./pages/groups/groups.module').then((m) => m.GroupsModule),
       },
       {
         path: DashboardRouting.info,

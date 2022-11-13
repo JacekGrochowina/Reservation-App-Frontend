@@ -21,6 +21,8 @@ import { StartComponent } from './modules/start/start.component';
 import { AuthEffects } from './store/auth/auth.effects';
 import { AuthFacade } from './store/auth/auth.facade';
 import { AuthInterceptorProvider } from './shared/utils/api/auth.interceptor';
+import { GroupsFacade } from './store/groups/groups.facade';
+import { GroupsEffects } from './store/groups/groups.effects';
 
 @NgModule({
   declarations: [
@@ -35,13 +37,13 @@ import { AuthInterceptorProvider } from './shared/utils/api/auth.interceptor';
     MatSidenavModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(appReducers as ActionReducerMap<AppState>),
-    EffectsModule.forRoot([SettingsEffects, CarsEffects, AuthEffects]),
+    EffectsModule.forRoot([SettingsEffects, CarsEffects, AuthEffects, GroupsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
   ],
-  providers: [SettingsFacade, CarsFacade, AuthFacade, AuthInterceptorProvider, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
+  providers: [SettingsFacade, CarsFacade, AuthFacade, GroupsFacade, AuthInterceptorProvider, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

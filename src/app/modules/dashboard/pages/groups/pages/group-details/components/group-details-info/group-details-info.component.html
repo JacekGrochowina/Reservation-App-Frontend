@@ -1,0 +1,25 @@
+<div class="pt-4">
+  <div class="row mb-3">
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Nazwa</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (groupDetailsItems$ | async)?.name }}</dd>
+    </dl>
+
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Miasto</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (groupDetailsItems$ | async)?.city }}</dd>
+    </dl>
+
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Adres</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (groupDetailsItems$ | async)?.address }}</dd>
+    </dl>
+  </div>
+
+  <div class="row">
+    <dl class="col-12 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Opis</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (groupDetailsItems$ | async)?.description }}</dd>
+    </dl>
+  </div>
+</div>

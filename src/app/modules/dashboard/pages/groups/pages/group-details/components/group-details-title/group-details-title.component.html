@@ -1,0 +1,11 @@
+<h1 class="d-flex align-items-center">
+  <button
+    mat-icon-button
+    color="primary"
+    routerLink="../"
+    aria-label="Back to groups list">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <span class="ml-3">{{ (groupDetailsItems$ | async)?.name }}</span>
+</h1>
+<mat-divider></mat-divider>

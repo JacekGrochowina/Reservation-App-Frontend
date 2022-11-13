@@ -16,9 +16,19 @@ export class SidenavComponent {
       path: DashboardRouting.home,
     },
     {
-      name: 'Samochody',
-      icon: 'directions_car',
-      path: DashboardRouting.cars,
+      name: 'Rezerwacje',
+      icon: 'event_note',
+      path: DashboardRouting.reservations,
+    },
+    {
+      name: 'Przedmioty',
+      icon: 'category',
+      path: DashboardRouting.items,
+    },
+    {
+      name: 'Grupy',
+      icon: 'dynamic_feed',
+      path: DashboardRouting.groups,
     },
     {
       name: 'O programie',

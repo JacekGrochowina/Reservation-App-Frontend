@@ -6,11 +6,11 @@ import { AddEditMode } from '../../../../shared/utils/enums/add-edit-mode.enum';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
-  selector: 'app-cars',
-  templateUrl: './cars.component.html',
-  styleUrls: ['./cars.component.scss']
+  selector: 'app-items',
+  templateUrl: './items.component.html',
+  styleUrls: ['./items.component.scss']
 })
-export class CarsComponent implements OnInit {
+export class ItemsComponent implements OnInit {
 
   constructor(
     private dialogService: DialogService,
