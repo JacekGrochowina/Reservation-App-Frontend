@@ -1,3 +1,21 @@
+th.mat-header-cell:not(th.mat-header-cell:first-of-type),
+td.mat-cell:not(td.mat-cell:first-of-type) {
+  padding-left: 5px !important;
+}
+
+th.mat-header-cell:not(th.mat-header-cell:last-of-type),
+td.mat-cell:not(td.mat-cell:last-of-type) {
+  padding-right: 5px !important;
+}
+
+table.mat-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
 td.mat-cell {
-  padding: 0 0.3rem !important;
+  overflow: hidden;
+  width: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

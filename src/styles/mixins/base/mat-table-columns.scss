@@ -6,12 +6,7 @@
 
       &#{$colName} {
         flex: $width;
-        max-width: $width;
         min-width: $width;
-
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
 
         @if map-has-key($props, 'color') {
           color: map-get($props, 'color');

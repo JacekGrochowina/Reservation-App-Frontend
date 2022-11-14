@@ -39,8 +39,6 @@ export class GroupsTableComponent implements OnInit {
     'description',
     'city',
     'address',
-    'createdAt',
-    'updatedAt',
     'action',
   ];
 

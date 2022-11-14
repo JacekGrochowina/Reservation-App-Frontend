@@ -1,6 +1,5 @@
 @import "./src/styles/mixins/mixins";
 
-@include mat-table-columns((
-  description: (width: 200px),
-  action: (width: 152px),
-));
+.mat-column-action {
+  width: 157px;
+}
