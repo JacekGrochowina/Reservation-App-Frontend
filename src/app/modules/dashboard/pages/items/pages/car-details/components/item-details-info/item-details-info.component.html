@@ -1,0 +1,35 @@
+<div class="pt-4">
+  <div class="row mb-3">
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Nazwa</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (itemDetailsItems$ | async)?.name }}</dd>
+    </dl>
+
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Cena za dobę</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (itemDetailsItems$ | async)?.pricePerDay }}</dd>
+    </dl>
+
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Aktywność</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (itemDetailsItems$ | async)?.isActive ? 'Aktywny' : 'Nie aktywny' }}</dd>
+    </dl>
+  </div>
+
+  <div class="row mb-3">
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Grupa</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (itemDetailsItems$ | async)?.idGroup }}</dd>
+    </dl>
+
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Data utworzenia</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (itemDetailsItems$ | async)?.createdAt }}</dd>
+    </dl>
+
+    <dl class="col-4 breed-details__dl cmn-dl">
+      <dt class="breed-details__dt cmn-dt">Data edytowania</dt>
+      <dd class="breed-details__dd cmn-dd">{{ (itemDetailsItems$ | async)?.updatedAt }}</dd>
+    </dl>
+  </div>
+</div>

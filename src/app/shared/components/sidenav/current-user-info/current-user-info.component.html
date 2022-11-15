@@ -12,6 +12,13 @@
       <dt class="info__dt">{{ authCurrentUserName$ | async }} {{ authCurrentUserSurname$ | async }}</dt>
       <dd class="info__dd">{{ authCurrentUserEmail$ | async }}</dd>
     </dl>
+
+    <div *ngIf="(authCurrentUserError$ | async)" class="info__error">
+      <p class="error__text">
+        Nie udało się wczytać danych
+        <mat-icon class="error__icon">info</mat-icon>
+      </p>
+    </div>
   </div>
 </div>
 

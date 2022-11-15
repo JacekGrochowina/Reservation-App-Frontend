@@ -1,5 +1,6 @@
 export interface GroupAddPayload {
-  brand: string;
-  model: string;
-  valueOfCar: number;
+  name: string;
+  description: string;
+  city: string;
+  address: string;
 }

@@ -12,8 +12,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { appReducers } from './store/app.reducers';
 import { AppState } from './store/app.state';
-import { CarsFacade } from './store/cars/cars.facade';
-import { CarsEffects } from './store/cars/cars.effects';
 import { SettingsFacade } from './store/settings/settings.facade';
 import { SettingsEffects } from './store/settings/settings.effects';
 import { environment } from '../environments/environment';
@@ -23,6 +21,8 @@ import { AuthFacade } from './store/auth/auth.facade';
 import { AuthInterceptorProvider } from './shared/utils/api/auth.interceptor';
 import { GroupsFacade } from './store/groups/groups.facade';
 import { GroupsEffects } from './store/groups/groups.effects';
+import { ItemsFacade } from './store/items/items.facade';
+import { ItemsEffects } from './store/items/items.effects';
 
 @NgModule({
   declarations: [
@@ -37,13 +37,24 @@ import { GroupsEffects } from './store/groups/groups.effects';
     MatSidenavModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(appReducers as ActionReducerMap<AppState>),
-    EffectsModule.forRoot([SettingsEffects, CarsEffects, AuthEffects, GroupsEffects]),
+    EffectsModule.forRoot([
+      SettingsEffects,
+      AuthEffects,
+      GroupsEffects,
+      ItemsEffects
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
   ],
-  providers: [SettingsFacade, CarsFacade, AuthFacade, GroupsFacade, AuthInterceptorProvider, {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
+  providers: [
+    SettingsFacade,
+    AuthFacade,
+    GroupsFacade,
+    ItemsFacade,
+    AuthInterceptorProvider,
+    {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

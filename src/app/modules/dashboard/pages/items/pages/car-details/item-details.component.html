@@ -1,0 +1,25 @@
+<app-page-content-template [maxWidth]="900">
+
+  <app-fluid-loading
+    *ngIf="(itemDetailsLoading$ | async)"
+    [height]="500"
+    text="Trwa ładowanie szczegółów pojazdu...">
+  </app-fluid-loading>
+
+  <ng-container *ngIf="!(itemDetailsLoading$ | async)">
+    <app-item-details-title [itemDetailsItems$]="itemDetailsItems$"></app-item-details-title>
+    <app-item-details-info [itemDetailsItems$]="itemDetailsItems$"></app-item-details-info>
+
+    <div class="d-flex justify-content-end pt-4">
+      <button mat-stroked-button color="warn" (click)="delItem()" class="cmn-btn mr-2">
+        <mat-icon class="mr-1">delete</mat-icon>
+        Usuń
+      </button>
+      <button mat-flat-button color="primary" (click)="editItem()" class="cmn-btn">
+        <mat-icon class="mr-1">edit</mat-icon>
+        Edytuj
+      </button>
+    </div>
+  </ng-container>
+
+</app-page-content-template>

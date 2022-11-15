@@ -23,9 +23,9 @@ export class GroupsService {
     return this.http.get<Group>(url, api.headers);
   }
 
-  public addGroup(car: GroupAddPayload): Observable<Group> {
+  public addGroup(group: GroupAddPayload): Observable<Group> {
     const url = `${api.apiURL}/groups/add`;
-    return this.http.post<Group>(url, car, api.headers);
+    return this.http.post<Group>(url, group, api.headers);
   }
 
   public delGroup(id: number): Observable<number> {

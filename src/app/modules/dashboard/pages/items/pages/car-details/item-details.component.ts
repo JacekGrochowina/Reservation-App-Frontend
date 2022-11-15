@@ -3,76 +3,76 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { filter, first, takeUntil } from 'rxjs/operators';
-import { AddEditGroupComponent } from '../../components/add-edit-group/add-edit-group.component';
+import { AddEditItemComponent } from '../../components/add-edit-item/add-edit-item.component';
 import { AddEditMode } from '../../../../../../shared/utils/enums/add-edit-mode.enum';
 import { DialogService, DialogSize } from '../../../../../../shared/services/dialog.service';
-import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
+import { ItemsFacade } from '../../../../../../store/items/items.facade';
 
 @Component({
-  selector: 'app-group-details',
-  templateUrl: './group-details.component.html',
-  styleUrls: ['./group-details.component.scss'],
+  selector: 'app-item-details',
+  templateUrl: './item-details.component.html',
+  styleUrls: ['./item-details.component.scss'],
 })
-export class GroupDetailsComponent implements OnInit, OnDestroy {
+export class ItemDetailsComponent implements OnInit, OnDestroy {
 
   // ========== Selectors Details
-  public groupDetailsItems$ = this.groupsFacade.groupDetailsItems$;
-  public groupDetailsLoading$ = this.groupsFacade.groupDetailsLoading$;
-  public groupDetailsSuccess$ = this.groupsFacade.groupDetailsSuccess$;
-  public groupDetailsError$ = this.groupsFacade.groupDetailsError$;
+  public itemDetailsItems$ = this.itemsFacade.itemDetailsItems$;
+  public itemDetailsLoading$ = this.itemsFacade.itemDetailsLoading$;
+  public itemDetailsSuccess$ = this.itemsFacade.itemDetailsSuccess$;
+  public itemDetailsError$ = this.itemsFacade.itemDetailsError$;
 
   // ========== Selectors Del
-  public groupDelLoading$ = this.groupsFacade.groupDelLoading$;
-  public groupDelSuccess$ = this.groupsFacade.groupDelSuccess$;
-  public groupDelError$ = this.groupsFacade.groupDelError$;
+  public itemDelLoading$ = this.itemsFacade.itemDelLoading$;
+  public itemDelSuccess$ = this.itemsFacade.itemDelSuccess$;
+  public itemDelError$ = this.itemsFacade.itemDelError$;
 
   // ========== Selectors Update
-  public groupUpdateLoading$ = this.groupsFacade.groupUpdateLoading$;
-  public groupUpdateSuccess$ = this.groupsFacade.groupUpdateSuccess$;
-  public groupUpdateError$ = this.groupsFacade.groupUpdateError$;
+  public itemUpdateLoading$ = this.itemsFacade.itemUpdateLoading$;
+  public itemUpdateSuccess$ = this.itemsFacade.itemUpdateSuccess$;
+  public itemUpdateError$ = this.itemsFacade.itemUpdateError$;
 
   private params: ParamMap = this.route.snapshot.paramMap;
   private unsubscribe$ = new Subject<boolean>();
 
-  get groupId(): number {
+  get itemId(): number {
     return Number(this.params.get('id'));
   }
 
   constructor(
-    private groupsFacade: GroupsFacade,
+    private itemsFacade: ItemsFacade,
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
 
   public ngOnInit(): void {
-    this.groupsFacade.getGroupDetails(this.groupId);
+    this.itemsFacade.getItemDetails(this.itemId);
   }
 
   public ngOnDestroy(): void {
     this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
-    this.groupsFacade.clearGroupDetails();
+    this.itemsFacade.clearItemDetails();
   }
 
-  public delGroup(): void {
+  public delItem(): void {
     this.dialogService.open(ConfirmDialogComponent, DialogSize.xs, {
       data: {
-        title: 'Usuwanie grupy',
-        message: 'Czy napewno chcesz usunąć tę grupę?',
+        title: 'Usuwanie przedmiotu',
+        message: 'Czy napewno chcesz usunąć ten przedmiot?',
         confirmLabel: 'Usuń',
         dismissLabel: 'Anuluj',
         isAsync: true,
-        close$: this.groupDelSuccess$,
-        loading$: this.groupDelLoading$,
-        errors$: this.groupDelError$,
+        close$: this.itemDelSuccess$,
+        loading$: this.itemDelLoading$,
+        errors$: this.itemDelError$,
         confirmed: () => {
-          this.groupsFacade.delGroup(this.groupId);
+          this.itemsFacade.delItem(this.itemId);
         },
       },
     });
 
-    this.groupDelSuccess$
+    this.itemDelSuccess$
       .pipe(
         takeUntil(this.unsubscribe$),
         filter((success) => !!success),
@@ -82,28 +82,28 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  public editGroup(): void {
-    this.groupDetailsItems$
+  public editItem(): void {
+    this.itemDetailsItems$
       .pipe(
         takeUntil(this.unsubscribe$),
         first(),
       )
-      .subscribe((group) => {
-        this.dialogService.open(AddEditGroupComponent, DialogSize.sm, {
+      .subscribe((item) => {
+        this.dialogService.open(AddEditItemComponent, DialogSize.sm, {
           data: {
-            group,
+            item,
             mode: AddEditMode.edit,
           },
         });
       });
 
-    this.groupUpdateSuccess$
+    this.itemUpdateSuccess$
       .pipe(
         takeUntil(this.unsubscribe$),
         filter((success) => !!success),
       )
       .subscribe(() => {
-        this.groupsFacade.getGroupDetails(this.groupId);
+        this.itemsFacade.getItemDetails(this.itemId);
       });
   }
 

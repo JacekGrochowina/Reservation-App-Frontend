@@ -140,7 +140,7 @@ export class AuthEffects {
   { dispatch: false }
   );
 
-  getCarsList$ = createEffect(() =>
+  getCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.getCurrentUser),
       switchMap(() =>

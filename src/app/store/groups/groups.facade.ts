@@ -75,8 +75,8 @@ export class GroupsFacade {
     this.store.dispatch(new GetDetailsGroupClear());
   }
 
-  public addGroup(driver: GroupAddPayload): void {
-    this.store.dispatch(new AddGroup(driver));
+  public addGroup(group: GroupAddPayload): void {
+    this.store.dispatch(new AddGroup(group));
   }
 
   public delGroup(groupID: number): void {

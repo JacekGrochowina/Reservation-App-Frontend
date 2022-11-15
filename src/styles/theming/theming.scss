@@ -23,6 +23,7 @@
   --active: rgba(0, 0, 0, 0.04);
 
   --gray: rgb(131, 131, 131);
+  --error: rgb(210, 62, 62);
 
   // backgrounds
   --background: rgb(250, 250, 250);
@@ -33,12 +34,12 @@
   --sidenav-item-text: #{$primary};
 
   // error handler
-  --error-handler-bg: rgb(210, 62, 62);
+  --error-handler-bg: var(--error);
   --error-handler-text: rgb(234, 234, 234);
   --error-handler-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
   // table
-  --table-error-bar-bg: rgb(210, 62, 62);
+  --table-error-bar-bg: var(--error);
   --table-error-bar-text: rgb(234, 234, 234);
   --table-error-bar-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   --table-error-content-icon: #{$primary};
@@ -82,6 +83,7 @@
   --active: rgba(255, 255, 255, 0.04);
 
   --gray: rgb(201, 201, 201);
+  --error: rgb(210, 62, 62);
 
   // backgrounds
   --background: rgb(48, 48, 48);
@@ -92,12 +94,12 @@
   --sidenav-item-text: rgb(255, 255, 255);
 
   // error handler
-  --error-handler-bg: rgb(210, 62, 62);
+  --error-handler-bg: var(--error);
   --error-handler-text: rgb(234, 234, 234);
   --error-handler-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
 
   // table
-  --table-error-bar-bg: rgb(210, 62, 62);
+  --table-error-bar-bg: var(--error);
   --table-error-bar-text: rgb(234, 234, 234);
   --table-error-bar-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
   --table-error-content-icon: #{$primary};

@@ -36,7 +36,6 @@ export class GroupsTableComponent implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
-    'description',
     'city',
     'address',
     'action',
