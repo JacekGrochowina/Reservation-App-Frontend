@@ -2,7 +2,9 @@
   <h1>Przedmioty</h1>
   <mat-divider></mat-divider>
 
-  <div class="d-flex justify-content-end py-3">
+  <div class="d-flex align-items-start justify-content-between py-3">
+    <app-select-items-group></app-select-items-group>
+
     <button mat-raised-button color="primary" (click)="openAddItemDialog()" class="cmn-btn">
       Dodaj przedmiot
       <mat-icon class="ml-1">add</mat-icon>

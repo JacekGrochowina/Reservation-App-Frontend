@@ -30,6 +30,7 @@ import {
 } from './items.selectors';
 import { ItemUpdatePayload } from './interfaces/payloads/item-update.payload';
 import { ItemAddPayload } from './interfaces/payloads/item-add.payload';
+import { ItemsListPayload } from './interfaces/payloads/items-list.payload';
 
 @Injectable()
 export class ItemsFacade {
@@ -63,8 +64,8 @@ export class ItemsFacade {
 
   constructor(private store: Store<AppState>) {}
 
-  public getItemsList(): void {
-    this.store.dispatch(new GetListItems());
+  public getItemsList(itemsList?: ItemsListPayload): void {
+    this.store.dispatch(new GetListItems(itemsList));
   }
 
   public getItemDetails(itemID: number): void {

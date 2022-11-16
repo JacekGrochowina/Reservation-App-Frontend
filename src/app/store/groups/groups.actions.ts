@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { Group } from './interfaces/group.interface';
 import { GroupUpdatePayload } from './interfaces/payloads/group-update.payload';
 import { GroupAddPayload } from './interfaces/payloads/group-add.payload';
+import { ItemsListPayload } from '../items/interfaces/payloads/items-list.payload';
 
 export enum GroupsActionTypes {
   getList = '[Groups/List] Get List Groups',

@@ -1,0 +1,12 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>Grupa</mat-label>
+    <mat-select (selectionChange)="optionChanged($event)" formControlName="selectedGroups" multiple>
+      <mat-option
+        *ngFor="let group of (groupsListItems$ | async)"
+        [value]="group.id">
+        {{ group.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

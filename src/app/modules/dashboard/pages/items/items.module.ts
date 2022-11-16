@@ -17,6 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SelectItemsGroupComponent } from './components/select-items-group/select-items-group.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ItemDetailsComponent,
     ItemDetailsInfoComponent,
     ItemDetailsTitleComponent,
+    SelectItemsGroupComponent,
   ],
   imports: [
     CommonModule,

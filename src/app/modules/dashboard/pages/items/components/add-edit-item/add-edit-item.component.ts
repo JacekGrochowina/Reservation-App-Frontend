@@ -36,9 +36,9 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private fb: FormBuilder,
     private itemsFacade: ItemsFacade,
     private groupsFacade: GroupsFacade,
-    private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddEditItemComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddEditItemDialogData
   ) {}

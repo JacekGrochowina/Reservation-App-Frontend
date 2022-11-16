@@ -28,8 +28,8 @@ export class AddEditGroupComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
-    private groupsFacade: GroupsFacade,
     private fb: FormBuilder,
+    private groupsFacade: GroupsFacade,
     private dialogRef: MatDialogRef<AddEditGroupComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddEditGroupDialogData
   ) {}

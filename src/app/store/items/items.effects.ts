@@ -38,11 +38,11 @@ export class ItemsEffects {
     private store: Store<AppState>,
   ) {}
 
-  getGroupsList$ = createEffect(() =>
+  getItemsList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.getList),
-      switchMap(() =>
-        this.itemsService.getItemsList().pipe(
+      switchMap((action: GetListItems) =>
+        this.itemsService.getItemsList(action.payload).pipe(
           map((response) => new GetListItemsSuccess(response)),
           catchError((error) => of(new GetListItemsFail(error)))
         )
@@ -50,7 +50,7 @@ export class ItemsEffects {
     )
   );
 
-  getGroupDetails$ = createEffect(() =>
+  getItemDetails$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.getDetails),
       switchMap((action: GetDetailsItem) =>
@@ -62,7 +62,7 @@ export class ItemsEffects {
     )
   );
 
-  addGroup$ = createEffect(() =>
+  addItem$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.add),
       switchMap((action: AddItem) =>
@@ -77,7 +77,7 @@ export class ItemsEffects {
     )
   );
 
-  addGroupSuccess$ = createEffect(() =>
+  addItemSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.addSuccess),
       map(() => {
@@ -88,7 +88,7 @@ export class ItemsEffects {
   { dispatch: false }
   );
 
-  addGroupFail$ = createEffect(() =>
+  addItemFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ItemsActionTypes.addFail),
         map(() => {
@@ -99,7 +99,7 @@ export class ItemsEffects {
     { dispatch: false }
   );
 
-  delGroup$ = createEffect(() =>
+  delItem$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.del),
       switchMap((action: DelItem) =>
@@ -114,7 +114,7 @@ export class ItemsEffects {
     )
   );
 
-  delGroupSuccess$ = createEffect(() =>
+  delItemSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.delSuccess),
       map(() => {
@@ -125,7 +125,7 @@ export class ItemsEffects {
   { dispatch: false }
   );
 
-  delGroupFail$ = createEffect(() =>
+  delItemFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ItemsActionTypes.delFail),
         map(() => {
@@ -136,7 +136,7 @@ export class ItemsEffects {
     { dispatch: false }
   );
 
-  updateGroup$ = createEffect(() =>
+  updateItem$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.update),
       mergeMap((action: UpdateItem) =>
@@ -151,7 +151,7 @@ export class ItemsEffects {
     )
   );
 
-  updateGroupSuccess$ = createEffect(() =>
+  updateItemSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ItemsActionTypes.updateSuccess),
       map(() => {
@@ -162,7 +162,7 @@ export class ItemsEffects {
   { dispatch: false }
   );
 
-  updateGroupFail$ = createEffect(() =>
+  updateItemFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ItemsActionTypes.updateFail),
         map(() => {

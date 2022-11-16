@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { Item } from './interfaces/item.interface';
 import { ItemUpdatePayload } from './interfaces/payloads/item-update.payload';
 import { ItemAddPayload } from './interfaces/payloads/item-add.payload';
+import { ItemsListPayload } from './interfaces/payloads/items-list.payload';
 
 export enum ItemsActionTypes {
   getList = '[Items/List] Get List Items',
@@ -39,6 +40,8 @@ export enum ItemsActionTypes {
 // ========== Get Items
 export class GetListItems implements Action {
   readonly type = ItemsActionTypes.getList;
+
+  constructor(public payload?: ItemsListPayload) {}
 }
 
 export class GetListItemsSuccess implements Action {
