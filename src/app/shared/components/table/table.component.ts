@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { map, takeUntil } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { map, takeUntil } from 'rxjs/operators';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
 
   @Input() items$!: Observable<any[]>;
   @Input() loading$!: Observable<boolean>;
@@ -20,13 +20,18 @@ export class TableComponent implements OnInit {
   public isTableEmptyVisible$!: Observable<boolean>;
   public isTableContentVisible$!: Observable<boolean>;
 
-  private unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<boolean>();
 
   public ngOnInit(): void {
     this.isEmpty$ = this.getIsEmpty();
     this.isTableErrorVisible$ = this.getIsTableErrorVisible();
     this.isTableEmptyVisible$ = this.getIsTableEmptyVisible();
     this.isTableContentVisible$ = this.getIsTableContentVisible();
+  }
+
+  public ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.unsubscribe();
   }
 
   private getIsEmpty(): Observable<boolean> {

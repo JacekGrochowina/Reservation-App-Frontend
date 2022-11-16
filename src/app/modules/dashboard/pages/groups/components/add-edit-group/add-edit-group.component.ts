@@ -25,7 +25,7 @@ export class AddEditGroupComponent implements OnInit, OnDestroy {
   public groupUpdateError$ = this.groupsFacade.groupUpdateError$;
 
   public form!: FormGroup;
-  private unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
@@ -42,8 +42,8 @@ export class AddEditGroupComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.unsubscribe();
   }
 
   public onSubmit(): void {

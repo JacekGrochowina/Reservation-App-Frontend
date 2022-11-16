@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -19,7 +19,7 @@ import { ItemsFacade } from '../../../../../../store/items/items.facade';
   templateUrl: './select-items-group.component.html',
   styleUrls: ['./select-items-group.component.scss']
 })
-export class SelectItemsGroupComponent implements OnInit {
+export class SelectItemsGroupComponent implements OnInit, OnDestroy {
 
   // ========== Selectors List
   public groupsListItems$ = this.groupsFacade.groupsListItems$;
@@ -31,11 +31,7 @@ export class SelectItemsGroupComponent implements OnInit {
 
   public form!: FormGroup;
 
-  private unsubscribe$ = new Subject<void>();
-
-  get selectedGroups(): FormControl {
-    return this.form.get('selectedGroups') as FormControl;
-  }
+  private unsubscribe$ = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
@@ -52,6 +48,11 @@ export class SelectItemsGroupComponent implements OnInit {
       });
 
     this.initForm();
+  }
+
+  public ngOnDestroy(): void {
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.unsubscribe();
   }
 
   private initForm(): void {

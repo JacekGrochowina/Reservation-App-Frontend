@@ -33,7 +33,7 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
   public itemUpdateError$ = this.itemsFacade.itemUpdateError$;
 
   public form!: FormGroup;
-  private unsubscribe$ = new Subject<void>();
+  private unsubscribe$ = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
@@ -52,8 +52,8 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.unsubscribe$.next(true);
+    this.unsubscribe$.unsubscribe();
   }
 
   public onSubmit(): void {
