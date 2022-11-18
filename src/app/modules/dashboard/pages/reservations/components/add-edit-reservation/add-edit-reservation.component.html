@@ -1,0 +1,104 @@
+<h1 mat-dialog-title>
+  {{ isAddMode() ? 'Dodawanie grupy' : 'Edycja grupy' }}
+</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Nazwa</mat-label>
+      <input
+        matInput
+        required
+        cdkFocusInitial
+        formControlName="name"
+        placeholder="np. Apartament Bursztynowy">
+      <mat-hint>Podana wartość będzie reprezentować tę grupę w systemie</mat-hint>
+      <mat-error *ngIf="form.get('name')?.value.length > 45 && !form.get('name')?.hasError('required')">
+        Pole musi mieć <strong>maksymalnie 45 znaków</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('name')?.value.length < 2 && !form.get('name')?.hasError('required')">
+        Pole musi mieć <strong>co najmniej 2 znaki</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('name')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Miasto</mat-label>
+      <input
+        matInput
+        required
+        formControlName="city"
+        placeholder="np. Toruń">
+      <mat-hint>Podana wartość będzie wyświetlać się w lokalizacji na stronie internetowej</mat-hint>
+      <mat-error *ngIf="form.get('city')?.value.length > 45 && !form.get('city')?.hasError('required')">
+        Pole musi mieć <strong>maksymalnie 45 znaków</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('city')?.value.length < 2 && !form.get('city')?.hasError('required')">
+        Pole musi mieć <strong>co najmniej 2 znaki</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('city')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Adres</mat-label>
+      <input
+        matInput
+        required
+        formControlName="address"
+        placeholder="np. Mikołaja Kopernika 21/10">
+      <mat-hint>Podana wartość będzie wyświetlać się w lokalizacji na stronie internetowej</mat-hint>
+      <mat-error *ngIf="form.get('address')?.value.length > 60 && !form.get('address')?.hasError('required')">
+        Pole musi mieć <strong>maksymalnie 60 znaków</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('address')?.value.length < 2 && !form.get('address')?.hasError('required')">
+        Pole musi mieć <strong>co najmniej 2 znaki</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('address')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Opis</mat-label>
+      <textarea
+        matInput
+        required
+        formControlName="description"
+        placeholder="np. Przytulna kamienica w samym centrum starego miasta.">
+      </textarea>
+      <mat-hint>Podana wartość będzie wyświetlać się na stronie internetowej w szczegółach danej grupy</mat-hint>
+      <mat-error *ngIf="form.get('description')?.value.length > 255 && !form.get('description')?.hasError('required')">
+        Pole musi mieć <strong>maksymalnie 255 znaków</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('description')?.value.length < 2 && !form.get('description')?.hasError('required')">
+        Pole musi mieć <strong>co najmniej 2 znaki</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('description')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions class="d-flex justify-content-end m-0 p-0">
+      <button
+        mat-stroked-button
+        mat-dialog-close
+        type="button"
+        color="primary"
+        (click)="closeDialog()">
+        Anuluj
+      </button>
+
+      <app-button-loading
+        color="primary"
+        [text]="isAddMode() ? 'Dodaj' : 'Edytuj'"
+        [disabled]="!form.valid || !form.dirty || (groupAddLoading$ | async) || (groupUpdateLoading$ | async)"
+        [isLoading]="(groupAddLoading$ | async) || (groupUpdateLoading$ | async)">
+      </app-button-loading>
+    </div>
+  </form>
+</div>

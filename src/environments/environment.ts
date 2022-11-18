@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'https://cars-list-sequelize-backend.herokuapp.com',
   apiUrl: 'http://localhost:8080',
 };
 

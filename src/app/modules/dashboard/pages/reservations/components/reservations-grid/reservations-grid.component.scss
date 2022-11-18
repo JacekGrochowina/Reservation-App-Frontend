@@ -1,0 +1,64 @@
+@import "./src/styles/variables";
+
+$table-cell-item-width: 250px;
+$table-visible-days-amount: 14;
+$table-row-border: 1px solid var(--border);
+$table-column-border: 1px solid var(--border);
+$table-row-header-height: 55px;
+
+.reservations__table {
+  width: 100%;
+
+  .table {
+    &__row {
+      border-bottom: $table-row-border;
+
+      .row {
+        &__cell {
+          border-right: $table-column-border;
+          padding: 10px 15px;
+
+          &:not(&--item) {
+            width: calc((100% - #{$table-cell-item-width}) / #{$table-visible-days-amount});
+            padding: 10px 0;
+          }
+
+          &:nth-last-of-type(1) {
+            border-right: none;
+          }
+
+          &--header {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            height: $table-row-header-height;
+          }
+
+          &--item {
+            width: $table-cell-item-width;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          .cell {
+            &__day-name,
+            &__day-date {
+              margin: 0;
+              font-weight: 500;
+              color: var(--greyed);
+            }
+
+            &__day-name {
+              font-size: 12px;
+            }
+
+            &__day-date {
+              font-size: 11px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

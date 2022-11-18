@@ -1,8 +1,11 @@
-<app-page-content-template [maxWidth]="1000">
-  <h1>Rezerwacje</h1>
-  <mat-divider></mat-divider>
+<app-page-content-template [maxWidth]="1500">
+<!--  <h1>Rezerwacje</h1>-->
+<!--  <mat-divider></mat-divider>-->
 
-  <div class="pt-4">
-    <p>Na tej stronie będzie wyświetlany główny komponent który będzie obsługiwał zarządzanie rezerwacjami.</p>
-  </div>
+  <app-reservations-grid
+    [itemsListItems$]="itemsListItems$"
+    [itemsListLoading$]="itemsListLoading$"
+    [itemsListSuccess$]="itemsListSuccess$"
+    [itemsListError$]="itemsListError$"
+  ></app-reservations-grid>
 </app-page-content-template>

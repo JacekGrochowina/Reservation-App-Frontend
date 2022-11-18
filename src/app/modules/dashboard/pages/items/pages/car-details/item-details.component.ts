@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { filter, first, takeUntil } from 'rxjs/operators';
+import { filter, first, map, takeUntil } from 'rxjs/operators';
 import { AddEditItemComponent } from '../../components/add-edit-item/add-edit-item.component';
 import { AddEditMode } from '../../../../../../shared/utils/enums/add-edit-mode.enum';
 import { DialogService, DialogSize } from '../../../../../../shared/services/dialog.service';
 import { ItemsFacade } from '../../../../../../store/items/items.facade';
+import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
+import { isNull } from 'lodash';
 
 @Component({
   selector: 'app-item-details',
@@ -14,6 +16,12 @@ import { ItemsFacade } from '../../../../../../store/items/items.facade';
   styleUrls: ['./item-details.component.scss'],
 })
 export class ItemDetailsComponent implements OnInit, OnDestroy {
+
+  // ========== Selectors Details
+  public groupDetailsItems$ = this.groupsFacade.groupDetailsItems$;
+  public groupDetailsLoading$ = this.groupsFacade.groupDetailsLoading$;
+  public groupDetailsSuccess$ = this.groupsFacade.groupDetailsSuccess$;
+  public groupDetailsError$ = this.groupsFacade.groupDetailsError$;
 
   // ========== Selectors Details
   public itemDetailsItems$ = this.itemsFacade.itemDetailsItems$;
@@ -31,6 +39,14 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   public itemUpdateSuccess$ = this.itemsFacade.itemUpdateSuccess$;
   public itemUpdateError$ = this.itemsFacade.itemUpdateError$;
 
+  public isDetailsContentLoading$: Observable<boolean> = combineLatest([
+    this.groupDetailsLoading$,
+    this.itemDetailsLoading$,
+  ]).pipe(
+    map(([groupDetailsLoading, itemDetailsLoading]) =>
+      groupDetailsLoading || itemDetailsLoading),
+  );
+
   private params: ParamMap = this.route.snapshot.paramMap;
   private unsubscribe$ = new Subject<boolean>();
 
@@ -41,18 +57,31 @@ export class ItemDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private itemsFacade: ItemsFacade,
     private dialogService: DialogService,
+    private groupsFacade: GroupsFacade,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
 
   public ngOnInit(): void {
-    this.itemsFacade.getItemDetails(this.itemId);
+    this.getDetailsContent();
   }
 
   public ngOnDestroy(): void {
     this.unsubscribe$.next(true);
     this.unsubscribe$.complete();
     this.itemsFacade.clearItemDetails();
+    this.groupsFacade.clearGroupDetails();
+  }
+
+  public getDetailsContent(): void {
+    this.itemsFacade.getItemDetails(this.itemId);
+
+    this.itemDetailsItems$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((itemDetailsItems) => {
+        if (isNull(itemDetailsItems)) { return; }
+        this.groupsFacade.getGroupDetails(itemDetailsItems.idGroup);
+      });
   }
 
   public delItem(): void {

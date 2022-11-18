@@ -44,5 +44,8 @@ import { SelectItemsGroupComponent } from './components/select-items-group/selec
     MatSelectModule,
     MatCheckboxModule,
   ],
+  exports: [
+    SelectItemsGroupComponent
+  ]
 })
 export class ItemsModule {}

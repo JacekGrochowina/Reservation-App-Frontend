@@ -13,24 +13,32 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ReservationsGridComponent } from './components/reservations-grid/reservations-grid.component';
+import { AddEditReservationComponent } from './components/add-edit-reservation/add-edit-reservation.component';
+import { ItemsModule } from '../items/items.module';
 
 @NgModule({
-  declarations: [ReservationsComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ReservationsRoutingModule,
-    SharedModule,
-    TextMaskModule,
-    MatDividerModule,
-    MatButtonModule,
-    MatIconModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+  declarations: [
+    ReservationsComponent,
+    ReservationsGridComponent,
+    AddEditReservationComponent,
   ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        ReservationsRoutingModule,
+        SharedModule,
+        TextMaskModule,
+        MatDividerModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        ItemsModule,
+    ],
   providers: [MatDatepickerModule],
 })
 export class ReservationsModule {}

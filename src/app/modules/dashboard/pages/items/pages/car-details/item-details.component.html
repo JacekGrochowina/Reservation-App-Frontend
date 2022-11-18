@@ -1,14 +1,17 @@
 <app-page-content-template [maxWidth]="900">
 
   <app-fluid-loading
-    *ngIf="(itemDetailsLoading$ | async)"
+    *ngIf="(isDetailsContentLoading$ | async)"
     [height]="500"
     text="Trwa ładowanie szczegółów pojazdu...">
   </app-fluid-loading>
 
-  <ng-container *ngIf="!(itemDetailsLoading$ | async)">
+  <ng-container *ngIf="!(isDetailsContentLoading$ | async)">
     <app-item-details-title [itemDetailsItems$]="itemDetailsItems$"></app-item-details-title>
-    <app-item-details-info [itemDetailsItems$]="itemDetailsItems$"></app-item-details-info>
+    <app-item-details-info
+      [groupDetailsItems$]="groupDetailsItems$"
+      [itemDetailsItems$]="itemDetailsItems$">
+    </app-item-details-info>
 
     <div class="d-flex justify-content-end pt-4">
       <button mat-stroked-button color="warn" (click)="delItem()" class="cmn-btn mr-2">

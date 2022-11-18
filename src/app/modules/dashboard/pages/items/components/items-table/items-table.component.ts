@@ -36,7 +36,6 @@ export class ItemsTableComponent implements OnInit {
 
   public displayedColumns: string[] = [
     'name',
-    'group',
     'pricePerDay',
     'action',
   ];
