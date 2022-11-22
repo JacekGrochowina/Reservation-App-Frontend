@@ -10,7 +10,7 @@ import { ActionReducerMap, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { appReducers } from './store/app.reducers';
+import { appReducers, metaReducers } from './store/app.reducers';
 import { AppState } from './store/app.state';
 import { SettingsFacade } from './store/settings/settings.facade';
 import { SettingsEffects } from './store/settings/settings.effects';
@@ -36,7 +36,15 @@ import { ItemsEffects } from './store/items/items.effects';
     SharedModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(appReducers as ActionReducerMap<AppState>),
+    StoreModule.forRoot(
+      appReducers as ActionReducerMap<AppState>,
+      {
+        metaReducers,
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true
+        }
+      }),
     EffectsModule.forRoot([
       SettingsEffects,
       AuthEffects,
