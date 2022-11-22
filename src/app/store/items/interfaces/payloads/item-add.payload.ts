@@ -1,5 +1,5 @@
 export interface ItemAddPayload {
-  idGroup: string;
+  groupId: string;
   name: string;
   pricePerDay: number;
   isActive: boolean;

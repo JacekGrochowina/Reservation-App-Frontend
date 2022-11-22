@@ -4,6 +4,7 @@ import { Item } from './interfaces/item.interface';
 import { ItemUpdatePayload } from './interfaces/payloads/item-update.payload';
 import { ItemAddPayload } from './interfaces/payloads/item-add.payload';
 import { ItemsListPayload } from './interfaces/payloads/items-list.payload';
+import { ItemExtendsResponse } from './interfaces/responses/item-extends.response';
 
 export enum ItemsActionTypes {
   getList = '[Items/List] Get List Items',
@@ -47,7 +48,7 @@ export class GetListItems implements Action {
 export class GetListItemsSuccess implements Action {
   readonly type = ItemsActionTypes.getListSuccess;
 
-  constructor(public payload: Item[]) {}
+  constructor(public payload: ItemExtendsResponse[]) {}
 }
 
 export class GetListItemsFail implements Action {

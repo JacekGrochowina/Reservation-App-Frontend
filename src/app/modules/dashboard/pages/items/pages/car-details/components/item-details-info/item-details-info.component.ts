@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Item } from '../../../../../../../../store/items/interfaces/item.interface';
-import { Group } from '../../../../../../../../store/groups/interfaces/group.interface';
+import { ItemExtendsResponse } from '../../../../../../../../store/items/interfaces/responses/item-extends.response';
 
 @Component({
   selector: 'app-item-details-info',
@@ -10,7 +9,6 @@ import { Group } from '../../../../../../../../store/groups/interfaces/group.int
 })
 export class ItemDetailsInfoComponent {
 
-  @Input() itemDetailsItems$!: Observable<Item | null>;
-  @Input() groupDetailsItems$!: Observable<Group | null>;
+  @Input() itemDetailsItems$!: Observable<ItemExtendsResponse | null>;
 
 }

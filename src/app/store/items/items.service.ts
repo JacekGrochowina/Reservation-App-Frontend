@@ -7,6 +7,7 @@ import { ItemUpdatePayload } from './interfaces/payloads/item-update.payload';
 import { ItemAddPayload } from './interfaces/payloads/item-add.payload';
 import { ItemsListPayload } from './interfaces/payloads/items-list.payload';
 import { isEmpty, isUndefined } from 'lodash';
+import { ItemExtendsResponse } from './interfaces/responses/item-extends.response';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class ItemsService {
 
   constructor(private http: HttpClient) {}
 
-  public getItemsList(itemsList?: ItemsListPayload): Observable<Item[]> {
+  public getItemsList(itemsList?: ItemsListPayload): Observable<ItemExtendsResponse[]> {
     const url = `${api.apiURL}/items`;
 
     const isGroup = !(isEmpty(itemsList?.groups) || isUndefined(itemsList?.groups));
@@ -25,7 +26,7 @@ export class ItemsService {
       ...(isGroup && { group: itemsList.groups.join(',') })
     }
 
-    return this.http.get<Item[]>(url, { ...api.headers, params });
+    return this.http.get<ItemExtendsResponse[]>(url, { ...api.headers, params });
   }
 
   public getItemDetails(id: number): Observable<Item> {

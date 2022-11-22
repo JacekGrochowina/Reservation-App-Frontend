@@ -5,6 +5,6 @@ export interface Item {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
-  idUser: number;
-  idGroup: number;
+  userId: number;
+  groupId: number;
 }

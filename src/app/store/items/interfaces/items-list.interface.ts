@@ -1,6 +1,6 @@
 import { Loading } from 'src/app/shared/utils/interfaces/loading.interface';
-import { Item } from './item.interface';
+import { ItemExtendsResponse } from './responses/item-extends.response';
 
 export interface ItemsListState extends Loading {
-  items: Item[];
+  items: ItemExtendsResponse[];
 }

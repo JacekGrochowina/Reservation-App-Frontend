@@ -86,7 +86,7 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
       isActive: ['true', [
         Validators.required,
       ]],
-      idGroup: ['', [
+      groupId: ['', [
         Validators.required,
       ]],
     });
