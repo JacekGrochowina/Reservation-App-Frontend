@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Group } from '../../../../../../store/groups/interfaces/group.interface';
-import { MatSelect, MatSelectChange } from '@angular/material/select';
+import { MatSelectChange } from '@angular/material/select';
 import { ItemsFacade } from '../../../../../../store/items/items.facade';
+import { DictionariesFacade } from '../../../../../../store/dictionaries/dictionaries.facade';
+import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.state';
 
 // https://stackblitz.com/edit/angular-material-with-angular-v5-jsgvx6?file=app%2Fapp.component.ts,app%2Fapp.component.html
 // https://stackoverflow.com/questions/51580095/select-all-mat-option-and-deselect-all
@@ -21,14 +21,7 @@ import { ItemsFacade } from '../../../../../../store/items/items.facade';
 })
 export class SelectItemsGroupComponent implements OnInit, OnDestroy {
 
-  // ========== Selectors List
-  public groupsListItems$ = this.groupsFacade.groupsListItems$;
-  public groupsListLoading$ = this.groupsFacade.groupsListLoading$;
-  public groupsListSuccess$ = this.groupsFacade.groupsListSuccess$;
-  public groupsListError$ = this.groupsFacade.groupsListError$;
-
-  public groupsListItems: Group[] = [];
-
+  public dictionaryGroupsItems$ = this.dictionariesFacade.dictionaryGroupsItems$;
   public form!: FormGroup;
 
   private unsubscribe$ = new Subject<boolean>();
@@ -37,15 +30,11 @@ export class SelectItemsGroupComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private groupsFacade: GroupsFacade,
     private itemsFacade: ItemsFacade,
+    private dictionariesFacade: DictionariesFacade,
   ) {}
 
   public ngOnInit(): void {
-    this.groupsFacade.getGroupsList();
-    this.groupsListItems$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((groupsListItems) => {
-        this.groupsListItems = groupsListItems;
-      });
+    this.dictionariesFacade.getDictionary(Dictionaries.groups);
 
     this.initForm();
   }
@@ -53,6 +42,8 @@ export class SelectItemsGroupComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.unsubscribe$.next(true);
     this.unsubscribe$.unsubscribe();
+
+    this.dictionariesFacade.clearDictionary(Dictionaries.groups);
   }
 
   private initForm(): void {

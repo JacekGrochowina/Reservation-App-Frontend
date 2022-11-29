@@ -4,100 +4,6 @@
 
 <div mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
-<!--    <mat-form-field appearance="fill" class="w-100 mb-2">-->
-<!--      <mat-label>Data rezerwacji</mat-label>-->
-<!--      <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">-->
-<!--        <input matStartDate formControlName="start" placeholder="Przyjazd">-->
-<!--        <input matEndDate formControlName="end" placeholder="Odjazd">-->
-<!--      </mat-date-range-input>-->
-<!--      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
-<!--      <mat-datepicker-toggle matSuffix matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--      <mat-date-range-picker #picker></mat-date-range-picker>-->
-
-<!--      <mat-error *ngIf="form.get('start')?.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
-<!--      <mat-error *ngIf="form.get('end')?.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
-<!--      <mat-error *ngIf="dateRange.get('start')?.hasError('required') || dateRange.get('end')?.hasError('required')">-->
-<!--        Pole <strong>jest wymagane</strong>-->
-<!--      </mat-error>-->
-<!--    </mat-form-field>-->
-
-<!--    <div class="row no-gutters">-->
-<!--      <div class="col-5">-->
-<!--        <mat-form-field appearance="fill" class="w-100 mb-2">-->
-<!--          <mat-label>Imie</mat-label>-->
-<!--          <input-->
-<!--            matInput-->
-<!--            formControlName="name">-->
-<!--          <mat-hint>Dane rezerwującego</mat-hint>-->
-<!--          <mat-error *ngIf="form.get('name')?.value.length < 3">-->
-<!--            Imie musi mieć <strong>min. 3 znaki</strong>-->
-<!--          </mat-error>-->
-<!--          <mat-error *ngIf="form.get('name')?.value.length > 25">-->
-<!--            Imie musi mieć <strong>max. 25 znaków</strong>-->
-<!--          </mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-
-<!--      <div class="col-7">-->
-<!--        <mat-form-field appearance="fill" class="w-100 mb-2">-->
-<!--          <mat-label>Nazwisko</mat-label>-->
-<!--          <input-->
-<!--            matInput-->
-<!--            formControlName="surname">-->
-<!--          <mat-error *ngIf="form.get('surname')?.value.length < 3 && !form.get('surname')?.hasError('required')">-->
-<!--            Naziwsko musi mieć <strong>min. 3 znaki</strong>-->
-<!--          </mat-error>-->
-<!--          <mat-error *ngIf="form.get('surname')?.value.length > 25 && !form.get('surname')?.hasError('required')">-->
-<!--            Nazwisko musi mieć <strong>max. 25 znaków</strong>-->
-<!--          </mat-error>-->
-<!--          <mat-error *ngIf="form.get('surname')?.hasError('required')">-->
-<!--            Pole <strong>jest wymagane</strong>-->
-<!--          </mat-error>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <section class="w-100 my-3">-->
-<!--      <mat-checkbox formControlName="isAdvance" color="primary">Czy zaliczka jest wymagana?</mat-checkbox>-->
-<!--    </section>-->
-
-<!--    <mat-form-field *ngIf="form.get('isAdvance')?.value" appearance="fill" class="w-100 mb-2">-->
-<!--      <mat-label>Wpłacona zaliczka</mat-label>-->
-<!--      <input-->
-<!--        matInput-->
-<!--        type="number"-->
-<!--        formControlName="advance"-->
-<!--        placeholder="np. 300">-->
-<!--      <span matSuffix>zł</span>-->
-<!--      <mat-error *ngIf="form.get('advance')?.value < 0 && !form.get('advance')?.hasError('required')">-->
-<!--        Pole musi mieć wartość <strong>większą lub równą 0</strong>-->
-<!--      </mat-error>-->
-<!--      <mat-error *ngIf="form.get('advance')?.hasError('required')">-->
-<!--        Pole <strong>jest wymagane</strong>-->
-<!--      </mat-error>-->
-<!--    </mat-form-field>-->
-
-<!--    <section class="w-100 my-3">-->
-<!--      <mat-checkbox formControlName="isDiscount" color="primary">Czy dodać rabat?</mat-checkbox>-->
-<!--    </section>-->
-
-<!--    <mat-form-field *ngIf="form.get('isDiscount')?.value" appearance="fill" class="w-100 mb-2">-->
-<!--      <mat-label>Rabat kwotowy</mat-label>-->
-<!--      <input-->
-<!--        matInput-->
-<!--        type="number"-->
-<!--        formControlName="discount"-->
-<!--        placeholder="np. 100">-->
-<!--      <span matSuffix>zł</span>-->
-<!--      <mat-error *ngIf="form.get('discount')?.value < 0 && !form.get('discount')?.hasError('required')">-->
-<!--        Pole musi mieć wartość <strong>większą lub równą 0</strong>-->
-<!--      </mat-error>-->
-<!--      <mat-error *ngIf="form.get('discount')?.hasError('required')">-->
-<!--        Pole <strong>jest wymagane</strong>-->
-<!--      </mat-error>-->
-<!--    </mat-form-field>-->
-
     <mat-vertical-stepper class="stepper" #stepper>
 
       <!-- STEP 1 - Form General -->
@@ -147,10 +53,15 @@
           </div>
 
           <mat-form-field appearance="fill" class="w-100 mb-2">
-            <mat-label>Grupa</mat-label>
-            <mat-select required formControlName="groupId">
+            <mat-label>
+              <div class="d-flex align-items-center">
+                <span class="flex-grow-1">{{ (dictionaryGroupsLoading$ | async) ? 'Ładowanie...' : 'Grupa' }}</span>
+                <mat-spinner *ngIf="(dictionaryGroupsLoading$ | async)" diameter="20"></mat-spinner>
+              </div>
+            </mat-label>
+            <mat-select formControlName="groupId">
               <mat-option
-                *ngFor="let group of (groupsListItems$ | async)"
+                *ngFor="let group of (dictionaryGroupsItems$ | async)"
                 [value]="group.id">
                 {{ group.name }}
               </mat-option>
@@ -159,14 +70,20 @@
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="w-100 mb-2">
-            <mat-label>Przedmiot</mat-label>
-            <mat-select required formControlName="itemId">
+            <mat-label>
+              <div class="d-flex align-items-center">
+                <span class="flex-grow-1">{{ (dictionaryItemsLoading$ | async) ? 'Ładowanie...' : 'Przedmiot' }}</span>
+                <mat-spinner *ngIf="(dictionaryItemsLoading$ | async)" diameter="20"></mat-spinner>
+              </div>
+            </mat-label>
+            <mat-select formControlName="itemId" [disabled]="isItemsSelectDisabled()">
               <mat-option
-                *ngFor="let item of (itemsListItems$ | async)"
+                *ngFor="let item of (dictionaryItemsItems$ | async)"
                 [value]="item.id">
                 {{ item.name }}
               </mat-option>
             </mat-select>
+
             <mat-hint>Dokona rezerwacji wybranego przedmiotu</mat-hint>
           </mat-form-field>
 

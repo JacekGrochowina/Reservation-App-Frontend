@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -8,6 +8,8 @@ import { AddEditReservationDialogData } from '../../utils/interfaces/add-edit-re
 import { ReservationsFacade } from '../../../../../../store/reservations/reservations.facade';
 import { ItemsFacade } from '../../../../../../store/items/items.facade';
 import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
+import { DictionariesFacade } from '../../../../../../store/dictionaries/dictionaries.facade';
+import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.state';
 
 type CheckboxStatus = 'tak' | 'nie';
 
@@ -19,17 +21,11 @@ type CheckboxStatus = 'tak' | 'nie';
 })
 export class AddEditReservationComponent implements OnInit, OnDestroy {
 
-  // ========== Selectors List Groups
-  public groupsListItems$ = this.groupsFacade.groupsListItems$;
-  public groupsListLoading$ = this.groupsFacade.groupsListLoading$;
-  public groupsListSuccess$ = this.groupsFacade.groupsListSuccess$;
-  public groupsListError$ = this.groupsFacade.groupsListError$;
+  public dictionaryGroupsItems$ = this.dictionariesFacade.dictionaryGroupsItems$;
+  public dictionaryGroupsLoading$ = this.dictionariesFacade.dictionaryGroupsLoading$;
 
-  // ========== Selectors List Items
-  public itemsListItems$ = this.itemsFacade.itemsListItems$;
-  public itemsListLoading$ = this.itemsFacade.itemsListLoading$;
-  public itemsListSuccess$ = this.itemsFacade.itemsListSuccess$;
-  public itemsListError$ = this.itemsFacade.itemsListError$;
+  public dictionaryItemsItems$ = this.dictionariesFacade.dictionaryItemsItems$;
+  public dictionaryItemsLoading$ = this.dictionariesFacade.dictionaryItemsLoading$;
 
   // ========== Selectors Add
   public reservationAddLoading$ = this.reservationsFacade.reservationAddLoading$;
@@ -43,10 +39,6 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
 
   public form!: FormGroup;
   private unsubscribe$ = new Subject<boolean>();
-
-  // get dateRange(): FormGroup {
-  //   return this.form.get('dateRange') as FormGroup;
-  // }
 
   get formGeneral(): FormGroup {
     return this.form.get('general') as FormGroup;
@@ -73,12 +65,14 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     private itemsFacade: ItemsFacade,
     private groupsFacade: GroupsFacade,
     private reservationsFacade: ReservationsFacade,
+    private dictionariesFacade: DictionariesFacade,
     private dialogRef: MatDialogRef<AddEditReservationComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddEditReservationDialogData
   ) {}
 
   public ngOnInit(): void {
     this.initForm();
+
     if (this.isEditMode()) {
       this.setFormValues();
     }
@@ -87,6 +81,8 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.unsubscribe$.next(true);
     this.unsubscribe$.unsubscribe();
+
+    this.clearDictionaries();
   }
 
   public onSubmit(): void {
@@ -114,6 +110,10 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     return formControl?.value ? 'tak' : 'nie';
   }
 
+  public isItemsSelectDisabled(): boolean {
+    return !this.formGeneral.get('groupId')?.value;
+  }
+
   private initForm(): void {
     /*
         1. general (Podstawowe informacje) - dateStart, dateFinish, itemId, priceTotal
@@ -124,7 +124,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
 
     this.form = this.fb.group({
       general: this.fb.group({
-        dateRange : this.fb.group({
+        dateRange: this.fb.group({
           start: ['', [Validators.required]],
           end: ['', [Validators.required]],
         }),
@@ -137,7 +137,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
           Validators.minLength(3),
           Validators.maxLength(25)
         ]],
-        surname: ['',[
+        surname: ['', [
           Validators.minLength(3),
           Validators.maxLength(25)
         ]],
@@ -155,57 +155,23 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
       }),
     });
 
-    this.formAdvance.get('isRequired')?.valueChanges.subscribe((isRequired) =>
-      isRequired
-        ? this.setRequired(this.formAdvance, 'amount')
-        : this.unsetRequired(this.formAdvance, 'amount')
-    );
+    this.handleRequired(this.formAdvance);
+    this.handleRequired(this.formDiscount);
 
-    this.formDiscount.get('isRequired')?.valueChanges.subscribe((isRequired) =>
-      isRequired
-        ? this.setRequired(this.formDiscount, 'amount')
-        : this.unsetRequired(this.formDiscount, 'amount')
-    );
+    this.handleChangesGeneralGroupId();
 
-    // this.form = this.fb.group({
-    //   dateRange : this.fb.group({
-    //     start: ['', [Validators.required]],
-    //     end: ['', [Validators.required]],
-    //   }),
-    //   name: ['', [
-    //     Validators.minLength(3),
-    //     Validators.maxLength(25)
-    //   ]],
-    //   surname: ['', [
-    //     Validators.minLength(3),
-    //     Validators.maxLength(25)
-    //   ]],
-    //   isAdvance: [false, [Validators.required]],
-    //   advance: [0, [
-    //     Validators.required,
-    //     Validators.min(0),
-    //   ]],
-    //   isDiscount: [false, [Validators.required]],
-    //   discount: [0, [
-    //     Validators.required,
-    //     Validators.min(0),
-    //   ]],
-    // });
-    //
-    // this.form.get('isAdvance')?.valueChanges.subscribe((isAdvance) =>
-    //   isAdvance
-    //     ? this.setRequired('advance')
-    //     : this.unsetRequired('advance')
-    // );
-    //
-    // this.form.get('isDiscount')?.valueChanges.subscribe((isDiscount) =>
-    //   isDiscount
-    //     ? this.setRequired('discount')
-    //     : this.unsetRequired('discount')
-    // );
+    this.loadDictionaries();
   }
 
-  private handleRequ
+  private handleRequired (formGroup: FormGroup): void {
+    formGroup.get('isRequired')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((isRequired) =>
+      isRequired
+        ? this.setRequired(formGroup, 'amount')
+        : this.unsetRequired(formGroup, 'amount')
+    );
+  }
 
   private setRequired(formGroup: FormGroup, controlName: string): void {
     formGroup.get(controlName)?.setValidators([Validators.required, Validators.min(0)]);
@@ -215,6 +181,23 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   private unsetRequired(formGroup: FormGroup, controlName: string): void {
     formGroup.get(controlName)?.setValidators(null);
     formGroup.get(controlName)?.updateValueAndValidity();
+  }
+
+  private handleChangesGeneralGroupId(): void {
+    this.formGeneral.get('groupId')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((group) => {
+        this.dictionariesFacade.clearDictionary(Dictionaries.items);
+        this.dictionariesFacade.getDictionary(Dictionaries.items, { group });
+      });
+  }
+
+  private loadDictionaries(): void {
+    this.dictionariesFacade.getDictionary(Dictionaries.groups);
+  }
+
+  private clearDictionaries(): void {
+    this.dictionariesFacade.clearDictionary(Dictionaries.groups);
   }
 
   private setFormValues(): void {

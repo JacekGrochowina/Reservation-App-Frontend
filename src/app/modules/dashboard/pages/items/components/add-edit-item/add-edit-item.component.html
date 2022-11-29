@@ -47,7 +47,7 @@
       <mat-label>Grupa</mat-label>
       <mat-select required formControlName="groupId">
         <mat-option
-          *ngFor="let group of (groupsListItems$ | async)"
+          *ngFor="let group of (dictionaryGroupsItems$ | async)"
           [value]="group.id">
           {{ group.name }}
         </mat-option>

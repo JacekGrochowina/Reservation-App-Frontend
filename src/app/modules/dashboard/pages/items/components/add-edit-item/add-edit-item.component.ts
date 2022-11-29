@@ -4,10 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AddEditMode } from 'src/app/shared/utils/enums/add-edit-mode.enum';
-import { Masks } from 'src/app/shared/utils/masks';
 import { AddEditItemDialogData } from '../../utils/interfaces/add-edit-item-dialog-data.interface';
 import { ItemsFacade } from '../../../../../../store/items/items.facade';
-import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
+import { DictionariesFacade } from '../../../../../../store/dictionaries/dictionaries.facade';
+import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.state';
 
 @Component({
   selector: 'app-add-edit-item',
@@ -16,11 +16,7 @@ import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
 })
 export class AddEditItemComponent implements OnInit, OnDestroy {
 
-  // ========== Selectors List
-  public groupsListItems$ = this.groupsFacade.groupsListItems$;
-  public groupsListLoading$ = this.groupsFacade.groupsListLoading$;
-  public groupsListSuccess$ = this.groupsFacade.groupsListSuccess$;
-  public groupsListError$ = this.groupsFacade.groupsListError$;
+  public dictionaryGroupsItems$ = this.dictionariesFacade.dictionaryGroupsItems$;
 
   // ========== Selectors Add
   public itemAddLoading$ = this.itemsFacade.itemAddLoading$;
@@ -38,13 +34,13 @@ export class AddEditItemComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private itemsFacade: ItemsFacade,
-    private groupsFacade: GroupsFacade,
+    private dictionariesFacade: DictionariesFacade,
     private dialogRef: MatDialogRef<AddEditItemComponent>,
     @Inject(MAT_DIALOG_DATA) private data: AddEditItemDialogData
   ) {}
 
   public ngOnInit(): void {
-    this.groupsFacade.getGroupsList();
+    this.dictionariesFacade.getDictionary(Dictionaries.items);
     this.initForm();
     if (this.isEditMode()) {
       this.setFormValues();

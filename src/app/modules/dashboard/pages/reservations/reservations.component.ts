@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemsFacade } from '../../../../store/items/items.facade';
-import { DictionariesFacade } from '../../../../store/dictionaries/dictionaries.facade';
-import { Dictionaries } from '../../../../store/dictionaries/dictionaries.state';
 
 @Component({
   selector: 'app-reservations',
@@ -16,16 +14,10 @@ export class ReservationsComponent implements OnInit {
   public itemsListSuccess$ = this.itemsFacade.itemsListSuccess$;
   public itemsListError$ = this.itemsFacade.itemsListError$;
 
-  constructor(
-    private itemsFacade: ItemsFacade,
-    private dictionariesFacade: DictionariesFacade,
-  ) {}
+  constructor(private itemsFacade: ItemsFacade) {}
 
   public ngOnInit(): void {
     this.itemsFacade.getItemsList();
-
-    this.dictionariesFacade.getDictionary(Dictionaries.items, { group: 1 });
-    this.dictionariesFacade.getDictionary(Dictionaries.groups);
   }
 
 }

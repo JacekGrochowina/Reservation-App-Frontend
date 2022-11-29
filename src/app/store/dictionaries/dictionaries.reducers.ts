@@ -21,7 +21,6 @@ export function DictionariesReducers(
     }
 
     case DictionariesActionTypes.getSuccess: {
-      console.log('test...');
       return {
         ...state,
         [action.payload]: {
