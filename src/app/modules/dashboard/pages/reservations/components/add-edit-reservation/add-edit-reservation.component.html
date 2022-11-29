@@ -1,87 +1,316 @@
 <h1 mat-dialog-title>
-  {{ isAddMode() ? 'Dodawanie grupy' : 'Edycja grupy' }}
+  {{ isAddMode() ? 'Dodawanie rezerwacji' : 'Edycja rezerwacji' }}
 </h1>
 
 <div mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <mat-form-field appearance="fill" class="w-100 mb-2">
-      <mat-label>Nazwa</mat-label>
-      <input
-        matInput
-        required
-        cdkFocusInitial
-        formControlName="name"
-        placeholder="np. Apartament Bursztynowy">
-      <mat-hint>Podana wartość będzie reprezentować tę grupę w systemie</mat-hint>
-      <mat-error *ngIf="form.get('name')?.value.length > 45 && !form.get('name')?.hasError('required')">
-        Pole musi mieć <strong>maksymalnie 45 znaków</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('name')?.value.length < 2 && !form.get('name')?.hasError('required')">
-        Pole musi mieć <strong>co najmniej 2 znaki</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('name')?.hasError('required')">
-        Pole <strong>jest wymagane</strong>
-      </mat-error>
-    </mat-form-field>
+<!--    <mat-form-field appearance="fill" class="w-100 mb-2">-->
+<!--      <mat-label>Data rezerwacji</mat-label>-->
+<!--      <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">-->
+<!--        <input matStartDate formControlName="start" placeholder="Przyjazd">-->
+<!--        <input matEndDate formControlName="end" placeholder="Odjazd">-->
+<!--      </mat-date-range-input>-->
+<!--      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>-->
+<!--      <mat-datepicker-toggle matSuffix matIconSuffix [for]="picker"></mat-datepicker-toggle>-->
+<!--      <mat-date-range-picker #picker></mat-date-range-picker>-->
 
-    <mat-form-field appearance="fill" class="w-100 mb-2">
-      <mat-label>Miasto</mat-label>
-      <input
-        matInput
-        required
-        formControlName="city"
-        placeholder="np. Toruń">
-      <mat-hint>Podana wartość będzie wyświetlać się w lokalizacji na stronie internetowej</mat-hint>
-      <mat-error *ngIf="form.get('city')?.value.length > 45 && !form.get('city')?.hasError('required')">
-        Pole musi mieć <strong>maksymalnie 45 znaków</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('city')?.value.length < 2 && !form.get('city')?.hasError('required')">
-        Pole musi mieć <strong>co najmniej 2 znaki</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('city')?.hasError('required')">
-        Pole <strong>jest wymagane</strong>
-      </mat-error>
-    </mat-form-field>
+<!--      <mat-error *ngIf="form.get('start')?.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
+<!--      <mat-error *ngIf="form.get('end')?.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
+<!--      <mat-error *ngIf="dateRange.get('start')?.hasError('required') || dateRange.get('end')?.hasError('required')">-->
+<!--        Pole <strong>jest wymagane</strong>-->
+<!--      </mat-error>-->
+<!--    </mat-form-field>-->
 
-    <mat-form-field appearance="fill" class="w-100 mb-2">
-      <mat-label>Adres</mat-label>
-      <input
-        matInput
-        required
-        formControlName="address"
-        placeholder="np. Mikołaja Kopernika 21/10">
-      <mat-hint>Podana wartość będzie wyświetlać się w lokalizacji na stronie internetowej</mat-hint>
-      <mat-error *ngIf="form.get('address')?.value.length > 60 && !form.get('address')?.hasError('required')">
-        Pole musi mieć <strong>maksymalnie 60 znaków</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('address')?.value.length < 2 && !form.get('address')?.hasError('required')">
-        Pole musi mieć <strong>co najmniej 2 znaki</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('address')?.hasError('required')">
-        Pole <strong>jest wymagane</strong>
-      </mat-error>
-    </mat-form-field>
+<!--    <div class="row no-gutters">-->
+<!--      <div class="col-5">-->
+<!--        <mat-form-field appearance="fill" class="w-100 mb-2">-->
+<!--          <mat-label>Imie</mat-label>-->
+<!--          <input-->
+<!--            matInput-->
+<!--            formControlName="name">-->
+<!--          <mat-hint>Dane rezerwującego</mat-hint>-->
+<!--          <mat-error *ngIf="form.get('name')?.value.length < 3">-->
+<!--            Imie musi mieć <strong>min. 3 znaki</strong>-->
+<!--          </mat-error>-->
+<!--          <mat-error *ngIf="form.get('name')?.value.length > 25">-->
+<!--            Imie musi mieć <strong>max. 25 znaków</strong>-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
 
-    <mat-form-field appearance="fill" class="w-100 mb-2">
-      <mat-label>Opis</mat-label>
-      <textarea
-        matInput
-        required
-        formControlName="description"
-        placeholder="np. Przytulna kamienica w samym centrum starego miasta.">
-      </textarea>
-      <mat-hint>Podana wartość będzie wyświetlać się na stronie internetowej w szczegółach danej grupy</mat-hint>
-      <mat-error *ngIf="form.get('description')?.value.length > 255 && !form.get('description')?.hasError('required')">
-        Pole musi mieć <strong>maksymalnie 255 znaków</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('description')?.value.length < 2 && !form.get('description')?.hasError('required')">
-        Pole musi mieć <strong>co najmniej 2 znaki</strong>
-      </mat-error>
-      <mat-error *ngIf="form.get('description')?.hasError('required')">
-        Pole <strong>jest wymagane</strong>
-      </mat-error>
-    </mat-form-field>
+<!--      <div class="col-7">-->
+<!--        <mat-form-field appearance="fill" class="w-100 mb-2">-->
+<!--          <mat-label>Nazwisko</mat-label>-->
+<!--          <input-->
+<!--            matInput-->
+<!--            formControlName="surname">-->
+<!--          <mat-error *ngIf="form.get('surname')?.value.length < 3 && !form.get('surname')?.hasError('required')">-->
+<!--            Naziwsko musi mieć <strong>min. 3 znaki</strong>-->
+<!--          </mat-error>-->
+<!--          <mat-error *ngIf="form.get('surname')?.value.length > 25 && !form.get('surname')?.hasError('required')">-->
+<!--            Nazwisko musi mieć <strong>max. 25 znaków</strong>-->
+<!--          </mat-error>-->
+<!--          <mat-error *ngIf="form.get('surname')?.hasError('required')">-->
+<!--            Pole <strong>jest wymagane</strong>-->
+<!--          </mat-error>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <section class="w-100 my-3">-->
+<!--      <mat-checkbox formControlName="isAdvance" color="primary">Czy zaliczka jest wymagana?</mat-checkbox>-->
+<!--    </section>-->
+
+<!--    <mat-form-field *ngIf="form.get('isAdvance')?.value" appearance="fill" class="w-100 mb-2">-->
+<!--      <mat-label>Wpłacona zaliczka</mat-label>-->
+<!--      <input-->
+<!--        matInput-->
+<!--        type="number"-->
+<!--        formControlName="advance"-->
+<!--        placeholder="np. 300">-->
+<!--      <span matSuffix>zł</span>-->
+<!--      <mat-error *ngIf="form.get('advance')?.value < 0 && !form.get('advance')?.hasError('required')">-->
+<!--        Pole musi mieć wartość <strong>większą lub równą 0</strong>-->
+<!--      </mat-error>-->
+<!--      <mat-error *ngIf="form.get('advance')?.hasError('required')">-->
+<!--        Pole <strong>jest wymagane</strong>-->
+<!--      </mat-error>-->
+<!--    </mat-form-field>-->
+
+<!--    <section class="w-100 my-3">-->
+<!--      <mat-checkbox formControlName="isDiscount" color="primary">Czy dodać rabat?</mat-checkbox>-->
+<!--    </section>-->
+
+<!--    <mat-form-field *ngIf="form.get('isDiscount')?.value" appearance="fill" class="w-100 mb-2">-->
+<!--      <mat-label>Rabat kwotowy</mat-label>-->
+<!--      <input-->
+<!--        matInput-->
+<!--        type="number"-->
+<!--        formControlName="discount"-->
+<!--        placeholder="np. 100">-->
+<!--      <span matSuffix>zł</span>-->
+<!--      <mat-error *ngIf="form.get('discount')?.value < 0 && !form.get('discount')?.hasError('required')">-->
+<!--        Pole musi mieć wartość <strong>większą lub równą 0</strong>-->
+<!--      </mat-error>-->
+<!--      <mat-error *ngIf="form.get('discount')?.hasError('required')">-->
+<!--        Pole <strong>jest wymagane</strong>-->
+<!--      </mat-error>-->
+<!--    </mat-form-field>-->
+
+    <mat-vertical-stepper class="stepper" #stepper>
+
+      <!-- STEP 1 - Form General -->
+      <mat-step [stepControl]="formGeneral">
+        <form [formGroup]="formGeneral">
+          <ng-template matStepLabel>Podstawowe informacje</ng-template>
+
+          <div class="row no-gutters">
+            <div class="col-7">
+              <mat-form-field appearance="fill" class="w-100 mb-2">
+                <mat-label>Data rezerwacji</mat-label>
+                <mat-date-range-input [formGroup]="formGeneralDateRange" [rangePicker]="picker">
+                  <input matStartDate formControlName="start" placeholder="Przyjazd">
+                  <input matEndDate formControlName="end" placeholder="Odjazd">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+                <mat-error *ngIf="form.get('start')?.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                <mat-error *ngIf="form.get('end')?.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                <mat-error *ngIf="formGeneralDateRange.get('start')?.hasError('required') || formGeneralDateRange.get('end')?.hasError('required')">
+                  Pole <strong>jest wymagane</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-5">
+              <mat-form-field appearance="fill" class="w-100 mb-2">
+                <mat-label>Cena pobytu</mat-label>
+                <input
+                  matInput
+                  required
+                  type="number"
+                  formControlName="priceTotal"
+                  placeholder="np. 300">
+                <span matSuffix>zł</span>
+                <mat-hint>Całkowita cena pobytu za {{ getDateRange() }} dni</mat-hint>
+                <mat-error *ngIf="form.get('pricePerDay')?.value < 0 && !form.get('pricePerDay')?.hasError('required')">
+                  Pole musi mieć wartość <strong>większą lub równą 0</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('pricePerDay')?.hasError('required')">
+                  Pole <strong>jest wymagane</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <mat-form-field appearance="fill" class="w-100 mb-2">
+            <mat-label>Grupa</mat-label>
+            <mat-select required formControlName="groupId">
+              <mat-option
+                *ngFor="let group of (groupsListItems$ | async)"
+                [value]="group.id">
+                {{ group.name }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Po wybraniu, poniżej wyświetlą się przedmioty tylko z tej grupy</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="w-100 mb-2">
+            <mat-label>Przedmiot</mat-label>
+            <mat-select required formControlName="itemId">
+              <mat-option
+                *ngFor="let item of (itemsListItems$ | async)"
+                [value]="item.id">
+                {{ item.name }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Dokona rezerwacji wybranego przedmiotu</mat-hint>
+          </mat-form-field>
+
+          <div>
+            <button mat-button matStepperNext>Dalej</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- STEP 2 - Form Client -->
+      <mat-step [stepControl]="formClient" label="Fill out your address">
+        <form [formGroup]="formClient">
+          <ng-template matStepLabel>Dane rezerwującego</ng-template>
+
+          <div class="row no-gutters">
+            <div class="col-5">
+              <mat-form-field appearance="fill" class="w-100 mb-2">
+                <mat-label>Imie</mat-label>
+                <input
+                  matInput
+                  formControlName="name">
+                <mat-error *ngIf="form.get('name')?.value.length < 3 && !form.get('name')?.hasError('required')">
+                  Imie musi mieć <strong>min. 3 znaki</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('name')?.value.length > 25 && !form.get('name')?.hasError('required')">
+                  Imie musi mieć <strong>max. 25 znaków</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('name')?.hasError('required')">
+                  Pole <strong>jest wymagane</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-7">
+              <mat-form-field appearance="fill" class="w-100 mb-2">
+                <mat-label>Nazwisko</mat-label>
+                <input
+                  matInput
+                  formControlName="surname">
+                <mat-error *ngIf="form.get('surname')?.value.length < 3 && !form.get('surname')?.hasError('required')">
+                  Nazwisko musi mieć <strong>min. 3 znaki</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('surname')?.value.length > 25 && !form.get('surname')?.hasError('required')">
+                  Nazwisko musi mieć <strong>max. 25 znaków</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('surname')?.hasError('required')">
+                  Pole <strong>jest wymagane</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-5">
+              <mat-form-field appearance="fill" class="w-100 mb-2">
+                <mat-label>Numer telefonu</mat-label>
+                <input
+                  matInput
+                  formControlName="phone">
+              </mat-form-field>
+            </div>
+
+            <div class="col-7">
+              <mat-form-field appearance="fill" class="w-100 mb-2">
+                <mat-label>Email</mat-label>
+                <input
+                  matInput
+                  formControlName="email">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div>
+            <button mat-button matStepperPrevious>Wstecz</button>
+            <button mat-button matStepperNext>Dalej</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- STEP 3 - Form Advance -->
+      <mat-step>
+        <ng-template matStepLabel>Zaliczka</ng-template>
+
+        <form [formGroup]="formAdvance">
+          <section class="w-100 my-3">
+            <mat-checkbox formControlName="isRequired" color="primary">
+              <p class="checkbox__desc desc">Czy zaliczka jest wymagana? <span class="desc__accent ml-2">{{ getCheckboxStatus(formAdvance.get('isRequired')) }}</span></p>
+            </mat-checkbox>
+          </section>
+
+          <ng-container *ngIf="formAdvance.get('isRequired')?.value">
+            <div class="row no-gutters">
+              <div class="col-6">
+                <mat-form-field appearance="fill" class="w-100 mb-2">
+                  <mat-label>Wymagana kwota</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="amount"
+                    placeholder="np. 300">
+                  <span matSuffix>zł</span>
+                  <mat-error *ngIf="formAdvance.get('amount')?.value < 0 && !formAdvance.get('amount')?.hasError('required')">
+                    Pole musi mieć wartość <strong>większą lub równą 0</strong>
+                  </mat-error>
+                  <mat-error *ngIf="formAdvance.get('amount')?.hasError('required')">
+                    Pole <strong>jest wymagane</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-6">
+                <mat-form-field appearance="fill" class="w-100 mb-2">
+                  <mat-label>Wpłacona zaliczka</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="paidAmount"
+                    placeholder="np. 300">
+                  <span matSuffix>zł</span>
+                  <mat-error *ngIf="formAdvance.get('paidAmount')?.value < 0 && !formAdvance.get('paidAmount')?.hasError('required')">
+                    Pole musi mieć wartość <strong>większą lub równą 0</strong>
+                  </mat-error>
+                  <mat-error *ngIf="formAdvance.get('paidAmount')?.hasError('required')">
+                    Pole <strong>jest wymagane</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-container>
+
+          <div>
+            <button mat-button matStepperPrevious>Wstecz</button>
+            <button mat-button matStepperNext>Dalej</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
 
     <div mat-dialog-actions class="d-flex justify-content-end m-0 p-0">
       <button
@@ -96,8 +325,8 @@
       <app-button-loading
         color="primary"
         [text]="isAddMode() ? 'Dodaj' : 'Edytuj'"
-        [disabled]="!form.valid || !form.dirty || (groupAddLoading$ | async) || (groupUpdateLoading$ | async)"
-        [isLoading]="(groupAddLoading$ | async) || (groupUpdateLoading$ | async)">
+        [disabled]="!form.valid || !form.dirty || (reservationAddLoading$ | async) || (reservationUpdateLoading$ | async)"
+        [isLoading]="(reservationAddLoading$ | async) || (reservationUpdateLoading$ | async)">
       </app-button-loading>
     </div>
   </form>

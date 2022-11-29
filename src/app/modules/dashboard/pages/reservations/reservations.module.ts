@@ -16,6 +16,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ReservationsGridComponent } from './components/reservations-grid/reservations-grid.component';
 import { AddEditReservationComponent } from './components/add-edit-reservation/add-edit-reservation.component';
 import { ItemsModule } from '../items/items.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -23,22 +26,25 @@ import { ItemsModule } from '../items/items.module';
     ReservationsGridComponent,
     AddEditReservationComponent,
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        ReservationsRoutingModule,
-        SharedModule,
-        TextMaskModule,
-        MatDividerModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTableModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        ItemsModule,
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ReservationsRoutingModule,
+    SharedModule,
+    TextMaskModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    ItemsModule,
+    MatCheckboxModule,
+    MatStepperModule,
+    MatSelectModule,
+  ],
   providers: [MatDatepickerModule],
 })
 export class ReservationsModule {}

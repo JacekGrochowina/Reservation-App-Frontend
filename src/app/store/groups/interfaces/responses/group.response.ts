@@ -1,6 +1,6 @@
 export interface GroupResponse {
   name: string;
-  description: string;
+  description: string | null;
   city: string;
   address: string;
   createdAt: string;

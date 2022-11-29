@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AddEditGroupComponent } from '../../../groups/components/add-edit-group/add-edit-group.component';
 import { DialogService, DialogSize } from '../../../../../../shared/services/dialog.service';
 import { AddEditMode } from '../../../../../../shared/utils/enums/add-edit-mode.enum';
 import { AddEditReservationDialogData } from '../../utils/interfaces/add-edit-reservation-dialog-data.interface';
 import { Observable } from 'rxjs';
 import { Item } from '../../../../../../store/items/interfaces/item.interface';
 import { isEmpty } from 'lodash';
+import { AddEditReservationComponent } from '../add-edit-reservation/add-edit-reservation.component';
 
 @Component({
   selector: 'app-reservations-grid',
@@ -44,7 +44,7 @@ export class ReservationsGridComponent implements OnInit {
   }
 
   public openAddGroupDialog(): void {
-    this.dialogService.open(AddEditGroupComponent, DialogSize.sm, {
+    this.dialogService.open(AddEditReservationComponent, DialogSize.md, {
       data: {
         mode: AddEditMode.add,
       } as AddEditReservationDialogData,

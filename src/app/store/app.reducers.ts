@@ -5,12 +5,16 @@ import { AuthReducers } from './auth/auth.reducers';
 import { GroupsReducers } from './groups/groups.reducers';
 import { ItemsReducers } from './items/items.reducers';
 import { AuthActionTypes } from './auth/auth.actions';
+import { ReservationsReducers } from './reservations/reservations.reducers';
+import { DictionariesReducers } from './dictionaries/dictionaries.reducers';
 
 export const appReducers: ActionReducerMap<AppState, any> = {
   auth: AuthReducers,
   settings: SettingsReducers,
   groups: GroupsReducers,
   items: ItemsReducers,
+  reservations: ReservationsReducers,
+  dictionaries: DictionariesReducers,
 };
 
 export const logout = (reducer: ActionReducer<any>): ActionReducer<any> => {

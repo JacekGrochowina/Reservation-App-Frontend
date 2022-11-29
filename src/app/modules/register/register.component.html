@@ -34,7 +34,7 @@
             matInput
             formControlName="surname">
           <mat-error *ngIf="form.get('surname')?.value.length < 3 && !form.get('surname')?.hasError('required')">
-            Naziwsko musi mieć <strong>min. 3 znaki</strong>
+            Nazwisko musi mieć <strong>min. 3 znaki</strong>
           </mat-error>
           <mat-error *ngIf="form.get('surname')?.value.length > 25 && !form.get('surname')?.hasError('required')">
             Nazwisko musi mieć <strong>max. 25 znaków</strong>

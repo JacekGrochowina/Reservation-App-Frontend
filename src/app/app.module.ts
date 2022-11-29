@@ -23,6 +23,10 @@ import { GroupsFacade } from './store/groups/groups.facade';
 import { GroupsEffects } from './store/groups/groups.effects';
 import { ItemsFacade } from './store/items/items.facade';
 import { ItemsEffects } from './store/items/items.effects';
+import { ReservationsEffects } from './store/reservations/reservations.effects';
+import { ReservationsFacade } from './store/reservations/reservations.facade';
+import { DictionariesFacade } from './store/dictionaries/dictionaries.facade';
+import { DictionariesEffects } from './store/dictionaries/dictionaries.effects';
 
 @NgModule({
   declarations: [
@@ -42,14 +46,16 @@ import { ItemsEffects } from './store/items/items.effects';
         metaReducers,
         runtimeChecks: {
           strictStateImmutability: true,
-          strictActionImmutability: true
+          strictActionImmutability: true,
         }
       }),
     EffectsModule.forRoot([
       SettingsEffects,
       AuthEffects,
+      DictionariesEffects,
       GroupsEffects,
-      ItemsEffects
+      ItemsEffects,
+      ReservationsEffects,
     ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -59,10 +65,13 @@ import { ItemsEffects } from './store/items/items.effects';
   providers: [
     SettingsFacade,
     AuthFacade,
+    DictionariesFacade,
     GroupsFacade,
     ItemsFacade,
+    ReservationsFacade,
     AuthInterceptorProvider,
-    {provide: MAT_DATE_LOCALE, useValue: 'pl-PL'}],
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
