@@ -1,6 +1,11 @@
 <form [formGroup]="form" class="form">
   <mat-form-field appearance="fill" class="form__field">
-    <mat-label>Grupa</mat-label>
+    <mat-label>
+      <div class="d-flex align-items-center">
+        <span class="flex-grow-1">{{ (dictionaryGroupsLoading$ | async) ? 'Ładowanie...' : 'Grupa' }}</span>
+        <mat-spinner *ngIf="(dictionaryGroupsLoading$ | async)" diameter="20"></mat-spinner>
+      </div>
+    </mat-label>
     <mat-select (selectionChange)="optionChanged($event)" formControlName="selectedGroups" multiple>
       <mat-option
         *ngFor="let group of (dictionaryGroupsItems$ | async)"

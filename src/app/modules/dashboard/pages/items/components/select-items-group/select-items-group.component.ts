@@ -22,6 +22,7 @@ import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.
 export class SelectItemsGroupComponent implements OnInit, OnDestroy {
 
   public dictionaryGroupsItems$ = this.dictionariesFacade.dictionaryGroupsItems$;
+  public dictionaryGroupsLoading$ = this.dictionariesFacade.dictionaryGroupsLoading$;
   public form!: FormGroup;
 
   private unsubscribe$ = new Subject<boolean>();

@@ -17,6 +17,7 @@ import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.
 export class AddEditItemComponent implements OnInit, OnDestroy {
 
   public dictionaryGroupsItems$ = this.dictionariesFacade.dictionaryGroupsItems$;
+  public dictionaryGroupsLoading$ = this.dictionariesFacade.dictionaryGroupsLoading$;
 
   // ========== Selectors Add
   public itemAddLoading$ = this.itemsFacade.itemAddLoading$;
