@@ -9,7 +9,6 @@
       <mat-label>Nazwa</mat-label>
       <input
         matInput
-        required
         cdkFocusInitial
         formControlName="name"
         placeholder="np. Apartament nr 1 z balkonem">
@@ -50,7 +49,7 @@
           <mat-spinner *ngIf="(dictionaryGroupsLoading$ | async)" diameter="20"></mat-spinner>
         </div>
       </mat-label>
-      <mat-select required formControlName="groupId">
+      <mat-select formControlName="groupId">
         <mat-option
           *ngFor="let group of (dictionaryGroupsItems$ | async)"
           [value]="group.id">
