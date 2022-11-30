@@ -110,8 +110,8 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     return formControl?.value ? 'tak' : 'nie';
   }
 
-  public isItemsSelectDisabled(): boolean {
-    return !this.formGeneral.get('groupId')?.value;
+  public percentFormat(value: number): string {
+    return `${value}%`;
   }
 
   private initForm(): void {
@@ -146,12 +146,14 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
       }),
       advance: this.fb.group({
         isRequired: [false, [Validators.required]],
-        amount: ['', [Validators.min(0)]],
+        amount: [0, [Validators.min(0)]],
+        amountPercent: [0, [Validators.min(0)]],
         paidAmount: ['', [Validators.min(0)]],
       }),
       discount: this.fb.group({
         isRequired: [false, [Validators.required]],
-        amount: ['', [Validators.min(0)]],
+        amount: [0, [Validators.min(0)]],
+        amountPercent: [0, [Validators.min(0)]],
       }),
     });
 
@@ -159,17 +161,35 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     this.handleRequired(this.formDiscount);
 
     this.handleChangesGeneralGroupId();
+    this.handleChangesPercent(this.formAdvance);
+    this.handleChangesPercent(this.formDiscount);
+
+    this.setDisabledControls();
 
     this.loadDictionaries();
+  }
+
+  private setDisabledControls(): void {
+    this.setDisabledFormGeneralItemId();
+  }
+
+  private setDisabledFormGeneralItemId(): void {
+    this.isItemsSelectDisabled()
+      ? this.formGeneral.get('itemId')?.disable()
+      : this.formGeneral.get('itemId')?.enable();
+  }
+
+  private isItemsSelectDisabled(): boolean {
+    return !this.formGeneral.get('groupId')?.value;
   }
 
   private handleRequired (formGroup: FormGroup): void {
     formGroup.get('isRequired')?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((isRequired) =>
-      isRequired
-        ? this.setRequired(formGroup, 'amount')
-        : this.unsetRequired(formGroup, 'amount')
+        isRequired
+          ? this.setRequired(formGroup, 'amount')
+          : this.unsetRequired(formGroup, 'amount')
     );
   }
 
@@ -187,9 +207,42 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     this.formGeneral.get('groupId')?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((group) => {
+        this.setDisabledFormGeneralItemId();
         this.dictionariesFacade.clearDictionary(Dictionaries.items);
         this.dictionariesFacade.getDictionary(Dictionaries.items, { group });
       });
+  }
+
+  private handleChangesPercent(formGroup: FormGroup): void {
+    formGroup.get('amount')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((amount) => {
+        const priceTotal = this.formGeneral.get('priceTotal')?.value;
+        const calcPercent = this.calcPercent(amount, priceTotal);
+
+        if ((formGroup.get('amountPercent')?.value) === calcPercent) return;
+
+        formGroup.get('amountPercent')?.patchValue(calcPercent);
+      });
+
+    formGroup.get('amountPercent')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((amountPercent) => {
+        const priceTotal = this.formGeneral.get('priceTotal')?.value;
+        const calcAmount = this.calcAmount(amountPercent, priceTotal);
+
+        if (formGroup.get('amount')?.value === calcAmount) return;
+
+        formGroup.get('amount')?.patchValue(calcAmount);
+      });
+  }
+
+  private calcAmount(percent: number, totalValue: number): number {
+    return Number((totalValue / 100 * percent).toFixed(2));
+  }
+
+  private calcPercent(value: number, totalValue: number): number {
+    return Number((value * 100 / totalValue).toFixed(2));
   }
 
   private loadDictionaries(): void {

@@ -35,6 +35,7 @@ import { AuthWrapperComponent } from './components/auth-wrapper/auth-wrapper.com
 import { ErrorHandlerComponent } from './components/error-handler/error-handler.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { CurrentUserInfoComponent } from './components/sidenav/current-user-info/current-user-info.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,10 @@ import { CurrentUserInfoComponent } from './components/sidenav/current-user-info
     ButtonLoadingComponent,
     AuthWrapperComponent,
   ],
-  providers: [DialogService],
+  providers: [
+    DialogService,
+    { provide: MAT_DATE_LOCALE, useValue: 'pl-PL' },
+  ],
 })
 export class SharedModule {
 }

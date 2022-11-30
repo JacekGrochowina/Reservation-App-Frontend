@@ -4,7 +4,7 @@
 
 <div mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-vertical-stepper class="stepper" #stepper>
+    <mat-vertical-stepper linear="true" class="stepper" #stepper>
 
       <!-- STEP 1 - Form General -->
       <mat-step [stepControl]="formGeneral">
@@ -76,7 +76,7 @@
                 <mat-spinner *ngIf="(dictionaryItemsLoading$ | async)" diameter="20"></mat-spinner>
               </div>
             </mat-label>
-            <mat-select formControlName="itemId" [disabled]="isItemsSelectDisabled()">
+            <mat-select formControlName="itemId">
               <mat-option
                 *ngFor="let item of (dictionaryItemsItems$ | async)"
                 [value]="item.id">
@@ -209,6 +209,19 @@
                   </mat-error>
                 </mat-form-field>
               </div>
+
+              <div class="col-12">
+                <mat-slider
+                  color="primary"
+                  class="w-100"
+                  formControlName="amountPercent"
+                  thumbLabel="true"
+                  [displayWith]="percentFormat"
+                  [max]="100"
+                  [min]="0"
+                  [step]="1">
+                </mat-slider>
+              </div>
             </div>
           </ng-container>
 
@@ -219,8 +232,55 @@
         </form>
       </mat-step>
 
+      <!-- STEP 4 - Form Discount -->
       <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
+        <ng-template matStepLabel>Rabat</ng-template>
+
+        <form [formGroup]="formDiscount">
+          <section class="w-100 my-3">
+            <mat-checkbox formControlName="isRequired" color="primary">
+              <p class="checkbox__desc desc">Czy chcesz naliczyć rabat? <span class="desc__accent ml-2">{{ getCheckboxStatus(formDiscount.get('isRequired')) }}</span></p>
+            </mat-checkbox>
+          </section>
+
+          <ng-container *ngIf="formDiscount.get('isRequired')?.value">
+            <mat-form-field appearance="fill" class="w-100 mb-2">
+              <mat-label>Kwota</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="amount"
+                placeholder="np. 300">
+              <span matSuffix>zł</span>
+              <mat-error *ngIf="formDiscount.get('amount')?.value < 0 && !formDiscount.get('amount')?.hasError('required')">
+                Pole musi mieć wartość <strong>większą lub równą 0</strong>
+              </mat-error>
+              <mat-error *ngIf="formDiscount.get('amount')?.hasError('required')">
+                Pole <strong>jest wymagane</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-slider
+              color="primary"
+              class="w-100"
+              formControlName="amountPercent"
+              thumbLabel="true"
+              [displayWith]="percentFormat"
+              [max]="100"
+              [min]="0"
+              [step]="1">
+            </mat-slider>
+          </ng-container>
+
+          <div>
+            <button mat-button matStepperPrevious>Wstecz</button>
+            <button mat-button matStepperNext>Dalej</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Podsumowanie</ng-template>
         <p>You are now done.</p>
         <div>
           <button mat-button matStepperPrevious>Back</button>

@@ -12,13 +12,15 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { ReservationsGridComponent } from './components/reservations-grid/reservations-grid.component';
 import { AddEditReservationComponent } from './components/add-edit-reservation/add-edit-reservation.component';
 import { ItemsModule } from '../items/items.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date.adapter';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatCheckboxModule,
     MatStepperModule,
     MatSelectModule,
+    MatSliderModule,
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule,
+    { provide: DateAdapter, useClass: CustomDateAdapter }
+  ],
 })
 export class ReservationsModule {}
