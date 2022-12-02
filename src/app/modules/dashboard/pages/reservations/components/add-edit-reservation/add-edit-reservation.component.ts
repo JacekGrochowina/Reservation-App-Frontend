@@ -13,6 +13,9 @@ import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.
 import { isNull } from 'lodash';
 import { getDayName } from '../../../../../../shared/utils/extensions/getDayName';
 import { DefaultDictionary } from '../../../../../../store/dictionaries/interfaces/common/default-dictionary.interface';
+import {
+  ReservationAddPayload
+} from '../../../../../../store/reservations/interfaces/payloads/reservation-add.payload';
 
 type CheckboxStatus = 'tak' | 'nie';
 
@@ -94,7 +97,8 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    console.log(this.form.value);
+    // console.log(this.form.value);
+    this.reservationAddSubmit();
     // this.isAddMode() ? this.groupAddSubmit() : this.groupUpdateSubmit();
   }
 
@@ -358,8 +362,37 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     return Math.floor((Date.parse(finishDate) - Date.parse(startDate)) / 86400000);
   }
 
-  private groupAddSubmit(): void {
-    this.reservationsFacade.addReservation(this.form.value);
+  private getFormControlStringValue(value: string): string | null {
+    const trimValue = value.trim();
+    const isEmpty = trimValue === '';
+    return isEmpty ? null : trimValue;
+  }
+
+  private getFormControlOptionalValue(formGroup: FormGroup, controlName: string): number | null {
+    const isIntroduced = formGroup.get('isRequired')?.value;
+    const controlNameValue = formGroup.get(controlName)?.value;
+    const isEmpty = controlNameValue === '';
+    return isIntroduced && !isEmpty ? controlNameValue : null;
+  }
+
+  private reservationAddSubmit(): void {
+    this.reservationsFacade.addReservation({
+      dateStart: this.formGeneralDateRange.get('start')?.value,
+      dateFinish: this.formGeneralDateRange.get('end')?.value,
+      clientName: this.getFormControlStringValue(this.formClient.get('name')?.value),
+      clientSurname: this.getFormControlStringValue(this.formClient.get('surname')?.value),
+      clientPhone: this.getFormControlStringValue(this.formClient.get('phone')?.value),
+      clientEmail: this.getFormControlStringValue(this.formClient.get('email')?.value),
+      isAdvance: this.formAdvance.get('isRequired')?.value,
+      advanceTotal: this.getFormControlOptionalValue(this.formAdvance, 'amount'),
+      advancePaid: this.getFormControlOptionalValue(this.formAdvance, 'paidAmount'),
+      isDiscount: this.formDiscount.get('isRequired')?.value,
+      discount: this.getFormControlOptionalValue(this.formDiscount, 'amount'),
+      priceTotal: this.formGeneral.get('priceTotal')?.value,
+      groupId: this.formGeneral.get('group')?.value.id,
+      itemId: this.formGeneral.get('item')?.value.id,
+    } as ReservationAddPayload);
+
     this.reservationAddSuccess$
       .pipe(
         takeUntil(this.unsubscribe$),
