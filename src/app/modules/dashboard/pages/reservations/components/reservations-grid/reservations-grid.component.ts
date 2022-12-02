@@ -28,16 +28,6 @@ export class ReservationsGridComponent implements OnInit {
   public prevRangeOffset: number = 0;
   public nextRangeOffset: number = 0;
 
-  // private dayNames: string[] = [
-  //   'Ndz.',
-  //   'Pon.',
-  //   'Wt.',
-  //   'Śr.',
-  //   'Czw.',
-  //   'Pt.',
-  //   'Sob.',
-  // ];
-
   constructor(private dialogService: DialogService) {}
 
   public ngOnInit(): void {
