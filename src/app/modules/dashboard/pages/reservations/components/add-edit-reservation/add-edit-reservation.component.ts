@@ -10,6 +10,9 @@ import { ItemsFacade } from '../../../../../../store/items/items.facade';
 import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
 import { DictionariesFacade } from '../../../../../../store/dictionaries/dictionaries.facade';
 import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.state';
+import { isNull } from 'lodash';
+import { getDayName } from '../../../../../../shared/utils/extensions/getDayName';
+import { DefaultDictionary } from '../../../../../../store/dictionaries/interfaces/common/default-dictionary.interface';
 
 type CheckboxStatus = 'tak' | 'nie';
 
@@ -22,7 +25,6 @@ type CheckboxStatus = 'tak' | 'nie';
 export class AddEditReservationComponent implements OnInit, OnDestroy {
 
   public dictionaryGroupsItems$ = this.dictionariesFacade.dictionaryGroupsItems$;
-  public dictionaryGroupsLoading$ = this.dictionariesFacade.dictionaryGroupsLoading$;
 
   public dictionaryItemsItems$ = this.dictionariesFacade.dictionaryItemsItems$;
   public dictionaryItemsLoading$ = this.dictionariesFacade.dictionaryItemsLoading$;
@@ -36,6 +38,12 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   public reservationUpdateLoading$ = this.reservationsFacade.reservationUpdateLoading$;
   public reservationUpdateSuccess$ = this.reservationsFacade.reservationUpdateSuccess$;
   public reservationUpdateError$ = this.reservationsFacade.reservationUpdateError$;
+
+  // ========== Selectors Details
+  public itemDetailsItems$ = this.itemsFacade.itemDetailsItems$;
+  public itemDetailsLoading$ = this.itemsFacade.itemDetailsLoading$;
+  public itemDetailsSuccess$ = this.itemsFacade.itemDetailsSuccess$;
+  public itemDetailsError$ = this.itemsFacade.itemDetailsError$;
 
   public form!: FormGroup;
   private unsubscribe$ = new Subject<boolean>();
@@ -110,27 +118,52 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     return formControl?.value ? 'tak' : 'nie';
   }
 
-  public percentFormat(value: number): string {
-    return `${value}%`;
+  public getPercentDisplayValue(formGroup: FormGroup): string {
+    return `${(formGroup.get('amountPercent')?.value).toFixed(2)}%`;
+  }
+
+  public getPersonalDataDisplayValue(): string {
+    const name = this.formClient.get('name')?.value.trim();
+    const surname = this.formClient.get('surname')?.value.trim();
+
+    if (!name && !surname) return 'Brak danych';
+    return `${name} ${surname}`;
+  }
+
+  public getOptionalSummaryDisplayValue(value: string): string {
+    return value.trim() === ''
+      ? 'Brak danych'
+      : value;
+  }
+
+  public getPriceTotalWithDiscount(): string {
+    const priceTotal = this.formGeneral.get('priceTotal')?.value;
+    const discount = this.formDiscount.get('amount')?.value;
+    return (priceTotal - discount).toFixed(2);
+  }
+
+  public getDayName(date: Date): string | null {
+    if (!date) { return null; }
+    return getDayName(date);
+  }
+
+  public toggleFormGeneralIsEditingPriceTotal(): void {
+    const currentValue = this.formGeneral.get('isEditingPriceTotal')?.value;
+    this.formGeneral.get('isEditingPriceTotal')?.patchValue(!currentValue);
+    this.setDisabledFormGeneralPriceTotal();
   }
 
   private initForm(): void {
-    /*
-        1. general (Podstawowe informacje) - dateStart, dateFinish, itemId, priceTotal
-        2. client (Dane rezerwującego) - clientName, clientSurname, clientPhone, clientEmail
-        3. advance (Zaliczka) - isAdvance, advanceTotal, advancePaid
-        4. discount (Rabat) - isDiscount, discount
-     */
-
     this.form = this.fb.group({
       general: this.fb.group({
         dateRange: this.fb.group({
           start: ['', [Validators.required]],
           end: ['', [Validators.required]],
         }),
-        groupId: ['', [Validators.required]],
-        itemId: ['', [Validators.required]],
+        group: ['', [Validators.required]],
+        item: ['', [Validators.required]],
         priceTotal: ['', [Validators.required]],
+        isEditingPriceTotal: [false, [Validators.required]],
       }),
       client: this.fb.group({
         name: ['', [
@@ -160,27 +193,36 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     this.handleRequired(this.formAdvance);
     this.handleRequired(this.formDiscount);
 
-    this.handleChangesGeneralGroupId();
+    this.handleChangesGeneralDateRange();
+    this.handleChangesGeneralPriceTotal();
+    this.handleChangesGeneralGroup();
+    this.handleChangesGeneralItem();
+
     this.handleChangesPercent(this.formAdvance);
     this.handleChangesPercent(this.formDiscount);
 
     this.setDisabledControls();
-
-    this.loadDictionaries();
   }
 
   private setDisabledControls(): void {
-    this.setDisabledFormGeneralItemId();
+    this.setDisabledFormGeneralPriceTotal();
+    this.setDisabledFormGeneralItem();
   }
 
-  private setDisabledFormGeneralItemId(): void {
+  private setDisabledFormGeneralPriceTotal(): void {
+    this.formGeneral.get('isEditingPriceTotal')?.value
+      ? this.formGeneral.get('priceTotal')?.enable()
+      : this.formGeneral.get('priceTotal')?.disable();
+  }
+
+  private setDisabledFormGeneralItem(): void {
     this.isItemsSelectDisabled()
-      ? this.formGeneral.get('itemId')?.disable()
-      : this.formGeneral.get('itemId')?.enable();
+      ? this.formGeneral.get('item')?.disable()
+      : this.formGeneral.get('item')?.enable();
   }
 
   private isItemsSelectDisabled(): boolean {
-    return !this.formGeneral.get('groupId')?.value;
+    return !this.formGeneral.get('group')?.value;
   }
 
   private handleRequired (formGroup: FormGroup): void {
@@ -203,13 +245,49 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     formGroup.get(controlName)?.updateValueAndValidity();
   }
 
-  private handleChangesGeneralGroupId(): void {
-    this.formGeneral.get('groupId')?.valueChanges
+  private handleChangesGeneralDateRange(): void {
+    ['start', 'end'].forEach((controlName) =>
+      this.formGeneralDateRange.get(controlName)?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((group) => {
-        this.setDisabledFormGeneralItemId();
+      .subscribe(() => this.calcPriceTotal())
+    );
+  }
+
+  private handleChangesGeneralPriceTotal(): void {
+    this.formGeneral.get('priceTotal')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((priceTotal) => {
+        if (priceTotal <= 0) { return; }
+
+        const advanceAmountPercent = this.formAdvance.get('amountPercent')?.value;
+        const discountAmountPercent = this.formDiscount.get('amountPercent')?.value;
+        const advanceAmount = this.calcAmount(advanceAmountPercent, priceTotal);
+        const discountAmount = this.calcAmount(discountAmountPercent, priceTotal);
+
+        this.formAdvance.get('amount')?.patchValue(advanceAmount);
+        this.formDiscount.get('amount')?.patchValue(discountAmount);
+      });
+  }
+
+  private handleChangesGeneralGroup(): void {
+    this.formGeneral.get('group')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({ id }: DefaultDictionary) => {
+        this.setDisabledFormGeneralItem();
         this.dictionariesFacade.clearDictionary(Dictionaries.items);
-        this.dictionariesFacade.getDictionary(Dictionaries.items, { group });
+        this.dictionariesFacade.getDictionary(Dictionaries.items, { group: id });
+      });
+  }
+
+  private handleChangesGeneralItem(): void {
+    this.itemDetailsItems$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.calcPriceTotal());
+
+    this.formGeneral.get('item')?.valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({ id }: DefaultDictionary) => {
+        this.itemsFacade.getItemDetails(id);
       });
   }
 
@@ -237,20 +315,30 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
       });
   }
 
+  private calcPriceTotal(): void {
+    this.itemsFacade.itemDetailsItems$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((itemDetailsItems) => {
+        if (isNull(itemDetailsItems) || isNaN(itemDetailsItems.pricePerDay)) { return; }
+
+        if (itemDetailsItems) {
+          this.formGeneral.get('priceTotal')?.patchValue(itemDetailsItems.pricePerDay * this.getDateRange());
+        } else {
+          this.formGeneral.get('priceTotal')?.patchValue(0);
+        }
+      });
+  }
+
   private calcAmount(percent: number, totalValue: number): number {
     return Number((totalValue / 100 * percent).toFixed(2));
   }
 
   private calcPercent(value: number, totalValue: number): number {
-    return Number((value * 100 / totalValue).toFixed(2));
-  }
-
-  private loadDictionaries(): void {
-    this.dictionariesFacade.getDictionary(Dictionaries.groups);
+    return Number(value * 100 / totalValue);
   }
 
   private clearDictionaries(): void {
-    this.dictionariesFacade.clearDictionary(Dictionaries.groups);
+    this.dictionariesFacade.clearDictionary(Dictionaries.items);
   }
 
   private setFormValues(): void {

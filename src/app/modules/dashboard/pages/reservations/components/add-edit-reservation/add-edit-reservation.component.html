@@ -2,7 +2,7 @@
   {{ isAddMode() ? 'Dodawanie rezerwacji' : 'Edycja rezerwacji' }}
 </h1>
 
-<div mat-dialog-content>
+<div mat-dialog-content class="mat-dialog-content">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <mat-vertical-stepper linear="true" class="stepper" #stepper>
 
@@ -23,8 +23,8 @@
                 <mat-datepicker-toggle matSuffix matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
 
-                <mat-error *ngIf="form.get('start')?.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                <mat-error *ngIf="form.get('end')?.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                <mat-error *ngIf="form.get('start')?.hasError('matStartDateInvalid')">Błędna data początkowa</mat-error>
+                <mat-error *ngIf="form.get('end')?.hasError('matEndDateInvalid')">Błędna data końcowa</mat-error>
                 <mat-error *ngIf="formGeneralDateRange.get('start')?.hasError('required') || formGeneralDateRange.get('end')?.hasError('required')">
                   Pole <strong>jest wymagane</strong>
                 </mat-error>
@@ -41,6 +41,15 @@
                   formControlName="priceTotal"
                   placeholder="np. 300">
                 <span matSuffix>zł</span>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  color="primary"
+                  class="ml-2"
+                  type="button"
+                  (click)="toggleFormGeneralIsEditingPriceTotal()">
+                  <mat-icon>edit</mat-icon>
+                </button>
                 <mat-hint>Całkowita cena pobytu za {{ getDateRange() }} dni</mat-hint>
                 <mat-error *ngIf="form.get('pricePerDay')?.value < 0 && !form.get('pricePerDay')?.hasError('required')">
                   Pole musi mieć wartość <strong>większą lub równą 0</strong>
@@ -53,16 +62,11 @@
           </div>
 
           <mat-form-field appearance="fill" class="w-100 mb-2">
-            <mat-label>
-              <div class="d-flex align-items-center">
-                <span class="flex-grow-1">{{ (dictionaryGroupsLoading$ | async) ? 'Ładowanie...' : 'Grupa' }}</span>
-                <mat-spinner *ngIf="(dictionaryGroupsLoading$ | async)" diameter="20"></mat-spinner>
-              </div>
-            </mat-label>
-            <mat-select formControlName="groupId">
+            <mat-label>Grupa</mat-label>
+            <mat-select formControlName="group">
               <mat-option
                 *ngFor="let group of (dictionaryGroupsItems$ | async)"
-                [value]="group.id">
+                [value]="group">
                 {{ group.name }}
               </mat-option>
             </mat-select>
@@ -76,10 +80,10 @@
                 <mat-spinner *ngIf="(dictionaryItemsLoading$ | async)" diameter="20"></mat-spinner>
               </div>
             </mat-label>
-            <mat-select formControlName="itemId">
+            <mat-select formControlName="item">
               <mat-option
                 *ngFor="let item of (dictionaryItemsItems$ | async)"
-                [value]="item.id">
+                [value]="item">
                 {{ item.name }}
               </mat-option>
             </mat-select>
@@ -176,13 +180,13 @@
             <div class="row no-gutters">
               <div class="col-6">
                 <mat-form-field appearance="fill" class="w-100 mb-2">
-                  <mat-label>Wymagana kwota</mat-label>
+                  <mat-label>Kwota zaliczki</mat-label>
                   <input
                     matInput
                     type="number"
                     formControlName="amount"
                     placeholder="np. 300">
-                  <span matSuffix>zł</span>
+                  <span matSuffix>zł ({{ getPercentDisplayValue(formAdvance) }})</span>
                   <mat-error *ngIf="formAdvance.get('amount')?.value < 0 && !formAdvance.get('amount')?.hasError('required')">
                     Pole musi mieć wartość <strong>większą lub równą 0</strong>
                   </mat-error>
@@ -216,7 +220,6 @@
                   class="w-100"
                   formControlName="amountPercent"
                   thumbLabel="true"
-                  [displayWith]="percentFormat"
                   [max]="100"
                   [min]="0"
                   [step]="1">
@@ -244,28 +247,43 @@
           </section>
 
           <ng-container *ngIf="formDiscount.get('isRequired')?.value">
-            <mat-form-field appearance="fill" class="w-100 mb-2">
-              <mat-label>Kwota</mat-label>
-              <input
-                matInput
-                type="number"
-                formControlName="amount"
-                placeholder="np. 300">
-              <span matSuffix>zł</span>
-              <mat-error *ngIf="formDiscount.get('amount')?.value < 0 && !formDiscount.get('amount')?.hasError('required')">
-                Pole musi mieć wartość <strong>większą lub równą 0</strong>
-              </mat-error>
-              <mat-error *ngIf="formDiscount.get('amount')?.hasError('required')">
-                Pole <strong>jest wymagane</strong>
-              </mat-error>
-            </mat-form-field>
+            <div class="row no-gutters">
+              <div class="col-6">
+                <mat-form-field appearance="fill" class="w-100 mb-2">
+                  <mat-label>Wysokość rabatu</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="amount"
+                    placeholder="np. 300">
+                  <span matSuffix>zł ({{ getPercentDisplayValue(formDiscount) }})</span>
+                  <mat-error *ngIf="formDiscount.get('amount')?.value < 0 && !formDiscount.get('amount')?.hasError('required')">
+                    Pole musi mieć wartość <strong>większą lub równą 0</strong>
+                  </mat-error>
+                  <mat-error *ngIf="formDiscount.get('amount')?.hasError('required')">
+                    Pole <strong>jest wymagane</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-6">
+                <mat-form-field appearance="fill" class="w-100 mb-2">
+                  <mat-label>Cena pobytu z rabatem</mat-label>
+                  <input
+                    matInput
+                    readonly
+                    [value]="getPriceTotalWithDiscount()">
+                  <span matSuffix>zł ({{ this.formGeneral.get('priceTotal')?.value }} zł)</span>
+                  <mat-hint>Kwota tylko do podglądu</mat-hint>
+                </mat-form-field>
+              </div>
+            </div>
 
             <mat-slider
               color="primary"
               class="w-100"
               formControlName="amountPercent"
               thumbLabel="true"
-              [displayWith]="percentFormat"
               [max]="100"
               [min]="0"
               [step]="1">
@@ -281,15 +299,106 @@
 
       <mat-step>
         <ng-template matStepLabel>Podsumowanie</ng-template>
-        <p>You are now done.</p>
+        <div class="reservation__summary summary">
+
+          <section class="summary__section section">
+            <div class="section__title title">
+              <h5 class="title__text">Podstawowe informacje</h5>
+            </div>
+
+            <div class="section__content content">
+              <div class="content__info info">
+                <mat-icon class="info__icon">calendar_month</mat-icon>
+                <p class="info__text">
+                    {{ formGeneralDateRange.get('start')?.value | date:'dd.MM.YYYY' }}
+                    ({{ getDayName(formGeneralDateRange.get('start')?.value) }}) -
+                    {{ formGeneralDateRange.get('end')?.value | date:'dd.MM.YYYY' }}
+                    ({{ getDayName(formGeneralDateRange.get('end')?.value) }})
+                </p>
+              </div>
+
+              <div class="content__info info">
+                <mat-icon class="info__icon">dark_mode</mat-icon>
+                <p class="info__text">
+                  {{ getDateRange() }} noce/nocy ({{ (itemDetailsItems$ | async)?.pricePerDay }} zł / noc)
+                </p>
+              </div>
+
+              <div class="content__info info">
+                <mat-icon class="info__icon">apartment</mat-icon>
+                <p class="info__text">
+                  {{ formGeneral.get('group')?.value?.name }}, {{ formGeneral.get('item')?.value?.name }}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="summary__section section">
+            <div class="section__title title">
+              <h5 class="title__text">Rezerwujący</h5>
+            </div>
+
+            <div class="section__content content">
+              <div class="content__info info">
+                <mat-icon class="info__icon">person</mat-icon>
+                <p class="info__text">
+                  {{ getPersonalDataDisplayValue() }}
+                </p>
+              </div>
+
+              <div class="content__info info">
+                <mat-icon class="info__icon">alternate_email</mat-icon>
+                <p class="info__text">
+                  {{ getOptionalSummaryDisplayValue(formClient.get('email')?.value) }}
+                </p>
+              </div>
+
+              <div class="content__info info">
+                <mat-icon class="info__icon">call</mat-icon>
+                <p class="info__text">
+                  {{ getOptionalSummaryDisplayValue(formClient.get('phone')?.value) }}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="summary__section section">
+            <div class="section__title title">
+              <h5 class="title__text">Finanse</h5>
+            </div>
+
+            <div class="section__content content">
+              <div class="content__info info">
+                <table class="info__table table">
+                  <tr class="table__row">
+                    <td class="row__cell row__cell--header">Cena pobytu</td>
+                    <td class="row__cell">{{ formGeneral.get('priceTotal')?.value }} zł</td>
+                  </tr>
+                  <tr class="table__row" *ngIf="formDiscount.get('isRequired')?.value">
+                    <td class="row__cell row__cell--header">Rabat ({{ getPercentDisplayValue(formDiscount) }})</td>
+                    <td class="row__cell">{{ formDiscount.get('amount')?.value }} zł</td>
+                  </tr>
+                  <tr class="table__row" *ngIf="formAdvance.get('isRequired')?.value">
+                    <td class="row__cell row__cell--header">Zaliczka ({{ getPercentDisplayValue(formAdvance) }})</td>
+                    <td class="row__cell">{{ formAdvance.get('amount')?.value }} zł</td>
+                  </tr>
+                  <tr class="table__row" *ngIf="formDiscount.get('isRequired')?.value">
+                    <td class="row__cell row__cell--header">Końcowa cena</td>
+                    <td class="row__cell">{{ getPriceTotalWithDiscount() }} zł</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </section>
+
+        </div>
         <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
+          <button mat-button matStepperPrevious>Wstecz</button>
         </div>
       </mat-step>
     </mat-vertical-stepper>
 
-    <div mat-dialog-actions class="d-flex justify-content-end m-0 p-0">
+    <div mat-dialog-actions class="d-flex justify-content-end m-0 mb-1 p-0">
       <button
         mat-stroked-button
         mat-dialog-close

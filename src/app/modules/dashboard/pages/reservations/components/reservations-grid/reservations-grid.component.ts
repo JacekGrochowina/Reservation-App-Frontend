@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Item } from '../../../../../../store/items/interfaces/item.interface';
 import { isEmpty } from 'lodash';
 import { AddEditReservationComponent } from '../add-edit-reservation/add-edit-reservation.component';
+import { getDayName } from '../../../../../../shared/utils/extensions/getDayName';
 
 @Component({
   selector: 'app-reservations-grid',
@@ -27,15 +28,15 @@ export class ReservationsGridComponent implements OnInit {
   public prevRangeOffset: number = 0;
   public nextRangeOffset: number = 0;
 
-  private dayNames: string[] = [
-    'Ndz.',
-    'Pon.',
-    'Wt.',
-    'Śr.',
-    'Czw.',
-    'Pt.',
-    'Sob.',
-  ];
+  // private dayNames: string[] = [
+  //   'Ndz.',
+  //   'Pon.',
+  //   'Wt.',
+  //   'Śr.',
+  //   'Czw.',
+  //   'Pt.',
+  //   'Sob.',
+  // ];
 
   constructor(private dialogService: DialogService) {}
 
@@ -72,7 +73,7 @@ export class ReservationsGridComponent implements OnInit {
   }
 
   private getDayName(date: Date): string {
-    return this.dayNames[date.getDay()];
+    return getDayName(date);
   }
 
   private setDaysRange(): void {
