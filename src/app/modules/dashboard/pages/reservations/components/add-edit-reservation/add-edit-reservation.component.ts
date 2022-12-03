@@ -376,9 +376,15 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   }
 
   private reservationAddSubmit(): void {
+    const dateStart = this.formGeneralDateRange.get('start')?.value;
+    const dateFinish = this.formGeneralDateRange.get('end')?.value;
+
+    dateStart.setDate(dateStart.getDate() + 1);
+    dateFinish.setDate(dateFinish.getDate() + 1);
+
     this.reservationsFacade.addReservation({
-      dateStart: this.formGeneralDateRange.get('start')?.value,
-      dateFinish: this.formGeneralDateRange.get('end')?.value,
+      dateStart,
+      dateFinish,
       clientName: this.getFormControlStringValue(this.formClient.get('name')?.value),
       clientSurname: this.getFormControlStringValue(this.formClient.get('surname')?.value),
       clientPhone: this.getFormControlStringValue(this.formClient.get('phone')?.value),

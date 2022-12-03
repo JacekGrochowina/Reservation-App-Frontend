@@ -1,10 +1,11 @@
 @import "./src/styles/variables";
 
 $table-cell-item-width: 250px;
-$table-visible-days-amount: 14;
 $table-row-border: 1px solid var(--border);
 $table-column-border: 1px solid var(--border);
 $table-row-header-height: 55px;
+$table-reservation-margin-y: 10%;
+$table-reservation-radius: 3px;
 
 .reservations__table {
   margin-top: -1px;
@@ -20,7 +21,7 @@ $table-row-header-height: 55px;
           padding: 10px 15px;
 
           &:not(&--item) {
-            width: calc((100% - #{$table-cell-item-width}) / #{$table-visible-days-amount});
+            flex-grow: 1;
             padding: 10px 0;
           }
 
@@ -42,6 +43,30 @@ $table-row-header-height: 55px;
             white-space: nowrap;
           }
 
+          &--day {
+            position: relative;
+            cursor: pointer;
+
+            &:hover {
+              background-color: var(--active);
+
+              &::before {
+                border: 1px solid var(--primary);
+              }
+            }
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              right: 0;
+              left: 0;
+              border: 1px solid transparent;
+              z-index: 99;
+            }
+          }
+
           .cell {
             &__day-name,
             &__day-date {
@@ -56,6 +81,29 @@ $table-row-header-height: 55px;
 
             &__day-date {
               font-size: 11px;
+            }
+
+            &__reservation {
+              position: absolute;
+              top: $table-reservation-margin-y;
+              bottom: $table-reservation-margin-y;
+              right: 0;
+              left: 0;
+              z-index: 1;
+              //background-color: var(--reservations-grid-reservation-confirmed);
+              background-color: var(--gray);
+
+              &--start {
+                left: 60%;
+                border-bottom-left-radius: $table-reservation-radius;
+                border-top-left-radius: $table-reservation-radius;
+              }
+
+              &--finish {
+                right: 60%;
+                border-bottom-right-radius: $table-reservation-radius;
+                border-top-right-radius: $table-reservation-radius;
+              }
             }
           }
         }

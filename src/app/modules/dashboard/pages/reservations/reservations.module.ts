@@ -20,6 +20,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatRippleModule } from '@angular/material/core';
 import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date.adapter';
 
 @NgModule({
@@ -47,6 +48,7 @@ import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date
     MatStepperModule,
     MatSelectModule,
     MatSliderModule,
+    MatRippleModule,
   ],
   providers: [
     MatDatepickerModule,
