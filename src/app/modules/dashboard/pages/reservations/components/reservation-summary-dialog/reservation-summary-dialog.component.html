@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Szczegóły</h1>
+
+<div mat-dialog-content>
+  <app-reservation-summary
+    [dateStart]="data.dateStart"
+    [dateEnd]="data.dateFinish"
+    [pricePerDay]="data.item.pricePerDay"
+    [groupName]="data.group.name"
+    [itemName]="data.item.name"
+    [priceTotal]="data.priceTotal"
+    [name]="nonNullable(data.clientName)"
+    [surname]="nonNullable(data.clientSurname)"
+    [email]="nonNullable(data.clientEmail)"
+    [phone]="nonNullable(data.clientPhone)"
+    [isDiscount]="data.isDiscount"
+    [discount]="data.discount"
+    [discountPercent]="calcPercent(data.discount, data.priceTotal)"
+    [isAdvance]="data.isAdvance"
+    [advance]="data.advanceTotal"
+    [advancePercent]="calcPercent(data.advanceTotal, data.priceTotal)"
+  ></app-reservation-summary>
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-end m-0 p-0">
+  <button
+    mat-stroked-button
+    mat-dialog-close
+    type="button"
+    color="primary"
+    (click)="closeDialog()">
+    Anuluj
+  </button>
+</div>

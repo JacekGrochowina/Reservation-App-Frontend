@@ -11,6 +11,7 @@ import { ReservationsFacade } from '../../../../../../store/reservations/reserva
 import { first, map, takeUntil } from 'rxjs/operators';
 import { Reservation } from '../../../../../../store/reservations/interfaces/reservation.interface';
 import { ConfirmDialogComponent } from '../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { ReservationSummaryDialogComponent } from '../reservation-summary-dialog/reservation-summary-dialog.component';
 
 @Component({
   selector: 'app-reservations-grid',
@@ -172,6 +173,21 @@ export class ReservationsGridComponent implements OnInit {
 
     this.setIsTodayDaysRange();
     this.setDaysRange();
+  }
+
+  public detailsReservation(item: Item, day: Date, isStart?: boolean): void {
+    this.findReservation(item, day, isStart)
+      .pipe(
+        first(),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe((reservation) => {
+        if (isNull(reservation)) { return; }
+
+        this.dialogService.open(ReservationSummaryDialogComponent, DialogSize.md, {
+          data: reservation,
+        });
+      });
   }
 
   public editReservation(item: Item, day: Date, isStart?: boolean): void {

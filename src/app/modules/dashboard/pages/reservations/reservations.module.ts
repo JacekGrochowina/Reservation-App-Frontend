@@ -25,6 +25,9 @@ import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date
 import { MatMenuModule } from '@angular/material/menu';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
+import {
+  ReservationSummaryDialogComponent
+} from './components/reservation-summary-dialog/reservation-summary-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { ReservationSummaryComponent } from './components/reservation-summary/re
     ReservationsGridComponent,
     AddEditReservationComponent,
     ReservationSummaryComponent,
+    ReservationSummaryDialogComponent,
   ],
   imports: [
     CommonModule,
