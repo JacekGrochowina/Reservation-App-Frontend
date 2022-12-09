@@ -11,7 +11,6 @@ import { GroupsFacade } from '../../../../../../store/groups/groups.facade';
 import { DictionariesFacade } from '../../../../../../store/dictionaries/dictionaries.facade';
 import { Dictionaries } from '../../../../../../store/dictionaries/dictionaries.state';
 import { isNull } from 'lodash';
-import { getDayName } from '../../../../../../shared/utils/extensions/getDayName';
 import { DefaultDictionary } from '../../../../../../store/dictionaries/interfaces/common/default-dictionary.interface';
 import {
   ReservationAddPayload
@@ -125,29 +124,10 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     return `${(formGroup.get('amountPercent')?.value).toFixed(2)}%`;
   }
 
-  public getPersonalDataDisplayValue(): string {
-    const name = this.formClient.get('name')?.value.trim();
-    const surname = this.formClient.get('surname')?.value.trim();
-
-    if (!name && !surname) return 'Brak danych';
-    return `${name} ${surname}`;
-  }
-
-  public getOptionalSummaryDisplayValue(value: string): string {
-    return value.trim() === ''
-      ? 'Brak danych'
-      : value;
-  }
-
   public getPriceTotalWithDiscount(): string {
     const priceTotal = this.formGeneral.get('priceTotal')?.value;
     const discount = this.formDiscount.get('amount')?.value;
     return (priceTotal - discount).toFixed(2);
-  }
-
-  public getDayName(date: Date): string | null {
-    if (!date) { return null; }
-    return getDayName(date);
   }
 
   public toggleFormGeneralIsEditingPriceTotal(): void {

@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { ReservationsGridComponent } from './components/reservations-grid/reservations-grid.component';
 import { AddEditReservationComponent } from './components/add-edit-reservation/add-edit-reservation.component';
 import { ItemsModule } from '../items/items.module';
@@ -24,12 +24,14 @@ import { MatRippleModule } from '@angular/material/core';
 import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date.adapter';
 import { MatMenuModule } from '@angular/material/menu';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
+import { ReservationSummaryComponent } from './components/reservation-summary/reservation-summary.component';
 
 @NgModule({
   declarations: [
     ReservationsComponent,
     ReservationsGridComponent,
     AddEditReservationComponent,
+    ReservationSummaryComponent,
   ],
   imports: [
     CommonModule,
