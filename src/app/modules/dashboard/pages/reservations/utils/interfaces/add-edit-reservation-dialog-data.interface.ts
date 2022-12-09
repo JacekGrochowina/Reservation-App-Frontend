@@ -1,7 +1,9 @@
 import { AddEditMode } from 'src/app/shared/utils/enums/add-edit-mode.enum';
-import { Group } from '../../../../../../store/groups/interfaces/group.interface';
+import {
+  ReservationExtendsResponse
+} from '../../../../../../store/reservations/interfaces/responses/reservation-extends.response';
 
 export interface AddEditReservationDialogData {
-  reservation?: Group;
+  reservation?: ReservationExtendsResponse;
   mode: AddEditMode;
 }

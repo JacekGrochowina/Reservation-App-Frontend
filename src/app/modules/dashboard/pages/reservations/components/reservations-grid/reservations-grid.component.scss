@@ -4,8 +4,9 @@ $table-cell-item-width: 250px;
 $table-row-border: 1px solid var(--border);
 $table-column-border: 1px solid var(--border);
 $table-row-header-height: 55px;
-$table-reservation-margin-y: 10%;
+$table-reservation-margin-y: 5%;
 $table-reservation-radius: 3px;
+$table-reservation-menu-warn-border: 1px solid var(--border);
 
 .reservations__table {
   margin-top: -1px;
@@ -63,7 +64,6 @@ $table-reservation-radius: 3px;
               right: 0;
               left: 0;
               border: 1px solid transparent;
-              z-index: 99;
             }
           }
 
@@ -87,26 +87,104 @@ $table-reservation-radius: 3px;
               position: absolute;
               top: $table-reservation-margin-y;
               bottom: $table-reservation-margin-y;
-              right: 0;
-              left: 0;
+              right: -1px;
+              left: -1px;
               z-index: 1;
-              //background-color: var(--reservations-grid-reservation-confirmed);
-              background-color: var(--gray);
+              background-color: var(--reservations-grid-reservation-confirmed);
+
+              &:hover {
+                //background-color: red;
+              }
 
               &--start {
-                left: 60%;
+                left: 53%;
                 border-bottom-left-radius: $table-reservation-radius;
                 border-top-left-radius: $table-reservation-radius;
               }
 
               &--finish {
-                right: 60%;
+                right: 53%;
                 border-bottom-right-radius: $table-reservation-radius;
                 border-top-right-radius: $table-reservation-radius;
+              }
+
+              .reservation {
+                position: relative;
+
+                &__actions {
+                  position: absolute;
+                  top: 50%;
+                  right: 0;
+                  transform: translateY(-50%);
+                  display: flex;
+
+                  .actions {
+                    &__button {
+                      .mat-icon {
+                        color: var(--reservations-grid-reservation-icon);
+                      }
+
+                      //$size-button: 26px;
+                      //$size-icon: 20px;
+                      //
+                      //width: $size-button;
+                      //height: $size-button;
+                      //line-height: $size-button;
+                      //
+                      //.mat-icon {
+                      //  font-size: $size-icon;
+                      //  width: $size-icon;
+                      //  height: $size-icon;
+                      //  line-height: $size-icon;
+                      //  color: var(--reservations-grid-reservation-icon);
+                      //}
+                      //
+                      //.mat-button-ripple {
+                      //  font-size: inherit;
+                      //  width: inherit;
+                      //  height: inherit;
+                      //  line-height: inherit;
+                      //}
+                    }
+                  }
+                }
               }
             }
           }
         }
+      }
+    }
+  }
+}
+
+.actions__menu {
+  .mat-menu-content {
+    padding: 0;
+  }
+
+  .mat-menu-item {
+    line-height: 32px;
+    height: 32px;
+
+    &.menu__button--warn {
+      border-top: $table-reservation-menu-warn-border;
+    }
+
+    .button__icon {
+      $size-icon: 17px;
+
+      font-size: $size-icon;
+      width: $size-icon;
+      height: $size-icon;
+      line-height: $size-icon;
+    }
+
+    .button__text {
+      font-size: 13px;
+
+      &--warn {
+        color: var(--warn);
+        font-weight: 500;
       }
     }
   }

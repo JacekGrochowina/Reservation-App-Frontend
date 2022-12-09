@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { ReservationsGridComponent } from './components/reservations-grid/reservations-grid.component';
 import { AddEditReservationComponent } from './components/add-edit-reservation/add-edit-reservation.component';
 import { ItemsModule } from '../items/items.module';
@@ -22,6 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatRippleModule } from '@angular/material/core';
 import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date.adapter';
+import { MatMenuModule } from '@angular/material/menu';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -49,10 +51,13 @@ import { CustomDateAdapter } from '../../../../shared/utils/adapters/custom-date
     MatSelectModule,
     MatSliderModule,
     MatRippleModule,
+    MatMenuModule,
+    MatMomentDateModule,
   ],
   providers: [
     MatDatepickerModule,
-    { provide: DateAdapter, useClass: CustomDateAdapter }
+    { provide: DateAdapter, useClass: CustomDateAdapter },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
 })
 export class ReservationsModule {}

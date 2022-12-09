@@ -10,7 +10,7 @@ export function ReservationsReducers(
 ): ReservationsState {
   switch (action.type) {
 
-    // ========== Get Groups
+    // ========== Get Reservations
     case ReservationsActionTypes.getList: {
       return {
         ...state,
@@ -62,7 +62,7 @@ export function ReservationsReducers(
       };
     }
 
-    // ========== Get Details Group
+    // ========== Get Details Reservation
     case ReservationsActionTypes.getDetails: {
       return {
         ...state,
@@ -114,7 +114,7 @@ export function ReservationsReducers(
       };
     }
 
-    // ========== Add Group
+    // ========== Add Reservation
     case ReservationsActionTypes.add: {
       return {
         ...state,
@@ -157,7 +157,7 @@ export function ReservationsReducers(
       };
     }
 
-    // ========== Del Group
+    // ========== Del Reservation
     case ReservationsActionTypes.del: {
       return {
         ...state,
@@ -200,7 +200,7 @@ export function ReservationsReducers(
       };
     }
 
-    // ========== Update Group
+    // ========== Update Reservation
     case ReservationsActionTypes.update: {
       return {
         ...state,

@@ -33,18 +33,35 @@
     <td class="row__cell row__cell--item">{{ item.name }}</td>
     <td *ngFor="let day of daysRange"
         (click)="onClickDayCell(item, day)"
-        matRipple
         class="row__cell row__cell--day cell">
 
-<!--      <div *ngIf="(isReservationCellVisible(item, day) | async)"-->
-<!--           class="cell__reservation"-->
-<!--           [class.cell__reservation&#45;&#45;start]="(isReservationCellVisibleEdge(item, day) | async)"-->
-<!--           [class.cell__reservation&#45;&#45;finish]="(isReservationCellVisibleEdge(item, day, false) | async)">-->
-<!--      </div>-->
-
-      <div *ngIf="(isReservationCellVisible(item, day) | async)" class="cell__reservation"></div>
-      <div *ngIf="(isReservationCellVisibleEdge(item, day) | async)" class="cell__reservation cell__reservation--start"></div>
-      <div *ngIf="(isReservationCellVisibleEdge(item, day, false) | async)" class="cell__reservation cell__reservation--finish"></div>
+      <div *ngIf="(isReservationCellVisible(item, day) | async)" (click)="onClickReservation(item, day)" class="cell__reservation"></div>
+      <div *ngIf="(isReservationCellVisibleEdge(item, day) | async)" (click)="onClickReservation(item, day, true)" class="cell__reservation cell__reservation--start"></div>
+      <div *ngIf="(isReservationCellVisibleEdge(item, day, false) | async)" (click)="onClickReservation(item, day, false)" class="cell__reservation cell__reservation--finish reservation">
+        <div class="reservation__actions actions">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="actions__button">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" class="actions__menu menu">
+            <button mat-menu-item class="menu__button button">
+              <mat-icon class="button__icon">visibility</mat-icon>
+              <span class="button__text">Szczegóły</span>
+            </button>
+            <button mat-menu-item class="menu__button button">
+              <mat-icon class="button__icon">paid</mat-icon>
+              <span class="button__text">Opłaty</span>
+            </button>
+            <button mat-menu-item (click)="editReservation(item, day, false)" class="menu__button button">
+              <mat-icon class="button__icon">edit</mat-icon>
+              <span class="button__text">Edytuj</span>
+            </button>
+            <button mat-menu-item (click)="delReservation(item, day, false)" class="menu__button menu__button--warn button">
+              <mat-icon color="warn" class="button__icon">delete</mat-icon>
+              <span class="button__text button__text--warn">Usuń</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
     </td>
   </tr>
 </table>

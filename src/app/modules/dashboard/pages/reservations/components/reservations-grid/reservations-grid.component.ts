@@ -1,19 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DialogService, DialogSize } from '../../../../../../shared/services/dialog.service';
 import { AddEditMode } from '../../../../../../shared/utils/enums/add-edit-mode.enum';
 import { AddEditReservationDialogData } from '../../utils/interfaces/add-edit-reservation-dialog-data.interface';
 import { Observable, Subject } from 'rxjs';
 import { Item } from '../../../../../../store/items/interfaces/item.interface';
-import { isEmpty } from 'lodash';
+import { isEmpty, isNull } from 'lodash';
 import { AddEditReservationComponent } from '../add-edit-reservation/add-edit-reservation.component';
 import { getDayName } from '../../../../../../shared/utils/extensions/getDayName';
 import { ReservationsFacade } from '../../../../../../store/reservations/reservations.facade';
-import { map, takeUntil } from 'rxjs/operators';
+import { first, map, takeUntil } from 'rxjs/operators';
+import { Reservation } from '../../../../../../store/reservations/interfaces/reservation.interface';
+import { ConfirmDialogComponent } from '../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-reservations-grid',
   templateUrl: './reservations-grid.component.html',
   styleUrls: ['./reservations-grid.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ReservationsGridComponent implements OnInit {
 
@@ -27,6 +30,11 @@ export class ReservationsGridComponent implements OnInit {
   reservationsListLoading$ = this.reservationsFacade.reservationsListLoading$;
   reservationsListSuccess$ = this.reservationsFacade.reservationsListSuccess$;
   reservationsListError$ = this.reservationsFacade.reservationsListError$;
+
+  // ========== Selectors Reservation Del
+  reservationDelLoading$ = this.reservationsFacade.reservationDelLoading$;
+  reservationDelSuccess$ = this.reservationsFacade.reservationDelSuccess$;
+  reservationDelError$ = this.reservationsFacade.reservationDelError$;
 
   public visibleDaysAmount: number = 14;
   public daysRange: Date[] = [];
@@ -54,7 +62,32 @@ export class ReservationsGridComponent implements OnInit {
   }
 
   public onClickDayCell(item: Item, day: Date): void {
-    console.log(item, day);
+    // console.log(item, day);
+  }
+
+  public onClickReservation(item: Item, day: Date, isStart?: boolean): void {
+    // this.findReservation(item, day, isStart)
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((reservation) => {
+    //     console.log(reservation);
+    //   });
+  }
+
+  private findReservation(item: Item, day: Date, isStart?: boolean): Observable<Reservation | null> {
+    return this.reservationsListItems$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map((reservationsListItems) => {
+          const reservationsForCurrentItem = reservationsListItems
+            .filter((reservationsItem) => reservationsItem.itemId === item.id);
+
+            return isStart
+              ? reservationsForCurrentItem.find((reservation) =>
+                this.isTwoDaysSameDay(new Date(reservation.dateStart), day)) ?? null
+              : reservationsForCurrentItem.find((reservation) =>
+                this.isTwoDaysSameDay(new Date(reservation.dateFinish), day)) ?? null;
+        }),
+      );
   }
 
   public isReservationCellVisible(item: Item, day: Date): Observable<boolean> {
@@ -139,6 +172,51 @@ export class ReservationsGridComponent implements OnInit {
 
     this.setIsTodayDaysRange();
     this.setDaysRange();
+  }
+
+  public editReservation(item: Item, day: Date, isStart?: boolean): void {
+    this.findReservation(item, day, isStart)
+      .pipe(
+        first(),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe((reservation) => {
+        if (isNull(reservation)) { return; }
+
+        this.dialogService.open(AddEditReservationComponent, DialogSize.md, {
+          data: {
+            reservation: reservation,
+            mode: AddEditMode.edit,
+          } as AddEditReservationDialogData,
+        });
+      });
+  }
+
+  public delReservation(item: Item, day: Date, isStart?: boolean): void {
+    this.findReservation(item, day, isStart)
+      .pipe(
+        first(),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe((reservation) => {
+        if (isNull(reservation)) { return; }
+
+        this.dialogService.open(ConfirmDialogComponent, DialogSize.xs, {
+          data: {
+            title: 'Usuwanie rezerwacji',
+            message: 'Czy napewno chcesz usunąć tę rezerwację?',
+            confirmLabel: 'Usuń',
+            dismissLabel: 'Anuluj',
+            isAsync: true,
+            close$: this.reservationDelSuccess$,
+            loading$: this.reservationDelLoading$,
+            errors$: this.reservationDelError$,
+            confirmed: () => {
+              this.reservationsFacade.delReservation(reservation.id);
+            },
+          },
+        });
+      });
   }
 
   private getDayName(date: Date): string {

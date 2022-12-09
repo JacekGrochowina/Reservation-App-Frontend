@@ -4,7 +4,7 @@
 
 <div mat-dialog-content class="mat-dialog-content">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-vertical-stepper linear="true" class="stepper" #stepper>
+    <mat-vertical-stepper [linear]="isAddMode()" class="stepper" #stepper>
 
       <!-- STEP 1 - Form General -->
       <mat-step [stepControl]="formGeneral">
@@ -13,15 +13,21 @@
 
           <div class="row no-gutters">
             <div class="col-7">
+
               <mat-form-field appearance="fill" class="w-100 mb-2">
                 <mat-label>Data rezerwacji</mat-label>
-                <mat-date-range-input [formGroup]="formGeneralDateRange" [rangePicker]="picker">
+                <mat-date-range-input [formGroup]="formGeneralDateRange" [rangePicker]="rangePicker">
                   <input matStartDate formControlName="start" placeholder="Przyjazd">
                   <input matEndDate formControlName="end" placeholder="Odjazd">
                 </mat-date-range-input>
                 <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
+                <mat-datepicker-toggle matSuffix matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #rangePicker>
+                  <mat-date-range-picker-actions>
+                    <button mat-button matDateRangePickerCancel>Anuluj</button>
+                    <button mat-raised-button color="primary" matDateRangePickerApply>Zastosuj</button>
+                  </mat-date-range-picker-actions>
+                </mat-date-range-picker>
 
                 <mat-error *ngIf="form.get('start')?.hasError('matStartDateInvalid')">Błędna data początkowa</mat-error>
                 <mat-error *ngIf="form.get('end')?.hasError('matEndDateInvalid')">Błędna data końcowa</mat-error>
@@ -63,7 +69,7 @@
 
           <mat-form-field appearance="fill" class="w-100 mb-2">
             <mat-label>Grupa</mat-label>
-            <mat-select formControlName="group">
+            <mat-select formControlName="group" [compareWith]="objectComparisonFunction">
               <mat-option
                 *ngFor="let group of (dictionaryGroupsItems$ | async)"
                 [value]="group">
@@ -80,7 +86,7 @@
                 <mat-spinner *ngIf="(dictionaryItemsLoading$ | async)" diameter="20"></mat-spinner>
               </div>
             </mat-label>
-            <mat-select formControlName="item">
+            <mat-select formControlName="item" [compareWith]="objectComparisonFunction">
               <mat-option
                 *ngFor="let item of (dictionaryItemsItems$ | async)"
                 [value]="item">

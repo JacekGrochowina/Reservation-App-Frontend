@@ -72,7 +72,8 @@
   --footer-text: rgb(255, 255, 255);
 
   // reservations grid
-  --reservations-grid-reservation-confirmed: rgb(223, 231, 239);
+  --reservations-grid-reservation-confirmed: var(--primary);
+  --reservations-grid-reservation-icon: var(--light);
 }
 
 .dark-theme {
@@ -134,5 +135,6 @@
   --footer-text: rgb(0, 0, 0);
 
   // reservations grid
-  --reservations-grid-reservation-confirmed: rgb(223, 231, 239);
+  --reservations-grid-reservation-confirmed: var(--primary);
+  --reservations-grid-reservation-icon: var(--light);
 }

@@ -31,6 +31,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
 
   public dictionaryItemsItems$ = this.dictionariesFacade.dictionaryItemsItems$;
   public dictionaryItemsLoading$ = this.dictionariesFacade.dictionaryItemsLoading$;
+  public dictionaryItemsSuccess$ = this.dictionariesFacade.dictionaryItemsSuccess$;
 
   // ========== Selectors Add
   public reservationAddLoading$ = this.reservationsFacade.reservationAddLoading$;
@@ -78,7 +79,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     private reservationsFacade: ReservationsFacade,
     private dictionariesFacade: DictionariesFacade,
     private dialogRef: MatDialogRef<AddEditReservationComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: AddEditReservationDialogData
+    @Inject(MAT_DIALOG_DATA) private data: AddEditReservationDialogData,
   ) {}
 
   public ngOnInit(): void {
@@ -97,9 +98,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    // console.log(this.form.value);
-    this.reservationAddSubmit();
-    // this.isAddMode() ? this.groupAddSubmit() : this.groupUpdateSubmit();
+    this.isAddMode() ? this.reservationAddSubmit() : this.reservationUpdateSubmit();
   }
 
   public isAddMode(): boolean {
@@ -155,6 +154,10 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     const currentValue = this.formGeneral.get('isEditingPriceTotal')?.value;
     this.formGeneral.get('isEditingPriceTotal')?.patchValue(!currentValue);
     this.setDisabledFormGeneralPriceTotal();
+  }
+
+  public objectComparisonFunction = function(option, value): boolean {
+    return option.id === value.id;
   }
 
   private initForm(): void {
@@ -291,7 +294,9 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     this.formGeneral.get('item')?.valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(({ id }: DefaultDictionary) => {
-        this.itemsFacade.getItemDetails(id);
+        if (id) {
+          this.itemsFacade.getItemDetails(id);
+        }
       });
   }
 
@@ -347,7 +352,53 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
 
   private setFormValues(): void {
     if (this.data.reservation) {
-      this.form.patchValue(this.data.reservation);
+      this.form.patchValue({
+        general: {
+          dateRange: {
+            start: new Date(this.data.reservation.dateStart),
+            end: new Date(this.data.reservation.dateFinish),
+          },
+          group: {
+            id: this.data.reservation.groupId,
+            name: this.data.reservation.group.name,
+          },
+          priceTotal: this.data.reservation.priceTotal,
+          isEditingPriceTotal: false,
+        },
+        client: {
+          name: this.data.reservation.clientName ?? '',
+          surname: this.data.reservation.clientSurname ?? '',
+          phone: this.data.reservation.clientPhone ?? '',
+          email: this.data.reservation.clientEmail ?? '',
+        },
+        advance: {
+          isRequired: this.data.reservation.advanceTotal ? true : false,
+          amount: this.data.reservation.advanceTotal,
+          amountPercent: this.data.reservation.advanceTotal
+            ? this.calcPercent(this.data.reservation.advanceTotal, this.data.reservation.priceTotal)
+            : null,
+          paidAmount: this.data.reservation.advancePaid,
+        },
+        discount: {
+          isRequired: this.data.reservation.discount ? true : false,
+          amount: this.data.reservation.discount,
+          amountPercent: this.data.reservation.discount
+            ? this.calcPercent(this.data.reservation.discount, this.data.reservation.priceTotal)
+            : null,
+        },
+      })
+
+      this.dictionaryItemsSuccess$
+        .pipe(
+          takeUntil(this.unsubscribe$),
+          filter((dictionaryItemsSuccess) => !!dictionaryItemsSuccess),
+        )
+        .subscribe(() => {
+          this.formGeneral.get('item')?.setValue({
+            id: this.data.reservation?.itemId,
+            name: this.data.reservation?.item.name,
+          });
+        });
     }
   }
 
@@ -376,15 +427,38 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
   }
 
   private reservationAddSubmit(): void {
-    const dateStart = this.formGeneralDateRange.get('start')?.value;
-    const dateFinish = this.formGeneralDateRange.get('end')?.value;
+    this.reservationsFacade.addReservation(this.getReservationAddPayload());
 
-    dateStart.setDate(dateStart.getDate() + 1);
-    dateFinish.setDate(dateFinish.getDate() + 1);
+    this.reservationAddSuccess$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter((reservationAddSuccess) => !!reservationAddSuccess)
+      )
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      });
+  }
 
-    this.reservationsFacade.addReservation({
-      dateStart,
-      dateFinish,
+  private reservationUpdateSubmit(): void {
+    this.reservationsFacade.updateReservation({
+      id: this.data.reservation?.id,
+      body: this.getReservationAddPayload(),
+    });
+
+    this.reservationUpdateSuccess$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter((reservationUpdateSuccess) => !!reservationUpdateSuccess)
+      )
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      });
+  }
+
+  private getReservationAddPayload(): ReservationAddPayload {
+    return {
+      dateStart: this.formGeneralDateRange.get('start')?.value,
+      dateFinish: this.formGeneralDateRange.get('end')?.value,
       clientName: this.getFormControlStringValue(this.formClient.get('name')?.value),
       clientSurname: this.getFormControlStringValue(this.formClient.get('surname')?.value),
       clientPhone: this.getFormControlStringValue(this.formClient.get('phone')?.value),
@@ -397,32 +471,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
       priceTotal: this.formGeneral.get('priceTotal')?.value,
       groupId: this.formGeneral.get('group')?.value.id,
       itemId: this.formGeneral.get('item')?.value.id,
-    } as ReservationAddPayload);
-
-    this.reservationAddSuccess$
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter((reservationAddSuccess) => !!reservationAddSuccess)
-      )
-      .subscribe(() => {
-        this.dialogRef.close(true);
-      });
-  }
-
-  private groupUpdateSubmit(): void {
-    this.reservationsFacade.updateReservation({
-      id: this.data.reservation?.id,
-      body: this.form.value,
-    });
-
-    this.reservationUpdateSuccess$
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter((reservationUpdateSuccess) => !!reservationUpdateSuccess)
-      )
-      .subscribe(() => {
-        this.dialogRef.close(true);
-      });
+    }
   }
 
 }
