@@ -136,7 +136,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     this.setDisabledFormGeneralPriceTotal();
   }
 
-  public objectComparisonFunction = function(option, value): boolean {
+  public objectComparisonFunction(option, value): boolean {
     return option.id === value.id;
   }
 
@@ -449,6 +449,7 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
       isDiscount: this.formDiscount.get('isRequired')?.value,
       discount: this.getFormControlOptionalValue(this.formDiscount, 'amount'),
       priceTotal: this.formGeneral.get('priceTotal')?.value,
+      paidAmount: 0,
       groupId: this.formGeneral.get('group')?.value.id,
       itemId: this.formGeneral.get('item')?.value.id,
     }

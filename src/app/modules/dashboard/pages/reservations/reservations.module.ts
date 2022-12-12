@@ -28,6 +28,7 @@ import { ReservationSummaryComponent } from './components/reservation-summary/re
 import {
   ReservationSummaryDialogComponent
 } from './components/reservation-summary-dialog/reservation-summary-dialog.component';
+import { ReservationPaidDialogComponent } from './components/reservation-paid-dialog/reservation-paid-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {
     AddEditReservationComponent,
     ReservationSummaryComponent,
     ReservationSummaryDialogComponent,
+    ReservationPaidDialogComponent,
   ],
   imports: [
     CommonModule,

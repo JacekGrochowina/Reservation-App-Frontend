@@ -47,7 +47,7 @@
               <mat-icon class="button__icon">visibility</mat-icon>
               <span class="button__text">Szczegóły</span>
             </button>
-            <button mat-menu-item class="menu__button button">
+            <button mat-menu-item (click)="paidReservation(item, day, false)" class="menu__button button">
               <mat-icon class="button__icon">paid</mat-icon>
               <span class="button__text">Opłaty</span>
             </button>

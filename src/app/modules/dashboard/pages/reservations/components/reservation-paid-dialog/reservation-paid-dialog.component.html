@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Opłaty</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="w-100 mb-2">
+      <mat-label>Opłacona kwota</mat-label>
+      <input
+        matInput
+        required
+        type="number"
+        formControlName="paidAmount"
+        placeholder="np. 300">
+      <span matSuffix>/ {{ data.priceTotal }} zł</span>
+      <button
+        mat-icon-button
+        matSuffix
+        color="primary"
+        class="ml-2"
+        type="button">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <mat-error *ngIf="form.get('paidAmount')?.value < 0 && !form.get('paidAmount')?.hasError('required')">
+        Pole musi mieć wartość <strong>większą lub równą 0</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('paidAmount')?.hasError('required')">
+        Pole <strong>jest wymagane</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <div mat-dialog-actions class="d-flex justify-content-end m-0 p-0">
+      <button
+        mat-stroked-button
+        mat-dialog-close
+        type="button"
+        color="primary"
+        (click)="closeDialog()">
+        Anuluj
+      </button>
+
+      <app-button-loading
+        color="primary"
+        text="Zatwierdź"
+        [disabled]="!form.valid || !form.dirty || (reservationUpdateLoading$ | async)"
+        [isLoading]="(reservationUpdateLoading$ | async)">
+      </app-button-loading>
+    </div>
+  </form>
+</div>

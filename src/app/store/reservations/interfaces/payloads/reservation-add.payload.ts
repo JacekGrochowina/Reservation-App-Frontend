@@ -11,6 +11,7 @@ export interface ReservationAddPayload {
   isDiscount: boolean;
   discount: number | null;
   priceTotal: number;
+  paidAmount: number;
   groupId: number;
   itemId: number;
 }

@@ -12,6 +12,7 @@ export interface Reservation {
   isDiscount: false;
   discount: number | null;
   priceTotal: number;
+  paidAmount: number;
   createdAt: string;
   updatedAt: string;
   userId: number;

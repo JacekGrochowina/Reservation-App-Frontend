@@ -12,6 +12,7 @@ import { first, map, takeUntil } from 'rxjs/operators';
 import { Reservation } from '../../../../../../store/reservations/interfaces/reservation.interface';
 import { ConfirmDialogComponent } from '../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ReservationSummaryDialogComponent } from '../reservation-summary-dialog/reservation-summary-dialog.component';
+import { ReservationPaidDialogComponent } from '../reservation-paid-dialog/reservation-paid-dialog.component';
 
 @Component({
   selector: 'app-reservations-grid',
@@ -184,7 +185,22 @@ export class ReservationsGridComponent implements OnInit {
       .subscribe((reservation) => {
         if (isNull(reservation)) { return; }
 
-        this.dialogService.open(ReservationSummaryDialogComponent, DialogSize.md, {
+        this.dialogService.open(ReservationSummaryDialogComponent, DialogSize.sm, {
+          data: reservation,
+        });
+      });
+  }
+
+  public paidReservation(item: Item, day: Date, isStart?: boolean): void {
+    this.findReservation(item, day, isStart)
+      .pipe(
+        first(),
+        takeUntil(this.unsubscribe$),
+      )
+      .subscribe((reservation) => {
+        if (isNull(reservation)) { return; }
+
+        this.dialogService.open(ReservationPaidDialogComponent, DialogSize.sm, {
           data: reservation,
         });
       });
