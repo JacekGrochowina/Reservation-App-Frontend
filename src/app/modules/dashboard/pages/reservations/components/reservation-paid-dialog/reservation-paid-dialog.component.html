@@ -11,14 +11,6 @@
         formControlName="paidAmount"
         placeholder="np. 300">
       <span matSuffix>/ {{ data.priceTotal }} zł</span>
-      <button
-        mat-icon-button
-        matSuffix
-        color="primary"
-        class="ml-2"
-        type="button">
-        <mat-icon>edit</mat-icon>
-      </button>
       <mat-error *ngIf="form.get('paidAmount')?.value < 0 && !form.get('paidAmount')?.hasError('required')">
         Pole musi mieć wartość <strong>większą lub równą 0</strong>
       </mat-error>

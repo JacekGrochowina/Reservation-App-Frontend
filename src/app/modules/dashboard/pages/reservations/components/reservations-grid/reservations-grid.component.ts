@@ -200,7 +200,7 @@ export class ReservationsGridComponent implements OnInit {
       .subscribe((reservation) => {
         if (isNull(reservation)) { return; }
 
-        this.dialogService.open(ReservationPaidDialogComponent, DialogSize.sm, {
+        this.dialogService.open(ReservationPaidDialogComponent, DialogSize.xs, {
           data: reservation,
         });
       });
