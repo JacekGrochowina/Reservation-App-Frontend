@@ -3,6 +3,7 @@ import { Action } from '@ngrx/store';
 import { ReservationUpdatePayload } from './interfaces/payloads/reservation-update.payload';
 import { ReservationAddPayload } from './interfaces/payloads/reservation-add.payload';
 import { ReservationExtendsResponse } from './interfaces/responses/reservation-extends.response';
+import { ReservationListPayload } from './interfaces/payloads/reservation-list.payload';
 
 export enum ReservationsActionTypes {
   getList = '[Reservations/List] Get List Reservations',
@@ -39,6 +40,8 @@ export enum ReservationsActionTypes {
 // ========== Get Reservations
 export class GetListReservations implements Action {
   readonly type = ReservationsActionTypes.getList;
+
+  constructor(public payload?: ReservationListPayload) {}
 }
 
 export class GetListReservationsSuccess implements Action {

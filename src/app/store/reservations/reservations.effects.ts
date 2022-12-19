@@ -41,8 +41,8 @@ export class ReservationsEffects {
   getReservationsList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ReservationsActionTypes.getList),
-      switchMap(() =>
-        this.reservationsService.getReservationsList().pipe(
+      switchMap((action: GetListReservations) =>
+        this.reservationsService.getReservationsList(action.payload).pipe(
           map((response) => new GetListReservationsSuccess(response)),
           catchError((error) => of(new GetListReservationsFail(error)))
         )

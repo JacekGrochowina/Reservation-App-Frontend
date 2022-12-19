@@ -13,6 +13,10 @@ import { Reservation } from '../../../../../../store/reservations/interfaces/res
 import { ConfirmDialogComponent } from '../../../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ReservationSummaryDialogComponent } from '../reservation-summary-dialog/reservation-summary-dialog.component';
 import { ReservationPaidDialogComponent } from '../reservation-paid-dialog/reservation-paid-dialog.component';
+import { getDateFormat } from '../../../../../../shared/utils/extensions/dateFormatter';
+import {
+  ReservationListPayload
+} from '../../../../../../store/reservations/interfaces/payloads/reservation-list.payload';
 
 @Component({
   selector: 'app-reservations-grid',
@@ -54,8 +58,11 @@ export class ReservationsGridComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.reservationsFacade.getReservationsList();
     this.setDaysRange();
+
+    this.reservationsFacade.getReservationsList(
+      this.getReservationListPayload()
+    );
   }
 
   public ngOnDestroy(): void {
@@ -167,6 +174,12 @@ export class ReservationsGridComponent implements OnInit {
 
     this.setIsTodayDaysRange();
     this.setDaysRange();
+
+    console.log(this.daysRange);
+
+    this.reservationsFacade.getReservationsList(
+      this.getReservationListPayload()
+    );
   }
 
   public nextRange(): void {
@@ -174,6 +187,11 @@ export class ReservationsGridComponent implements OnInit {
 
     this.setIsTodayDaysRange();
     this.setDaysRange();
+
+    console.log(this.daysRange);
+    this.reservationsFacade.getReservationsList(
+      this.getReservationListPayload()
+    );
   }
 
   public detailsReservation(item: Item, day: Date, isStart?: boolean): void {
@@ -295,6 +313,16 @@ export class ReservationsGridComponent implements OnInit {
     return firstDate.getFullYear() === secondDate.getFullYear() &&
       firstDate.getMonth() === secondDate.getMonth() &&
       firstDate.getDate() === secondDate.getDate();
+  }
+
+  private getReservationListPayload(): ReservationListPayload {
+    const from = this.daysRange[0];
+    const to = this.daysRange[this.daysRange.length - 1];
+
+    return {
+      from: getDateFormat(from),
+      to: getDateFormat(to),
+    }
   }
 
 }

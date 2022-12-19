@@ -30,6 +30,7 @@ import {
 } from './reservations.selectors';
 import { ReservationUpdatePayload } from './interfaces/payloads/reservation-update.payload';
 import { ReservationAddPayload } from './interfaces/payloads/reservation-add.payload';
+import { ReservationListPayload } from './interfaces/payloads/reservation-list.payload';
 
 @Injectable()
 export class ReservationsFacade {
@@ -63,8 +64,8 @@ export class ReservationsFacade {
 
   constructor(private store: Store<AppState>) {}
 
-  public getReservationsList(): void {
-    this.store.dispatch(new GetListReservations());
+  public getReservationsList(reservationsList?: ReservationListPayload): void {
+    this.store.dispatch(new GetListReservations(reservationsList));
   }
 
   public getReservationDetails(reservationID: number): void {
