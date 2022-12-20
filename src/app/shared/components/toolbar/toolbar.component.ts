@@ -21,6 +21,15 @@ export class ToolbarComponent implements OnInit {
 
   public ngOnInit(): void {
     this.checked = this.getSlideToogleStateFromLocalStorage();
+
+    const isSidenavOpen = localStorage.getItem('isSidenavOpen') === 'true';
+    this.drawer.opened = isSidenavOpen;
+  }
+
+  public toggleSidenav(): void {
+    const toogler = !this.drawer.opened;
+    this.drawer.opened = toogler;
+    localStorage.setItem('isSidenavOpen', String(toogler));
   }
 
   public changeTheme(): void {
