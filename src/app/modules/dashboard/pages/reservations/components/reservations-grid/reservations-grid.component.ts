@@ -175,8 +175,6 @@ export class ReservationsGridComponent implements OnInit {
     this.setIsTodayDaysRange();
     this.setDaysRange();
 
-    console.log(this.daysRange);
-
     this.reservationsFacade.getReservationsList(
       this.getReservationListPayload()
     );
