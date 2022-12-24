@@ -36,6 +36,7 @@ import { ErrorHandlerComponent } from './components/error-handler/error-handler.
 import { MatMenuModule } from '@angular/material/menu';
 import { CurrentUserInfoComponent } from './components/sidenav/current-user-info/current-user-info.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -62,21 +63,22 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     SuccessSnackbarComponent,
     WarningSnackbarComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatCardModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    MatSidenavModule,
-    MatMenuModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        MatListModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatCardModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatSidenavModule,
+        MatMenuModule,
+        MatExpansionModule,
+    ],
   exports: [
     MatProgressSpinnerModule,
     ToolbarComponent,

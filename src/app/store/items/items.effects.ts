@@ -91,10 +91,7 @@ export class ItemsEffects {
   addItemFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ItemsActionTypes.addFail),
-        map(() => {
-          this.snackbarService.openFail('Nie dodano nowego przedmiotu');
-          this.store.dispatch(new AddItemClear());
-        })
+        map(() => this.snackbarService.openFail('Nie dodano nowego przedmiotu')),
       ),
     { dispatch: false }
   );
@@ -128,10 +125,7 @@ export class ItemsEffects {
   delItemFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ItemsActionTypes.delFail),
-        map(() => {
-          this.snackbarService.openFail('Nie usunięto przedmiotu');
-          this.store.dispatch(new DelItemClear());
-        })
+        map(() => this.snackbarService.openFail('Nie usunięto przedmiotu')),
       ),
     { dispatch: false }
   );
@@ -165,10 +159,7 @@ export class ItemsEffects {
   updateItemFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ItemsActionTypes.updateFail),
-        map(() => {
-          this.snackbarService.openFail('Nie edytowano przedmiotu');
-          this.store.dispatch(new UpdateItemClear());
-        })
+        map(() => this.snackbarService.openFail('Nie edytowano przedmiotu')),
       ),
     { dispatch: false }
   );

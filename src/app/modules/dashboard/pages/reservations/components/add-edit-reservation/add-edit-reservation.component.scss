@@ -1,5 +1,9 @@
 @import "./src/styles/variables";
 
+.mat-dialog-title {
+  max-height: 88px;
+}
+
 .mat-vertical-content {
   padding: 0 24px !important;
 }

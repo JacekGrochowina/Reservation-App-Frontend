@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../app.state';
 import {
-  AddReservation,
+  AddReservation, AddReservationClear,
   DelReservation,
   GetDetailsReservation,
   GetDetailsReservationClear,
   GetListReservations,
-  UpdateReservation,
+  UpdateReservation, UpdateReservationClear,
 } from './reservations.actions';
 import {
   selectReservationDetailsError,
@@ -80,12 +80,20 @@ export class ReservationsFacade {
     this.store.dispatch(new AddReservation(reservation));
   }
 
+  public clearAddReservation(): void {
+    this.store.dispatch(new AddReservationClear());
+  }
+
   public delReservation(reservationID: number): void {
     this.store.dispatch(new DelReservation(reservationID));
   }
 
   public updateReservation(reservation: ReservationUpdatePayload): void {
     this.store.dispatch(new UpdateReservation(reservation));
+  }
+
+  public clearUpdateReservation(): void {
+    this.store.dispatch(new UpdateReservationClear());
   }
 
 }

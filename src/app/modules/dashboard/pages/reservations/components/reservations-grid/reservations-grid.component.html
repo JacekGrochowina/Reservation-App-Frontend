@@ -8,10 +8,10 @@
     <button mat-icon-button color="primary" (click)="todayRange()" [disabled]="isTodayDaysRange" class="mr-1">
       <mat-icon>today</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="prevRange()" class="mr-1">
+    <button mat-icon-button color="primary" (click)="prevRange()" [disabled]="((itemsListLoading$ | async) || (reservationsListLoading$ | async))" class="mr-1">
       <mat-icon>chevron_left</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="nextRange()">
+    <button mat-icon-button color="primary" (click)="nextRange()" [disabled]="((itemsListLoading$ | async) || (reservationsListLoading$ | async))">
       <mat-icon>chevron_right</mat-icon>
     </button>
   </div>

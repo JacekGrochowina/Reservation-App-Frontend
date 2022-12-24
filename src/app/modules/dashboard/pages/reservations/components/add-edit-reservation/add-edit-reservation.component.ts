@@ -94,6 +94,9 @@ export class AddEditReservationComponent implements OnInit, OnDestroy {
     this.unsubscribe$.unsubscribe();
 
     this.clearDictionaries();
+    this.isAddMode()
+      ? this.reservationsFacade.clearAddReservation()
+      : this.reservationsFacade.clearUpdateReservation();
   }
 
   public onSubmit(): void {

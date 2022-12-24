@@ -279,7 +279,6 @@ export class ReservationsGridComponent implements OnInit {
       date.setDate(date.getDate() + i);
       this.daysRange.push(date);
     }
-    console.log(this.daysRange);
   }
 
   private setIsTodayDaysRange(): void {

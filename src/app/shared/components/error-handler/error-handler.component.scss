@@ -1,5 +1,9 @@
 @import "./src/styles/variables";
 
+.mat-expansion-panel {
+  z-index: 999;
+}
+
 .error-handler {
   &__bar {
     display: flex;
@@ -18,8 +22,63 @@
       &__label {
         margin: 0;
         color: var(--error-handler-text);
+        font-size: 14px;
         font-weight: 500;
       }
+    }
+  }
+}
+
+app-error-handler {
+  .mat-expansion-panel-header-title {
+    align-items: center;
+  }
+
+  .mat-expansion-panel-header {
+    background-color: var(--error-handler-bg);
+
+    &:hover, &:focus {
+      background-color: var(--error-handler-bg) !important;
+    }
+
+    &.mat-expanded {
+      height: 48px;
+    }
+
+    .mat-expansion-indicator::after {
+      color: var(--error-handler-text) !important;
+    }
+
+    .header {
+      &__icon {
+        color: var(--error-handler-text);
+        fill: var(--error-handler-text);
+      }
+
+      &__label {
+        margin: 0;
+        color: var(--error-handler-text);
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 16px 24px !important;
+  }
+}
+
+.expansion {
+  &-list {
+    padding-top: 0;
+  }
+
+  &-item {
+    height: 30px !important;
+
+    .mat-list-item-content {
+      font-size: 14px;
     }
   }
 }

@@ -1,6 +1,28 @@
-<div *ngIf="message" [class]="'error-handler ' + class">
-  <div class="error-handler__bar bar px-3 py-2">
-    <mat-icon class="bar__icon mr-2">error</mat-icon>
-    <p class="bar__label">{{ message }}</p>
+<ng-container *ngIf="isExpanded">
+  <mat-expansion-panel *ngIf="message" [class]="'error-handler-expansion ' + class">
+    <mat-expansion-panel-header class="header">
+      <mat-panel-title>
+        <mat-icon class="header__icon mr-2">error</mat-icon>
+        <p class="header__label">{{ message }}</p>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-nav-list class="expansion-list">
+      <mat-list-item *ngFor="let item of detailsList" role="listitem" class="expansion-item">
+        {{ item?.dateStart | date:'dd.MM.YYYY' }}
+        ({{ getDayName(item?.dateStart) }}) -
+        {{ item?.dateFinish | date:'dd.MM.YYYY' }}
+        ({{ getDayName(item?.dateFinish) }})
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</ng-container>
+
+<ng-container *ngIf="!isExpanded">
+  <div *ngIf="message" [class]="'error-handler ' + class">
+    <div class="error-handler__bar bar px-3 py-2">
+      <mat-icon class="bar__icon mr-2">error</mat-icon>
+      <p class="bar__label">{{ message }}</p>
+    </div>
   </div>
-</div>
+</ng-container>

@@ -91,10 +91,7 @@ export class ReservationsEffects {
   addReservationFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ReservationsActionTypes.addFail),
-        map(() => {
-          this.snackbarService.openFail('Nie dodano nowej rezerwacji');
-          this.store.dispatch(new AddReservationClear());
-        })
+        map(() => this.snackbarService.openFail('Nie dodano nowej rezerwacji')),
       ),
     { dispatch: false }
   );
@@ -128,10 +125,7 @@ export class ReservationsEffects {
   delReservationFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ReservationsActionTypes.delFail),
-        map(() => {
-          this.snackbarService.openFail('Nie usunięto rezerwacji');
-          this.store.dispatch(new DelReservationClear());
-        })
+        map(() => this.snackbarService.openFail('Nie usunięto rezerwacji')),
       ),
     { dispatch: false }
   );
@@ -165,10 +159,7 @@ export class ReservationsEffects {
   updateReservationFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(ReservationsActionTypes.updateFail),
-        map(() => {
-          this.snackbarService.openFail('Nie edytowano rezerwacji');
-          this.store.dispatch(new UpdateReservationClear());
-        })
+        map(() => this.snackbarService.openFail('Nie edytowano rezerwacji')),
       ),
     { dispatch: false }
   );

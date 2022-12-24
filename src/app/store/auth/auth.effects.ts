@@ -64,7 +64,7 @@ export class AuthEffects {
   loginFail$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActionTypes.loginFail),
-      map(() => this.snackbarService.openFail('Nie udało się zalogować'))
+      map(() => this.snackbarService.openFail('Nie udało się zalogować')),
     ),
   { dispatch: false }
   );
@@ -98,7 +98,7 @@ export class AuthEffects {
   registerFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(AuthActionTypes.registerFail),
-        map(() => this.snackbarService.openFail('Nie udało się zarejestrować'))
+        map(() => this.snackbarService.openFail('Nie udało się zarejestrować')),
       ),
     { dispatch: false }
   );

@@ -91,10 +91,7 @@ export class GroupsEffects {
   addGroupFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(GroupsActionTypes.addFail),
-        map(() => {
-          this.snackbarService.openFail('Nie dodano nowej grupy');
-          this.store.dispatch(new AddGroupClear());
-        })
+        map(() => this.snackbarService.openFail('Nie dodano nowej grupy')),
       ),
     { dispatch: false }
   );
@@ -128,10 +125,7 @@ export class GroupsEffects {
   delGroupFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(GroupsActionTypes.delFail),
-        map(() => {
-          this.snackbarService.openFail('Nie usunięto grupy');
-          this.store.dispatch(new DelGroupClear());
-        })
+        map(() => this.snackbarService.openFail('Nie usunięto grupy')),
       ),
     { dispatch: false }
   );
@@ -165,10 +159,7 @@ export class GroupsEffects {
   updateGroupFail$ = createEffect(() =>
       this.actions$.pipe(
         ofType(GroupsActionTypes.updateFail),
-        map(() => {
-          this.snackbarService.openFail('Nie edytowano grupy');
-          this.store.dispatch(new UpdateGroupClear());
-        })
+        map(() => this.snackbarService.openFail('Nie edytowano grupy')),
       ),
     { dispatch: false }
   );
