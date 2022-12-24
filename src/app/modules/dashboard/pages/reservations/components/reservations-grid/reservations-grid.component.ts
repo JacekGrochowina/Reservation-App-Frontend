@@ -138,7 +138,7 @@ export class ReservationsGridComponent implements OnInit {
           const reservationsForCurrentItem = reservationsListItems
             .filter((reservationsItem) => reservationsItem.itemId === item.id);
 
-          let isReservationCellVisibleStart = false;
+          let isReservationCellVisible = false;
 
           reservationsForCurrentItem.forEach((reservation) => {
             const date = isStart
@@ -146,11 +146,11 @@ export class ReservationsGridComponent implements OnInit {
               : new Date(reservation.dateFinish);
 
             if (this.isTwoDaysSameDay(date, day)) {
-              isReservationCellVisibleStart = true;
+              isReservationCellVisible = true;
             }
           });
 
-          return isReservationCellVisibleStart;
+          return isReservationCellVisible;
         })
       )
   }
@@ -279,6 +279,7 @@ export class ReservationsGridComponent implements OnInit {
       date.setDate(date.getDate() + i);
       this.daysRange.push(date);
     }
+    console.log(this.daysRange);
   }
 
   private setIsTodayDaysRange(): void {

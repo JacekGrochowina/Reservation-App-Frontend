@@ -45,7 +45,7 @@
           class="row__cell row__cell--day cell">
 
         <div *ngIf="(isReservationCellVisible(item, day) | async)" (click)="onClickReservation(item, day)" class="cell__reservation"></div>
-        <div *ngIf="(isReservationCellVisibleEdge(item, day) | async)" (click)="onClickReservation(item, day, true)" class="cell__reservation cell__reservation--start"></div>
+        <div *ngIf="(isReservationCellVisibleEdge(item, day, true) | async)" (click)="onClickReservation(item, day, true)" class="cell__reservation cell__reservation--start"></div>
         <div *ngIf="(isReservationCellVisibleEdge(item, day, false) | async)" (click)="onClickReservation(item, day, false)" class="cell__reservation cell__reservation--finish reservation">
           <div class="reservation__actions actions">
             <button mat-icon-button [matMenuTriggerFor]="menu" class="actions__button">
