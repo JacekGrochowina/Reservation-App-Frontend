@@ -30,6 +30,10 @@
     </th>
   </tr>
 
+  <tr *ngIf="(itemsListItems$ | async)?.length === 0">
+    <app-table-empty></app-table-empty>
+  </tr>
+
   <tr *ngIf="(itemsListLoading$ | async) || (reservationsListLoading$ | async)">
     <app-fluid-loading
       [height]="500"

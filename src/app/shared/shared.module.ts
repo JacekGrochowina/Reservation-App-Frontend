@@ -92,6 +92,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     PageContainerTemplateComponent,
     ButtonLoadingComponent,
     AuthWrapperComponent,
+    TableEmptyComponent,
   ],
   providers: [
     DialogService,
